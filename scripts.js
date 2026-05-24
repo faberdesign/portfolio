@@ -1,6 +1,29 @@
 (function () {
   'use strict';
 
+  // ----- Deferred-hash scroll -----
+  // Set in the inline <head> script on index.html when the page is
+  // loaded with a hash (e.g. coming from a project page's "Work" link).
+  // The hash is stripped from the URL early so the browser doesn't
+  // auto-jump; we now smooth-scroll to the section after a brief pause
+  // so the user sees the top of the page first.
+  if (window.__deferredHash) {
+    const hash = window.__deferredHash;
+    delete window.__deferredHash;
+    const target = document.querySelector(hash);
+    if (target) {
+      window.scrollTo(0, 0);
+      setTimeout(function () {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        history.replaceState(
+          null,
+          '',
+          window.location.pathname + window.location.search + hash
+        );
+      }, 500);
+    }
+  }
+
   // ----- Custom cursor (surface-aware solid circle) -----
   // Color flips by what's underneath:
   //   • Orange hero  → white cursor

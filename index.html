@@ -9,6 +9,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="shared.css">
   <link rel="stylesheet" href="styles.css">
+  <script>
+    // If we arrived with a hash (e.g. /#work from a project page),
+    // strip it from the URL so the browser doesn't auto-jump. scripts.js
+    // will smooth-scroll to the target after page load so the user
+    // sees the top of the page first.
+    if (window.location.hash) {
+      window.__deferredHash = window.location.hash;
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+  </script>
 </head>
 <body>
 
