@@ -1,6 +1,28 @@
 (function () {
   'use strict';
 
+  // ----- Logo click — smooth scroll to top on the root page -----
+  // On project pages the default navigation to "/" runs; on the index
+  // we intercept and smooth-scroll back to the top instead.
+  const navLogo = document.querySelector('.nav-logo');
+  if (navLogo) {
+    navLogo.addEventListener('click', function (e) {
+      const path = window.location.pathname;
+      const onRoot = path === '/' || path.endsWith('/index.html');
+      if (onRoot) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (window.location.hash) {
+          history.replaceState(
+            null,
+            '',
+            window.location.pathname + window.location.search
+          );
+        }
+      }
+    });
+  }
+
   // ----- Deferred-hash scroll -----
   // Set in the inline <head> script on index.html when the page is
   // loaded with a hash (e.g. coming from a project page's "Work" link).
