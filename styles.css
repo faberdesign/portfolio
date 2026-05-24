@@ -862,11 +862,10 @@ h1, h2, h3 {
   font-size: clamp(32px, 5vw, 52px);
   color: var(--color-text);
   line-height: 1.15;
-  max-width: 780px;
   margin-top: 20px;
 }
 
-.cs-h2.on-dark { color: var(--color-footer-text); max-width: 700px; }
+.cs-h2.on-dark { color: var(--color-footer-text); }
 
 .cs-h3 {
   font-family: 'Syne', sans-serif;
