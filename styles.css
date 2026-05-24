@@ -109,7 +109,7 @@ h1, h2, h3 {
    ============================================================ */
 
 .hero {
-  background: var(--color-accent);
+  background: var(--color-dark);
   min-height: auto;
   position: relative;
 }
@@ -154,8 +154,7 @@ h1, h2, h3 {
 .hero-row {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 80px 48px 80px;
-  padding-right: clamp(280px, 32vw, 480px);
+  padding: 80px 48px;
   position: relative;
   z-index: 1;
 }
@@ -220,14 +219,163 @@ h1, h2, h3 {
 
 .hero-illustration {
   position: absolute;
-  right: -40px;
-  top: -30px;
-  width: clamp(380px, 42vw, 620px);
+  right: 5%;
+  top: 15%;
+  width: clamp(200px, 25vw, 520px);
   transform: rotate(-2deg);
   z-index: 2;
-  pointer-events: none;
   display: block;
   height: auto;
+}
+
+/* ============================================================
+   DESIGN PROCESS
+   ============================================================ */
+
+.process {
+  /* Fluid sizes — everything in this block scales from these vars,
+     so the diagram stays horizontal and legible from 320px up. */
+  --circle-size: clamp(56px, 11vw, 110px);
+  --icon-size: clamp(22px, 4.4vw, 44px);
+  --label-font: clamp(11px, 1.5vw, 18px);
+  --label-gap: clamp(10px, 1.5vw, 20px);
+  --arrow-max: clamp(20px, 8vw, 100px);
+  --iter-overhang: clamp(56px, 8.8vw, 88px);
+  --iter-label-font: clamp(9px, 1.2vw, 13px);
+
+  background: var(--color-white);
+  /* Top padding compensates for the iterate arrows that overhang the
+     diagram, so the gap above matches the gap to the About section. */
+  padding: clamp(140px, 18vw, 200px) 0 clamp(80px, 10vw, 120px);
+  width: 100%;
+}
+
+.process-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(24px, 4vw, 48px);
+}
+
+.process-heading {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: clamp(28px, 4vw, 48px);
+  color: var(--color-text);
+  line-height: 1.15;
+  margin-bottom: clamp(56px, 10vw, 120px);
+}
+
+.process-diagram {
+  position: relative;
+}
+
+/* Wraps the iterate SVG and its HTML labels so they overhang above
+   the circles together and scale with --iter-overhang. */
+.process-iterate-zone {
+  position: absolute;
+  top: calc(-1 * var(--iter-overhang) - 8px);
+  left: 0;
+  width: 100%;
+  height: var(--iter-overhang);
+  pointer-events: none;
+}
+
+.process-iter-label {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: var(--iter-label-font);
+  letter-spacing: 0.2em;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.process-iterate {
+  position: absolute;
+  top: calc(var(--iter-label-font) * 1.4);
+  left: 0;
+  width: 100%;
+  height: calc(100% - var(--iter-label-font) * 1.4);
+}
+
+.process-flow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: clamp(4px, 0.8vw, 8px);
+}
+
+.process-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--label-gap);
+  flex: 0 0 auto;
+  position: relative;
+  z-index: 1;
+  /* Cap step width so labels can't stretch the column wider than the
+     circle itself + a little breathing room. Long labels wrap below. */
+  max-width: calc(var(--circle-size) + clamp(8px, 1.4vw, 18px));
+}
+
+.process-circle {
+  width: var(--circle-size);
+  height: var(--circle-size);
+  border-radius: 50%;
+  background: var(--color-white);
+  border: 2px solid var(--color-dark);
+  color: var(--color-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.process-icon {
+  width: var(--icon-size);
+  height: var(--icon-size);
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+.process-label {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: var(--label-font);
+  color: var(--color-text);
+  text-align: center;
+  line-height: 1.2;
+}
+
+.process-arrow {
+  flex: 1;
+  max-width: var(--arrow-max);
+  height: 2px;
+  /* Line + chevron share colour via currentColor so they render at the
+     exact same value. */
+  color: var(--color-muted);
+  background: currentColor;
+  border-radius: 1px;
+  position: relative;
+  /* Center on the circle by going down half the circle's height. */
+  margin-top: calc(var(--circle-size) / 2 - 1px);
+}
+
+.process-arrow-head {
+  position: absolute;
+  right: -4px;
+  top: 50%;
+  width: clamp(9px, 1.4vw, 14px);
+  height: clamp(9px, 1.4vw, 14px);
+  transform: translateY(-50%);
+  overflow: visible;
+  color: inherit;
+  fill: none;
 }
 
 /* ============================================================
@@ -237,7 +385,7 @@ h1, h2, h3 {
 .faber-section {
   position: relative;
   z-index: 1;
-  background: var(--color-bg);
+  background: var(--color-white);
   padding: 160px 48px 120px;
   text-align: center;
   border: none;
@@ -310,7 +458,7 @@ h1, h2, h3 {
    ============================================================ */
 
 .work {
-  background: var(--color-white);
+  background: var(--color-bg);
   padding: 100px 0 160px;
 }
 
@@ -322,6 +470,15 @@ h1, h2, h3 {
 
 .work-label {
   margin-bottom: 48px;
+}
+
+.work-heading {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: clamp(32px, 4vw, 48px);
+  color: var(--color-text);
+  line-height: 1.15;
+  margin-bottom: 56px;
 }
 
 .work-feature {
@@ -378,7 +535,7 @@ h1, h2, h3 {
 .work-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 32px;
+  gap: 80px 48px;
 }
 
 .work-card {
@@ -391,11 +548,12 @@ h1, h2, h3 {
 }
 
 .work-card-title {
-  margin-top: 20px;
+  margin-top: 28px;
   font-family: 'Syne', sans-serif;
   font-weight: 700;
-  font-size: 20px;
+  font-size: clamp(22px, 2.2vw, 28px);
   color: var(--color-text);
+  line-height: 1.2;
   transition: color 0.25s ease;
 }
 
@@ -403,23 +561,24 @@ h1, h2, h3 {
   color: var(--color-accent);
 }
 
-.work-card-desc {
-  margin-top: 8px;
+.work-card-tag {
+  margin-top: 4px;
   font-family: 'DM Sans', sans-serif;
-  font-weight: 300;
-  font-size: 15px;
+  font-weight: 400;
+  font-size: 13px;
   color: var(--color-muted);
-  line-height: 1.6;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
-.work-card-tag {
-  margin-top: 12px;
+.work-card-desc {
+  margin-top: 16px;
   font-family: 'DM Sans', sans-serif;
-  font-weight: 500;
-  font-size: 12px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--color-muted);
+  font-weight: 300;
+  font-size: 16px;
+  color: var(--color-text);
+  line-height: 1.65;
+  max-width: 56ch;
 }
 
 /* ============================================================
@@ -761,12 +920,12 @@ h1, h2, h3 {
 }
 
 .stat-text {
-  margin-top: 8px;
+  margin-top: 12px;
   font-family: 'DM Sans', sans-serif;
   font-weight: 300;
-  font-size: 14px;
+  font-size: 16px;
   color: var(--color-muted);
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
 .cs-quote {
@@ -815,9 +974,9 @@ h1, h2, h3 {
   max-width: 680px;
   font-family: 'DM Sans', sans-serif;
   font-weight: 300;
-  font-size: 18px;
+  font-size: 16px;
   color: var(--color-text);
-  line-height: 1.7;
+  line-height: 1.8;
 }
 
 /* Section 03 — Decisions */
@@ -1125,9 +1284,15 @@ h1, h2, h3 {
     padding-left: 32px;
     padding-right: 32px;
   }
-  .hero-row {
-    padding-right: clamp(240px, 28vw, 400px);
+
+  /* Hide the bobblehead on viewports too narrow to host it without
+     overlapping the text column. Below 1024 the hero is text-only. */
+  .hero-illustration {
+    display: none;
   }
+
+  .hero-h1 { max-width: 100%; }
+  .hero-sub { max-width: 100%; }
 }
 
 @media (max-width: 768px) {
@@ -1148,6 +1313,9 @@ h1, h2, h3 {
   .faber-section {
     padding: 80px 24px;
   }
+
+  /* Process stays horizontal at every width — sizes are driven by the
+     CSS variables defined on .process and scale fluidly via clamp(). */
 
   /* Work */
   .work {

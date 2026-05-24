@@ -304,6 +304,136 @@ nav {
 }
 
 /* ============================================================
+   CUSTOM CURSOR (desktop only — disabled on touch devices)
+   ============================================================ */
+
+@media (pointer: fine) {
+  body,
+  a,
+  button,
+  label,
+  input,
+  textarea,
+  select,
+  .work-card,
+  .work-feature,
+  .nav-hamburger,
+  .nav-logo,
+  .scroll-top {
+    cursor: none;
+  }
+}
+
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  /* Solid cursor; the colour switches by surface (see .surface-* below).
+     Default = dark blue for light/cream/white surfaces. */
+  background: var(--color-dark);
+  border: 2px solid transparent;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  will-change: transform;
+  transition: opacity 0.2s ease,
+              width 0.2s ease,
+              height 0.2s ease,
+              margin 0.2s ease,
+              background-color 0.2s ease,
+              border-color 0.2s ease;
+}
+
+/* Center dot — invisible by default, fades in on hover */
+.cursor::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-dark);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+/* Orange surface (hero) → white cursor */
+.cursor.surface-orange {
+  background: #FFFFFF;
+}
+
+.cursor.surface-orange::after {
+  background: #FFFFFF;
+}
+
+/* Dark surfaces (nav, footer, bg-dark sections, overlay) → orange cursor */
+.cursor.surface-dark {
+  background: var(--color-accent);
+}
+
+.cursor.surface-dark::after {
+  background: var(--color-accent);
+}
+
+.cursor.is-active {
+  opacity: 1;
+}
+
+/* Hover state — circle becomes a ring with a center dot. Size grows.
+   Hover color mapping:
+     • light/white/cream surfaces → orange
+     • orange hero                → orange (matches the surface accent)
+     • dark surfaces              → white */
+.cursor.is-hover {
+  width: 64px;
+  height: 64px;
+  margin: -16px 0 0 -16px;
+  background: transparent;
+  border-color: var(--color-accent);
+}
+
+.cursor.is-hover::after {
+  background: var(--color-accent);
+  opacity: 1;
+}
+
+.cursor.is-hover.surface-dark {
+  border-color: #FFFFFF;
+}
+
+.cursor.is-hover.surface-dark::after {
+  background: #FFFFFF;
+}
+
+/* Click state — shrinks back to the non-hover 32px size while
+   keeping the ring + center-dot style. Triggered on any mousedown. */
+.cursor.is-click {
+  width: 32px;
+  height: 32px;
+  margin: 0;
+  background: transparent;
+  border-color: var(--color-accent);
+}
+
+.cursor.is-click::after {
+  background: var(--color-accent);
+  opacity: 1;
+}
+
+.cursor.is-click.surface-dark {
+  border-color: #FFFFFF;
+}
+
+.cursor.is-click.surface-dark::after {
+  background: #FFFFFF;
+}
+
+/* ============================================================
    SCROLL-TO-TOP BUTTON
    ============================================================ */
 
