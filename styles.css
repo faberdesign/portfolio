@@ -1219,6 +1219,78 @@ h1, h2, h3 {
 }
 
 /* ============================================================
+   IMPRESSUM
+   ============================================================ */
+
+.impressum {
+  background: var(--color-bg);
+  width: 100%;
+  padding: clamp(80px, 12vw, 140px) 0 clamp(80px, 10vw, 120px);
+}
+
+.impressum-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 clamp(24px, 4vw, 48px);
+}
+
+.impressum-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: clamp(40px, 6vw, 72px);
+  color: var(--color-text);
+  line-height: 1.1;
+  margin-bottom: clamp(40px, 5vw, 64px);
+}
+
+.impressum-section {
+  margin-bottom: 40px;
+}
+
+.impressum-section:last-child {
+  margin-bottom: 0;
+}
+
+.impressum-h2 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--color-text);
+  margin-bottom: 12px;
+  line-height: 1.25;
+}
+
+.impressum-section p {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  color: var(--color-text);
+  line-height: 1.75;
+}
+
+.impressum-section a {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent);
+  text-underline-offset: 3px;
+  transition: color 0.25s ease;
+}
+
+.impressum-section a:hover {
+  color: var(--color-accent);
+}
+
+/* Impressum link in the footer-bottom row */
+.footer-bottom-link {
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.footer-bottom-link:hover {
+  color: var(--color-accent);
+}
+
+/* ============================================================
    PLACEHOLDER PROJECT PAGE
    ============================================================ */
 
