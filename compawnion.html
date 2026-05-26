@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Benedikt Faber — UX & Product Designer based in Hamburg.">
-  <title>Benedikt Faber — Compawnion Case Study</title>
+  <meta name="description" content="Compawnion: pet adoption case study by Benedikt Faber.">
+  <title>Benedikt Faber, Compawnion Case Study</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="shared.css">
@@ -16,7 +16,7 @@
   <nav aria-label="Primary">
     <div class="nav-inner">
       <a href="/" class="nav-logo">Benedikt Faber</a>
-      <button class="nav-hamburger" aria-label="Menu" aria-controls="nav-overlay">
+      <button class="nav-hamburger" type="button" aria-label="Open menu" aria-controls="nav-overlay" aria-expanded="false">
         <span></span>
         <span></span>
       </button>
@@ -31,13 +31,13 @@
     </ul>
   </div>
 
-  <!-- SECTION 01 — HERO -->
+  <!-- SECTION 01: HERO -->
   <section class="cs-hero">
     <div class="cs-hero-inner">
-      <span class="section-label">Product Design Case &middot; Feb &ndash; May 2026</span>
+      <span class="section-label">Product Design Case &middot; Feb-May 2026</span>
       <h1 class="cs-title">Compawnion</h1>
       <p class="cs-tagline">Pet adoption that fits your life.</p>
-      <p class="cs-blurb">A mobile app that helps first-time adopters find the right shelter animal &mdash; by honestly mapping daily life before browsing.</p>
+      <p class="cs-blurb">A mobile app that helps first-time adopters find the right shelter animal, by honestly mapping daily life before browsing.</p>
 
       <div class="cs-hero-grid">
         <div class="cs-meta">
@@ -55,36 +55,34 @@
           </div>
           <div>
             <span class="section-label cs-meta-item-label">Timeline</span>
-            <span class="cs-meta-item-value">February &ndash; May 2026</span>
+            <span class="cs-meta-item-value">February-May 2026</span>
           </div>
         </div>
 
         <div class="cs-hero-image">
-          <div class="placeholder aspect-4-3">
-            <span class="placeholder-label">Key Screen &mdash; Final Prototype Placeholder</span>
-          </div>
+          <img src="img/main_screen.jpg" alt="Compawnion app on three iPhone screens: welcome with a hand-drawn dog and cat illustrating &ldquo;Finde ein Tier, das wirklich zu dir passt&rdquo;, an animal browse list with everyday-life fit scores, and a detail view for Luke, a golden retriever.">
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SECTION 02 — THE PROBLEM -->
+  <!-- SECTION 02: THE PROBLEM -->
   <section class="cs-section bg-white">
     <div class="cs-section-inner">
-      <span class="section-label accent">01 &mdash; The Problem</span>
+      <span class="section-label accent">01 &middot; The Problem</span>
       <h2 class="cs-h2">The desire is there. <br/>The decision feels overwhelming.</h2>
       <p class="cs-body cs-intro">When people want to adopt a pet, they quickly face the same problem: too much information from too many sources, and the real question goes unanswered: Does this animal actually fit my life?</p>
 
       <div class="problem-stats">
-        <div class="stat-block">
+        <div class="stat-block reveal">
           <div class="stat-number">84%</div>
           <p class="stat-text">considered adopting from a shelter.</p>
         </div>
-        <div class="stat-block">
+        <div class="stat-block reveal">
           <div class="stat-number">&gt;50%</div>
-          <p class="stat-text">feared rejection from the shelter &mdash; before making first contact.</p>
+          <p class="stat-text">feared rejection from the shelter, before making first contact.</p>
         </div>
-        <div class="stat-block">
+        <div class="stat-block reveal">
           <div class="stat-number">44%</div>
           <p class="stat-text">higher fear of making the wrong decision among first-time adopters vs. experienced ones.</p>
         </div>
@@ -92,19 +90,19 @@
 
       <blockquote class="cs-quote problem-quote">&ldquo;It feels like too big a task. I really feel like this task has overwhelmed me in my head.&rdquo;</blockquote>
 
-      <p class="problem-close">These aren&rsquo;t information problems. They&rsquo;re a missing tool for honest self-assessment &mdash; and a lack of confidence at the first step.</p>
+      <p class="problem-close">These aren&rsquo;t information problems. They&rsquo;re a missing tool for honest self-assessment, and a lack of confidence at the first step.</p>
     </div>
   </section>
 
-  <!-- SECTION 02 — PERSONA -->
+  <!-- SECTION 02: PERSONA -->
   <section class="cs-section bg-tinted">
     <div class="cs-section-inner">
-      <span class="section-label accent">02 &mdash; Persona</span>
+      <span class="section-label accent">02 &middot; Persona</span>
       <h2 class="cs-h2">Designing for Maja, the first-time adopter.</h2>
 
       <div class="persona-card">
         <aside class="persona-profile">
-          <img class="persona-image" src="maja.jpg" alt="Maja — persona portrait" />
+          <img class="persona-image" src="maja.jpg" alt="Maja, persona portrait" />
           <div class="persona-meta">
             <h3 class="persona-name">Maja</h3>
             <ul class="persona-facts">
@@ -117,7 +115,7 @@
         </aside>
 
         <div class="persona-attrs">
-          <div class="persona-attr">
+          <div class="persona-attr reveal">
             <span class="section-label accent">Behaviors &amp; Habits</span>
             <ul class="persona-list">
               <li><strong>Risk-averse:</strong> &ldquo;I don&rsquo;t want to make any mistakes.&rdquo;</li>
@@ -125,7 +123,7 @@
             </ul>
           </div>
 
-          <div class="persona-attr">
+          <div class="persona-attr reveal">
             <span class="section-label accent">Pain Points &amp; Frustrations</span>
             <ul class="persona-list">
               <li>Fear of misjudging the animal&rsquo;s daily life.</li>
@@ -134,7 +132,7 @@
             </ul>
           </div>
 
-          <div class="persona-attr">
+          <div class="persona-attr reveal">
             <span class="section-label accent">Needs &amp; Goals</span>
             <ul class="persona-list">
               <li>A clear assessment of the fit.</li>
@@ -148,109 +146,109 @@
     </div>
   </section>
 
-  <!-- SECTION 03 — PROCESS & KEY DECISIONS -->
+  <!-- SECTION 03: PROCESS & KEY DECISIONS -->
   <section class="cs-section bg-bg">
     <div class="cs-section-inner">
-      <span class="section-label accent">03 &mdash; Process &amp; Key Decisions</span>
+      <span class="section-label accent">03 &middot; Process &amp; Key Decisions</span>
       <h2 class="cs-h2">Four decisions that <br/>shaped the product.</h2>
 
-      <article class="decision-block">
+      <article class="decision-block reveal">
         <div class="decision-left">
           <span class="section-label accent">Decision 01</span>
           <h3 class="cs-h3">Profile-first instead of browse-first.</h3>
         </div>
         <div class="decision-right">
-          <p class="cs-body smaller">The classic marketplace flow shows animals first &mdash; and leaves it to the user to figure out whether they&rsquo;re a good fit. My research showed: the problem isn&rsquo;t the supply of animals, it&rsquo;s the lack of self-assessment. Compawnion flips the flow: users define their daily life before they browse animals. This reduces aspirational self-assessment bias and makes matching more honest.</p>
+          <p class="cs-body smaller">The classic marketplace flow shows animals first, and leaves it to the user to figure out whether they&rsquo;re a good fit. My research showed: the problem isn&rsquo;t the supply of animals, it&rsquo;s the lack of self-assessment. Compawnion flips the flow: users define their daily life before they browse animals. This reduces aspirational self-assessment bias and makes matching more honest.</p>
           <blockquote class="cs-quote small">&ldquo;Profiles saying &lsquo;sweet, friendly, great&rsquo; don&rsquo;t help me. What helps: likes to sleep on the couch, needs a moment in the morning, goes crazy when someone rings the doorbell.&rdquo;</blockquote>
           <blockquote class="cs-quote small">&ldquo;It would help to have access to good information that isn&rsquo;t just buzzwords but can actually be matched against my daily life.&rdquo;</blockquote>
         </div>
       </article>
 
-      <article class="decision-block">
+      <article class="decision-block reveal">
         <div class="decision-left">
           <span class="section-label accent">Decision 02</span>
           <h3 class="cs-h3">First-time adopters as the primary target.</h3>
         </div>
         <div class="decision-right">
-          <p class="cs-body smaller">Compawnion serves anyone looking to adopt &mdash; but I designed for the user where the problem is most acute: the first-time adopter who wants to do everything right, overthinks every step, and abandons the process before making first contact. This user type is the hardest to serve &mdash; and the most underserved.</p>
+          <p class="cs-body smaller">Compawnion serves anyone looking to adopt, but I designed for the user where the problem is most acute: the first-time adopter who wants to do everything right, overthinks every step, and abandons the process before making first contact. This user type is the hardest to serve, and the most underserved.</p>
           <p class="cs-body smaller" style="margin-top:16px;">Maja, 33, Hamburg, risk-averse and analytical, is the design filter for every copy, flow, and hierarchy decision. She needs legitimation, not encouragement.</p>
         </div>
       </article>
 
-      <article class="decision-block">
+      <article class="decision-block reveal">
         <div class="decision-left">
           <span class="section-label accent">Decision 03</span>
           <h3 class="cs-h3">The Situations-Check as a contact anxiety intervention.</h3>
         </div>
         <div class="decision-right">
-          <p class="cs-body smaller">A &lsquo;Send inquiry&rsquo; button isn&rsquo;t enough. The critical moment isn&rsquo;t choosing the right animal &mdash; it&rsquo;s the transition from observer to applicant. My interviews showed how emotionally charged this moment is.</p>
+          <p class="cs-body smaller">A &lsquo;Send inquiry&rsquo; button isn&rsquo;t enough. The critical moment isn&rsquo;t choosing the right animal, it&rsquo;s the transition from observer to applicant. My interviews showed how emotionally charged this moment is.</p>
           <p class="cs-body smaller" style="margin-top:16px;">The Situations-Check prepares Maja for first contact in a structured way: what to expect, what the shelter expects, what she can say. When she hits &lsquo;Send,&rsquo; she feels like she&rsquo;s already decided.</p>
           <blockquote class="cs-quote small">&ldquo;I always feared they would categorically reject me as a pet owner because of my living situation in a shared flat.&rdquo;</blockquote>
         </div>
       </article>
 
-      <article class="decision-block">
+      <article class="decision-block reveal">
         <div class="decision-left">
           <span class="section-label accent">Decision 04</span>
-          <h3 class="cs-h3">User side first &mdash; systemic question openly named.</h3>
+          <h3 class="cs-h3">User side first, systemic question openly named.</h3>
         </div>
         <div class="decision-right">
-          <p class="cs-body smaller">Matching quality depends directly on data quality from the shelter side. I decided to build the user side first &mdash; because that&rsquo;s the part that can be validated, and because a working user flow is the prerequisite for bringing shelters on board as partners.</p>
+          <p class="cs-body smaller">Matching quality depends directly on data quality from the shelter side. I decided to build the user side first, because that&rsquo;s the part that can be validated, and because a working user flow is the prerequisite for bringing shelters on board as partners.</p>
           <p class="cs-body smaller" style="margin-top:16px;">This isn&rsquo;t a forgotten problem. It&rsquo;s the next step.</p>
         </div>
       </article>
     </div>
   </section>
 
-  <!-- SECTION 04 — THE SOLUTION -->
+  <!-- SECTION 04: THE SOLUTION -->
   <section class="cs-section bg-white">
     <div class="cs-section-inner">
-      <span class="section-label accent">04 &mdash; The Solution</span>
+      <span class="section-label accent">04 &middot; The Solution</span>
       <h2 class="cs-h2">Two interventions. <br/>Two moments where adoption regularly breaks down.</h2>
 
       <a class="proto-link" href="https://www.figma.com/proto/ja1BhQ9iAlVRXn2zY2xSQx/Compawnion---Benedikt-Faber?node-id=2600-2656&viewport=524%2C919%2C0.23&t=ZJdr7vrYRHGuGfHW-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=2600%3A2656&page-id=1%3A10">View interactive prototype <span class="arrow">&rarr;</span></a>
 
-      <article class="solution-block">
+      <article class="solution-block reveal">
         <div class="solution-text">
           <span class="section-label">Moment 01</span>
-          <h3 class="cs-h3">Choosing the right animal &mdash; the Alltagscheck.</h3>
-          <p class="cs-body">A structured questionnaire covering the relevant dimensions of a user&rsquo;s life: time, living situation, activity level, experience. The answer options are value-neutral &mdash; Maja describes her daily life, she doesn&rsquo;t optimize it for a desired outcome.</p>
+          <h3 class="cs-h3">Choosing the right animal, the Alltagscheck.</h3>
+          <p class="cs-body">A structured questionnaire covering the relevant dimensions of a user&rsquo;s life: time, living situation, activity level, experience. The answer options are value-neutral, Maja describes her daily life, she doesn&rsquo;t optimize it for a desired outcome.</p>
         </div>
         <div class="solution-image">
           <div class="placeholder aspect-4-3">
-            <span class="placeholder-label">Alltagscheck Flow &mdash; Placeholder</span>
+            <span class="placeholder-label">Alltagscheck Flow Placeholder</span>
           </div>
         </div>
       </article>
 
-      <article class="solution-block">
+      <article class="solution-block reveal">
         <div class="solution-text">
           <span class="section-label">Moment 02</span>
-          <h3 class="cs-h3">Making contact &mdash; the Situations-Check.</h3>
-          <p class="cs-body">Maja doesn&rsquo;t need encouragement &mdash; she needs legitimation. The Situations-Check prepares her for first contact in a structured way, so the step feels like a prepared action rather than a leap into the unknown.</p>
+          <h3 class="cs-h3">Making contact, the Situations-Check.</h3>
+          <p class="cs-body">Maja doesn&rsquo;t need encouragement, she needs legitimation. The Situations-Check prepares her for first contact in a structured way, so the step feels like a prepared action rather than a leap into the unknown.</p>
         </div>
         <div class="solution-image">
           <div class="placeholder aspect-4-3">
-            <span class="placeholder-label">Situations-Check &mdash; Placeholder</span>
+            <span class="placeholder-label">Situations-Check Placeholder</span>
           </div>
         </div>
       </article>
 
       <div class="extra-screens">
         <div class="placeholder aspect-3-4">
-          <span class="placeholder-label">Results List &mdash; Alltagspassung Indicator</span>
+          <span class="placeholder-label">Results List, Alltagspassung Indicator</span>
         </div>
         <div class="placeholder aspect-3-4">
-          <span class="placeholder-label">Animal Profile &mdash; Placeholder</span>
+          <span class="placeholder-label">Animal Profile Placeholder</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SECTION 05 — TESTING (INVERTED) -->
+  <!-- SECTION 05: TESTING (INVERTED) -->
   <section class="cs-section bg-dark">
     <div class="cs-section-inner">
-      <span class="section-label accent">05 &mdash; Testing &amp; Iteration</span>
+      <span class="section-label accent">05 &middot; Testing &amp; Iteration</span>
       <h2 class="cs-h2 on-dark">The concept was understood. <br/>The details needed work.</h2>
 
       <div class="testing-grid">
@@ -267,7 +265,7 @@
             </div>
             <div class="change-item">
               <span class="change-lead">CTA &lsquo;Contact Luke&rsquo;:</span>
-              <span class="change-rest"> Created confusion &mdash; animal or shelter? Fix: CTA now explicitly references the organization.</span>
+              <span class="change-rest"> Created confusion, animal or shelter? Fix: CTA now explicitly references the organization.</span>
             </div>
             <div class="change-item">
               <span class="change-lead">Missing metadata:</span>
@@ -298,58 +296,58 @@
     </div>
   </section>
 
-  <!-- SECTION 06 — AI -->
+  <!-- SECTION 06: AI -->
   <section class="ai-section">
     <div class="ai-inner">
       <div class="ai-grid">
         <div class="ai-text-col">
-          <span class="section-label accent">06 &mdash; AI in the Design Process</span>
+          <span class="section-label accent">06 &middot; AI in the Design Process</span>
           <h2 class="cs-h2">Using AI to &lsquo;learn slower&rsquo;.</h2>
           <div class="ai-body">
-            <p>I used AI tools deliberately &mdash; with the goal of understanding the design process itself, not accelerating it. Where I used AI, it was as a thinking partner, not an execution tool.</p>
-            <p>I used Claude throughout as a sparring partner: to structure research material and data, to iterate on question and answer formats in the Alltagscheck, and for the writing process behind this portfolio page. Suggesting formulations, reasoning through them, discarding them &mdash; the final decision was always mine.</p>
-            <p>I used Figma Make, Lovable and Claude Design selectively for individual screens, to quickly generate and compare variants &mdash; as a tool for decision-making, not for design.</p>
-			<p>I used ChatGPT to generate placeholder illustrations for key screens and flows. These are intentional stand-ins — the final product would use proper vector-based illustrations.</p>
-            <p>The deliberate restraint had a reason: I wanted to make decisions myself, make my own mistakes, and actually learn. It&rsquo;s slower. But it gave me a much better understanding of why a design works &mdash; not just whether it does.</p>
+            <p>I used AI tools deliberately, with the goal of understanding the design process itself, not accelerating it. Where I used AI, it was as a thinking partner, not an execution tool.</p>
+            <p>I used Claude throughout as a sparring partner: to structure research material and data, to iterate on question and answer formats in the Alltagscheck, and for the writing process behind this portfolio page. Suggesting formulations, reasoning through them, discarding them, the final decision was always mine.</p>
+            <p>I used Figma Make, Lovable and Claude Design selectively for individual screens, to quickly generate and compare variants, as a tool for decision-making, not for design.</p>
+			<p>I used ChatGPT to generate placeholder illustrations for key screens and flows. These are intentional stand-ins ,  the final product would use proper vector-based illustrations.</p>
+            <p>The deliberate restraint had a reason: I wanted to make decisions myself, make my own mistakes, and actually learn. It&rsquo;s slower. But it gave me a much better understanding of why a design works, not just whether it does.</p>
           </div>
         </div>
 
         <div class="ai-image-col">
           <div class="placeholder aspect-3-4">
-            <span class="placeholder-label">AI in Process &mdash; Placeholder</span>
+            <span class="placeholder-label">AI in Process Placeholder</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SECTION 07 — LEARNINGS & OUTLOOK -->
+  <!-- SECTION 07: LEARNINGS & OUTLOOK -->
   <section class="cs-section bg-bg">
     <div class="cs-section-inner">
-      <span class="section-label accent">07 &mdash; Learnings &amp; Outlook</span>
+      <span class="section-label accent">07 &middot; Learnings &amp; Outlook</span>
       <h2 class="cs-h2">What I&rsquo;d do differently, <br/>and what remains open.</h2>
 
-      <article class="learning-block">
+      <article class="learning-block reveal">
         <div class="learning-num">1</div>
         <div class="learning-text">
           <h3 class="cs-h3" style="font-size:20px;">The concept is stronger than the product without a system partner.</h3>
-          <p class="cs-body">Compawnion works only as well as the data it receives. The user side is built &mdash; but without structured animal profiles from shelters, matching remains a hypothesis. This was a deliberate scope decision, not an oversight.</p>
+          <p class="cs-body">Compawnion works only as well as the data it receives. The user side is built, but without structured animal profiles from shelters, matching remains a hypothesis. This was a deliberate scope decision, not an oversight.</p>
         </div>
       </article>
 
-      <article class="learning-block">
+      <article class="learning-block reveal">
         <div class="learning-num">2</div>
         <div class="learning-text">
           <h3 class="cs-h3" style="font-size:20px;">Terminology is conceptual work, not microcopy.</h3>
-          <p class="cs-body">&lsquo;Alltagspassung&rsquo; was not spontaneously understood by any test participant. That&rsquo;s not a wording problem &mdash; it shows that a new concept needs onboarding, not just a better label. Whether &lsquo;matching&rsquo; would be clearer was discussed, but the term carries too strong a dating connotation. The hypothesis that onboarding will carry the term remains to be tested.</p>
+          <p class="cs-body">&lsquo;Alltagspassung&rsquo; was not spontaneously understood by any test participant. That&rsquo;s not a wording problem, it shows that a new concept needs onboarding, not just a better label. Whether &lsquo;matching&rsquo; would be clearer was discussed, but the term carries too strong a dating connotation. The hypothesis that onboarding will carry the term remains to be tested.</p>
         </div>
       </article>
 
-      <article class="learning-block">
+      <article class="learning-block reveal">
         <div class="learning-num">3</div>
         <div class="learning-text">
           <h3 class="cs-h3" style="font-size:20px;">Research was strong early. Testing earlier would have been stronger.</h3>
-          <p class="cs-body">The conceptual foundation was well-supported by survey and interview data. What I&rsquo;d do differently: earlier testing sessions with an unfinished prototype. I waited too long for the product to feel &lsquo;test-ready&rsquo; &mdash; rough, early tests would likely have been more revealing than later ones with a polished mid-fi.</p>
+          <p class="cs-body">The conceptual foundation was well-supported by survey and interview data. What I&rsquo;d do differently: earlier testing sessions with an unfinished prototype. I waited too long for the product to feel &lsquo;test-ready&rsquo;, rough, early tests would likely have been more revealing than later ones with a polished mid-fi.</p>
         </div>
       </article>
     </div>
