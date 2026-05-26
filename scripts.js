@@ -1,30 +1,6 @@
 (function () {
   'use strict';
 
-  // ----- Scroll reveal -----
-  // Elements with .reveal start faded + offset and settle in when they
-  // enter the viewport. Stagger between siblings is handled in CSS via
-  // :nth-child rules, so JS just needs to flip the `is-visible` flag.
-  if ('IntersectionObserver' in window) {
-    const revealObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
-    document.querySelectorAll('.reveal').forEach(function (el) {
-      revealObserver.observe(el);
-    });
-  } else {
-    // No observer support — show everything immediately.
-    document.querySelectorAll('.reveal').forEach(function (el) {
-      el.classList.add('is-visible');
-    });
-  }
-
   // ----- Logo click — smooth scroll to top on the root page -----
   // On project pages the default navigation to "/" runs; on the index
   // we intercept and smooth-scroll back to the top instead.
@@ -167,43 +143,22 @@
   }
 
   // ----- Hamburger toggle (animates into X, also doubles as close) -----
-  // aria-expanded mirrors visual state so screen readers and the cursor
-  // see the same thing. ESC closes the overlay; opening it pulls focus
-  // onto the first menu link so keyboard users land where they expect.
   const hamburger = document.querySelector('.nav-hamburger');
   const overlay = document.querySelector('.nav-overlay');
 
   if (hamburger && overlay) {
-    const firstOverlayLink = overlay.querySelector('a');
-
-    function setMenuOpen(isOpen) {
-      overlay.classList.toggle('is-open', isOpen);
-      hamburger.classList.toggle('is-open', isOpen);
-      hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      hamburger.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
-      document.body.style.overflow = isOpen ? 'hidden' : '';
-      if (isOpen && firstOverlayLink) {
-        // Wait one frame so the transition has started before focusing —
-        // focusing during the visibility flip can drop the ring.
-        requestAnimationFrame(function () { firstOverlayLink.focus(); });
-      }
-    }
-
     hamburger.addEventListener('click', function () {
-      setMenuOpen(!overlay.classList.contains('is-open'));
+      const isOpen = overlay.classList.toggle('is-open');
+      hamburger.classList.toggle('is-open', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
     });
 
     document.querySelectorAll('.nav-overlay a').forEach(function (link) {
       link.addEventListener('click', function () {
-        setMenuOpen(false);
+        overlay.classList.remove('is-open');
+        hamburger.classList.remove('is-open');
+        document.body.style.overflow = '';
       });
-    });
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && overlay.classList.contains('is-open')) {
-        setMenuOpen(false);
-        hamburger.focus();
-      }
     });
   }
 
