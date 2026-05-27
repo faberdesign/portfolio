@@ -956,7 +956,7 @@ h1, h2, h3 {
 .cs-intro {
   margin-top: 32px;
   max-width: none;
-  font-weight: 400;
+  font-weight: 300;
   font-size: clamp(19px, 2.2vw, 27px);
   line-height: 1.4;
   letter-spacing: -0.005em;
@@ -1048,8 +1048,8 @@ h1, h2, h3 {
   border-top: 1px solid var(--color-border);
   max-width: none;
   font-family: 'DM Sans', sans-serif;
-  font-weight: 500;
-  font-size: clamp(20px, 2.4vw, 30px);
+  font-weight: 300;
+  font-size: clamp(19px, 2.2vw, 27px);
   letter-spacing: -0.005em;
   color: var(--color-text);
   line-height: 1.35;
