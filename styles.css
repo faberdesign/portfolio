@@ -74,6 +74,16 @@ h1, h2, h3 {
   text-align: center;
 }
 
+/* When a placeholder holds an actual image, the img fills the wrapper
+   edge-to-edge and inherits the 4px corner radius. */
+.placeholder > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: inherit;
+}
+
 .placeholder.aspect-16-9 { aspect-ratio: 16 / 9; }
 .placeholder.aspect-16-8 { aspect-ratio: 16 / 8; }
 .placeholder.aspect-16-7 { aspect-ratio: 16 / 7; }
@@ -174,6 +184,60 @@ h1, h2, h3 {
   color: var(--color-footer-text);
   opacity: 1;
   line-height: 1.7;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 36px;
+  padding: 14px 24px;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: clamp(15px, 1.4vw, 17px);
+  letter-spacing: 0.02em;
+  color: var(--color-footer-text);
+  background: transparent;
+  border: 1px solid oklch(96% 0.008 70 / 0.4);
+  border-radius: 4px;
+  width: fit-content;
+  transform-origin: center;
+  transition: transform 320ms var(--ease-out-soft),
+              color 240ms var(--ease-out-soft),
+              background-color 240ms var(--ease-out-soft),
+              border-color 240ms var(--ease-out-soft);
+}
+
+.hero-cta-label,
+.hero-cta-arrow {
+  display: inline-block;
+  line-height: 1;
+}
+
+.hero-cta-arrow {
+  transition: transform 240ms var(--ease-out-soft);
+}
+
+.hero-cta:hover {
+  color: var(--color-footer-text);
+  background: transparent;
+  border-color: var(--color-accent);
+  transform: translateY(-3px) scale(1.1);
+}
+
+.hero-cta:hover .hero-cta-arrow {
+  transform: translateX(4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-cta,
+  .hero-cta:hover,
+  .hero-cta:hover .hero-cta-arrow {
+    transform: none;
+    transition: color 200ms linear,
+                background-color 200ms linear,
+                border-color 200ms linear;
+  }
 }
 
 .faber-def {
@@ -595,12 +659,41 @@ h1, h2, h3 {
   color: var(--color-accent);
 }
 
-/* In-progress variant — same dimensions, hairline surround instead of
-   filled surface, muted name. The eyebrow carries the state label. */
+/* Image-led variant: tile becomes a pure image holder. The eyebrow +
+   name live below the tile in .work-card-header (tighter than the
+   parent's 24px gap so they read as a unit). */
+.work-card-tile:has(> img) {
+  padding: 0;
+}
+
+.work-card-tile > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.work-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1vw, 12px);
+}
+
+/* In-progress variant — same dimensions, muted name. When the tile is
+   empty, a hairline surround stands in for the missing image; when an
+   image is present (.work-card-tile:has(> img)), the outline drops so
+   the image reads clean to the corners. The eyebrow + name below carry
+   the state label either way. */
 .work-card-progress .work-card-tile {
   background: transparent;
   outline: 1px solid var(--color-border);
   outline-offset: -1px;
+}
+
+.work-card-progress .work-card-tile:has(> img) {
+  outline: none;
 }
 
 .work-card-progress .work-card-tile-name {
@@ -675,7 +768,7 @@ h1, h2, h3 {
 
 .about {
   background: var(--color-bg);
-  min-height: 75vh;
+  min-height: 75dvh;
   display: flex;
   align-items: center;
 }
@@ -1040,6 +1133,35 @@ h1, h2, h3 {
 /* Dark surface — italic body shifts to cream; vermilion glyph stays. */
 .cs-section.bg-dark .cs-quote {
   color: var(--color-footer-text);
+}
+
+/* Quote with attribution wrapper. */
+.cs-quote-figure {
+  margin: 0;
+}
+
+.cs-quote-figure .cs-quote {
+  margin-bottom: 8px;
+}
+
+.cs-quote-attr {
+  padding-left: 64px;
+  margin-bottom: 32px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.cs-quote-figure .cs-quote.small + .cs-quote-attr {
+  padding-left: 52px;
+  margin-bottom: 24px;
+}
+
+.cs-section.bg-dark .cs-quote-attr {
+  color: var(--color-footer-muted);
 }
 
 .problem-close {

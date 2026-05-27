@@ -187,7 +187,7 @@ nav {
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   background: var(--color-dark);
   z-index: 200;
   display: flex;
@@ -286,7 +286,6 @@ nav {
   font-size: 17px;
   color: var(--color-footer-muted);
   line-height: 1.55;
-  
 }
 
 .footer-contacts {

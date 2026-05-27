@@ -88,7 +88,7 @@
       // visually past the hero's bottom edge into the section below.
       // When the cursor is on the illustration but its y position is
       // already below the hero, treat it as the next section instead
-      // of inheriting the hero's orange surface.
+      // of inheriting the hero's dark surface.
       if (el && el.classList && el.classList.contains('hero-illustration')) {
         const hero = document.querySelector('.hero');
         if (hero && y >= hero.getBoundingClientRect().bottom) {
@@ -98,7 +98,7 @@
 
       let node = el;
       while (node && node !== document.body) {
-        // Dark surfaces (hero, nav, footer, overlay, .bg-dark sections)
+        // Dark surfaces (nav, hero, footer, overlay, .bg-dark case-study sections)
         if (
           node.tagName === 'NAV' ||
           node.classList.contains('footer') ||
@@ -208,17 +208,28 @@
   }
 
   // ----- Scroll-to-top button -----
+  // A 1px sentinel parked at 50vh from the document top. When it scrolls
+  // out the top of the viewport, scrollY has exceeded 50vh and we show
+  // the button. Replaces a per-frame scroll listener with one IO callback
+  // that fires only at the threshold crossing.
   const scrollTopBtn = document.querySelector('.scroll-top');
   if (scrollTopBtn) {
-    function toggleScrollTop() {
-      if (window.scrollY > window.innerHeight * 0.5) {
-        scrollTopBtn.classList.add('visible');
-      } else {
-        scrollTopBtn.classList.remove('visible');
-      }
-    }
-    window.addEventListener('scroll', toggleScrollTop, { passive: true });
-    toggleScrollTop();
+    const sentinel = document.createElement('div');
+    sentinel.setAttribute('aria-hidden', 'true');
+    sentinel.style.cssText =
+      'position:absolute;top:50vh;left:0;width:1px;height:1px;pointer-events:none;';
+    document.body.appendChild(sentinel);
+
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        // The sentinel sits at 50vh in document coordinates. It's only
+        // ABOVE the viewport when the user has scrolled past 50vh.
+        const isAbove =
+          !entry.isIntersecting && entry.boundingClientRect.top < 0;
+        scrollTopBtn.classList.toggle('visible', isAbove);
+      });
+    }, { threshold: 0 });
+    observer.observe(sentinel);
 
     scrollTopBtn.addEventListener('click', function () {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -226,10 +237,9 @@
   }
 
   // ----- Active section highlight (index only) -----
-  // Scroll-position based: the section whose top has just passed the
-  // trigger line (100px below viewport top — clear of the 56px fixed nav)
-  // wins. Iterating in document order means the latest section scrolled
-  // past becomes the active one.
+  // Each section is observed against a thin "active band" near the top of
+  // the viewport. When a section's top crosses into the band, IO fires and
+  // we recompute which section currently leads. No per-frame scroll listener.
   const sections = document.querySelectorAll('section[id], footer[id]');
   const navLinks = document.querySelectorAll('.nav-overlay-links a[href*="#"]');
 
@@ -244,22 +254,33 @@
       }
     });
 
-    function updateActiveSection() {
+    const sectionsById = {};
+    sections.forEach(function (s) { sectionsById[s.id] = s; });
+    const intersecting = new Set();
+
+    function updateActiveLink() {
+      // Pick the section whose top is closest to (but at or above)
+      // the 100px trigger line. If multiple intersect the band, the one
+      // with the largest negative-or-near-zero top wins (topmost).
       let activeId = null;
+      let bestTop = -Infinity;
+      intersecting.forEach(function (id) {
+        const el = sectionsById[id];
+        if (!el) return;
+        const top = el.getBoundingClientRect().top;
+        if (top <= 100 && top > bestTop) {
+          bestTop = top;
+          activeId = id;
+        }
+      });
 
-      // If the page has bottomed out, force the last section (the footer
-      // can't always be scrolled high enough to cross the trigger line).
-      const nearBottom = window.scrollY + window.innerHeight >=
-        document.documentElement.scrollHeight - 10;
-
-      if (nearBottom) {
-        activeId = sections[sections.length - 1].id;
-      } else {
-        sections.forEach(function (section) {
-          if (section.getBoundingClientRect().top <= 100) {
-            activeId = section.id;
-          }
-        });
+      // Bottomed-out fallback: when scrolled all the way down, force the
+      // last section (the footer's top may never cross the trigger line on
+      // short pages). This reads scrollY once per IO callback, not per frame.
+      if (!activeId) {
+        const nearBottom = window.scrollY + window.innerHeight >=
+          document.documentElement.scrollHeight - 10;
+        if (nearBottom) activeId = sections[sections.length - 1].id;
       }
 
       navLinks.forEach(function (l) { l.classList.remove('active'); });
@@ -268,8 +289,21 @@
       }
     }
 
-    window.addEventListener('scroll', updateActiveSection, { passive: true });
-    window.addEventListener('resize', updateActiveSection);
-    updateActiveSection();
+    const sectionObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) intersecting.add(entry.target.id);
+        else intersecting.delete(entry.target.id);
+      });
+      updateActiveLink();
+    }, {
+      // Active band: from the 56px-nav line down to the top 25% of the
+      // viewport. A section "intersects" while its top is in this band.
+      rootMargin: '-56px 0px -75% 0px',
+      threshold: 0,
+    });
+
+    sections.forEach(function (section) {
+      sectionObserver.observe(section);
+    });
   }
 })();
