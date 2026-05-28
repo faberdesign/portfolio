@@ -306,4 +306,90 @@
       sectionObserver.observe(section);
     });
   }
+
+  // ----- Scroll-velocity marquee -----
+  // Vanilla port of the React Bits ScrollVelocity component. Marquee
+  // drifts at a base velocity; scroll velocity is smoothed via spring
+  // and applied as a multiplier. Direction follows the sign of scroll
+  // velocity, so scrolling reverses the marquee.
+  //
+  // Position is read off window.scrollY each rAF tick (not via a scroll
+  // event listener) so the loop drives motion regardless of whether the
+  // user scrolls.
+  const marqueeTrack = document.querySelector('.marquee-track');
+  const reducedMotion = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (marqueeTrack && !reducedMotion) {
+    const BASE_VELOCITY = 60;           // px/sec drift at zero scroll
+    const SPRING = 0.12;                // velocity smoothing per frame
+    const INPUT_RANGE = 1000;           // scroll velocity (px/sec) input...
+    const OUTPUT_RANGE = 5;             // ...mapped to this multiplier
+    const NUM_COPIES = 6;
+
+    // Clone marquee content up to NUM_COPIES so there's always a buffer
+    // of repeated text on both sides — needed for bidirectional looping.
+    const existingCopies = marqueeTrack.querySelectorAll('.marquee-content');
+    if (existingCopies.length > 0 && existingCopies.length < NUM_COPIES) {
+      const template = existingCopies[0];
+      for (let i = existingCopies.length; i < NUM_COPIES; i++) {
+        marqueeTrack.appendChild(template.cloneNode(true));
+      }
+    }
+
+    let lastScrollY = window.scrollY;
+    let lastTime = performance.now();
+    let smoothVelocity = 0;
+    let direction = 1;
+    let baseX = 0;
+    let copyWidth = 0;
+
+    function measureCopy() {
+      const firstCopy = marqueeTrack.querySelector('.marquee-content');
+      copyWidth = firstCopy ? firstCopy.offsetWidth : 0;
+    }
+
+    function wrap(min, max, v) {
+      const range = max - min;
+      if (range <= 0) return min;
+      const mod = (((v - min) % range) + range) % range;
+      return mod + min;
+    }
+
+    measureCopy();
+    window.addEventListener('resize', measureCopy);
+
+    // Disable the CSS keyframe so JS owns the transform.
+    marqueeTrack.style.animation = 'none';
+    marqueeTrack.style.willChange = 'transform';
+
+    function marqueeTick(now) {
+      const dt = Math.min((now - lastTime) / 1000, 0.1);
+      lastTime = now;
+
+      const currentScrollY = window.scrollY;
+      const rawVelocity = dt > 0 ? (currentScrollY - lastScrollY) / dt : 0;
+      lastScrollY = currentScrollY;
+
+      smoothVelocity += (rawVelocity - smoothVelocity) * SPRING;
+
+      let velocityFactor = (smoothVelocity / INPUT_RANGE) * OUTPUT_RANGE;
+      velocityFactor = Math.max(-OUTPUT_RANGE, Math.min(OUTPUT_RANGE, velocityFactor));
+
+      if (velocityFactor > 0.05) direction = 1;
+      else if (velocityFactor < -0.05) direction = -1;
+
+      let moveBy = direction * BASE_VELOCITY * dt;
+      moveBy += direction * moveBy * velocityFactor;
+
+      baseX += moveBy;
+
+      const x = copyWidth > 0 ? wrap(-copyWidth, 0, baseX) : 0;
+      marqueeTrack.style.transform = 'translate3d(' + x + 'px, 0, 0)';
+
+      requestAnimationFrame(marqueeTick);
+    }
+
+    requestAnimationFrame(marqueeTick);
+  }
 })();
