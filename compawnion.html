@@ -53,6 +53,10 @@
             <span class="section-label cs-meta-item-label">Interviews</span>
             <span class="cs-meta-item-value">4 qualitative</span>
           </div>
+		   <div>
+            <span class="section-label cs-meta-item-label">Testing</span>
+            <span class="cs-meta-item-value">4</span>
+          </div>
           <div>
             <span class="section-label cs-meta-item-label">Timeline</span>
             <span class="cs-meta-item-value">February-May 2026</span>
@@ -94,25 +98,128 @@
       </figure>
 
       <p class="problem-close">These aren&rsquo;t information problems. They&rsquo;re a missing tool for honest self-assessment, and a lack of confidence at the first step.</p>
+
+      <div class="problem-flow-section">
+        <h3 class="problem-flow-heading">Two moments where adoption regularly breaks down.</h3>
+
+        <div class="problem-flow" role="list" aria-label="Adoption flow">
+          <div class="problem-flow-step" role="listitem">
+            <div class="problem-flow-node">
+              <div class="problem-flow-marker" aria-hidden="true"></div>
+            </div>
+            <span class="problem-flow-label">Desire</span>
+          </div>
+
+          <div class="problem-flow-step" role="listitem">
+            <div class="problem-flow-node">
+              <div class="problem-flow-marker" aria-hidden="true"></div>
+            </div>
+            <span class="problem-flow-label">Research</span>
+          </div>
+
+          <div class="problem-flow-step problem-flow-step-critical" role="listitem">
+            <div class="problem-flow-node">
+              <div class="problem-flow-marker" aria-hidden="true"></div>
+            </div>
+            <span class="problem-flow-label">Choosing an Animal</span>
+            <span class="problem-flow-eyebrow">Critical Moment 1</span>
+            <span class="problem-flow-detail">Suitability for Daily Life</span>
+          </div>
+
+          <div class="problem-flow-step problem-flow-step-critical" role="listitem">
+            <div class="problem-flow-node">
+              <div class="problem-flow-marker" aria-hidden="true"></div>
+            </div>
+            <span class="problem-flow-label">Initial Contact</span>
+            <span class="problem-flow-eyebrow">Critical Moment 2</span>
+            <span class="problem-flow-detail">Fear of Contact</span>
+          </div>
+
+          <div class="problem-flow-step" role="listitem">
+            <div class="problem-flow-node">
+              <div class="problem-flow-marker" aria-hidden="true"></div>
+            </div>
+            <span class="problem-flow-label">Arrival</span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- SECTION 02: PERSONA -->
-  <section class="cs-section bg-tinted">
+  <!-- SECTION 02: PROCESS & KEY DECISIONS -->
+  <section class="cs-section bg-bg">
+    <div class="cs-section-inner">
+      <span class="section-label accent">Process &amp; Key Decisions</span>
+      <h2 class="cs-h2">Four decisions that <br/>shaped the product.</h2>
+
+      <article class="decision-block reveal">
+        <div class="decision-left">
+          <h3 class="cs-h3">Profile-first instead of browse-first.</h3>
+        </div>
+        <div class="decision-right">
+          <p class="cs-body smaller">The classic marketplace flow shows animals first, and leaves it to the user to figure out whether they&rsquo;re a good fit. My research showed: the problem isn&rsquo;t the supply of animals, it&rsquo;s the lack of self-assessment. Compawnion flips the flow: users define their daily life before they browse animals. This reduces aspirational self-assessment bias and makes matching more honest.</p>
+          <figure class="cs-quote-figure">
+            <blockquote class="cs-quote small">&ldquo;Profiles saying &lsquo;sweet, friendly, great&rsquo; don&rsquo;t help me. What helps: likes to sleep on the couch, needs a moment in the morning, goes crazy when someone rings the doorbell.&rdquo;</blockquote>
+            <figcaption class="cs-quote-attr">Interview, first-time adopter</figcaption>
+          </figure>
+          <figure class="cs-quote-figure">
+            <blockquote class="cs-quote small">&ldquo;It would help to have access to good information that isn&rsquo;t just buzzwords but can actually be matched against my daily life.&rdquo;</blockquote>
+            <figcaption class="cs-quote-attr">Survey, first-time adopter</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <article class="decision-block reveal">
+        <div class="decision-left">
+          <h3 class="cs-h3">First-time adopters as the primary target.</h3>
+        </div>
+        <div class="decision-right">
+          <p class="cs-body smaller">Compawnion serves anyone looking to adopt, but I designed for the user where the problem is most acute: the first-time adopter who wants to do everything right, overthinks every step, and abandons the process before making first contact. This user type is the hardest to serve, and the most underserved.</p>
+        </div>
+      </article>
+
+      <article class="decision-block reveal">
+        <div class="decision-left">
+          <h3 class="cs-h3">The Situations-Check as a contact anxiety intervention.</h3>
+        </div>
+        <div class="decision-right">
+          <p class="cs-body smaller">A &lsquo;Send inquiry&rsquo; button isn&rsquo;t enough. The critical moment isn&rsquo;t choosing the right animal, it&rsquo;s the transition from observer to applicant. My interviews showed how emotionally charged this moment is.</p>
+          <p class="cs-body smaller" style="margin-top:16px;">A solution that prepares the user for first contact in a structured way is needed: what to expect, what the shelter expects, what they can say. When they hit &lsquo;Send,&rsquo; they feel like they are already decided.</p>
+          <figure class="cs-quote-figure">
+            <blockquote class="cs-quote small">&ldquo;I always feared they would categorically reject me as a pet owner because of my living situation in a shared flat.&rdquo;</blockquote>
+            <figcaption class="cs-quote-attr">Interview, first-time adopter</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <article class="decision-block reveal">
+        <div class="decision-left">
+          <h3 class="cs-h3">User side first, systemic question openly named.</h3>
+        </div>
+        <div class="decision-right">
+          <p class="cs-body smaller">Matching quality depends directly on data quality from the shelter side. I decided to build the user side first, because that&rsquo;s the part that can be validated, and because a working user flow is the prerequisite for bringing shelters on board as partners.</p>
+          <p class="cs-body smaller" style="margin-top:16px;">This isn&rsquo;t a forgotten problem. It&rsquo;s the next step.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- SECTION: PERSONA -->
+  <section class="cs-section bg-white">
     <div class="cs-section-inner">
       <span class="section-label accent">Persona</span>
       <h2 class="cs-h2">Designing for Maja, the first-time adopter.</h2>
 
       <div class="persona-card">
         <aside class="persona-profile">
-          <img class="persona-image" src="maja.jpg" alt="Maja, persona portrait" width="400" height="400" />
+          <div class="persona-image-frame">
+            <img class="persona-image" src="img/maja.jpg" alt="Maja, persona portrait" width="1200" height="1200" />
+          </div>
           <div class="persona-meta">
-            <h3 class="persona-name">Maja</h3>
+            <h3 class="persona-name">Maja, 33</h3>
             <ul class="persona-facts">
-              <li>33 years old</li>
-              <li>Project manager</li>
-              <li>Hamburg</li>
-              <li>Small flat</li>
+              <li>Project Manager, Hamburg</li>
+              <li>Small flat, no garden</li>
             </ul>
           </div>
         </aside>
@@ -149,72 +256,13 @@
     </div>
   </section>
 
-  <!-- SECTION 03: PROCESS & KEY DECISIONS -->
+  <!-- SECTION: THE SOLUTION -->
   <section class="cs-section bg-bg">
     <div class="cs-section-inner">
-      <span class="section-label accent">Process &amp; Key Decisions</span>
-      <h2 class="cs-h2">Four decisions that <br/>shaped the product.</h2>
-
-      <article class="decision-block reveal">
-        <div class="decision-left">
-          <h3 class="cs-h3">Profile-first instead of browse-first.</h3>
-        </div>
-        <div class="decision-right">
-          <p class="cs-body smaller">The classic marketplace flow shows animals first, and leaves it to the user to figure out whether they&rsquo;re a good fit. My research showed: the problem isn&rsquo;t the supply of animals, it&rsquo;s the lack of self-assessment. Compawnion flips the flow: users define their daily life before they browse animals. This reduces aspirational self-assessment bias and makes matching more honest.</p>
-          <figure class="cs-quote-figure">
-            <blockquote class="cs-quote small">&ldquo;Profiles saying &lsquo;sweet, friendly, great&rsquo; don&rsquo;t help me. What helps: likes to sleep on the couch, needs a moment in the morning, goes crazy when someone rings the doorbell.&rdquo;</blockquote>
-            <figcaption class="cs-quote-attr">Interview, first-time adopter</figcaption>
-          </figure>
-          <figure class="cs-quote-figure">
-            <blockquote class="cs-quote small">&ldquo;It would help to have access to good information that isn&rsquo;t just buzzwords but can actually be matched against my daily life.&rdquo;</blockquote>
-            <figcaption class="cs-quote-attr">Survey, first-time adopter</figcaption>
-          </figure>
-        </div>
-      </article>
-
-      <article class="decision-block reveal">
-        <div class="decision-left">
-          <h3 class="cs-h3">First-time adopters as the primary target.</h3>
-        </div>
-        <div class="decision-right">
-          <p class="cs-body smaller">Compawnion serves anyone looking to adopt, but I designed for the user where the problem is most acute: the first-time adopter who wants to do everything right, overthinks every step, and abandons the process before making first contact. This user type is the hardest to serve, and the most underserved.</p>
-          <p class="cs-body smaller" style="margin-top:16px;">Maja, 33, Hamburg, risk-averse and analytical, is the design filter for every copy, flow, and hierarchy decision. She needs legitimation, not encouragement.</p>
-        </div>
-      </article>
-
-      <article class="decision-block reveal">
-        <div class="decision-left">
-          <h3 class="cs-h3">The Situations-Check as a contact anxiety intervention.</h3>
-        </div>
-        <div class="decision-right">
-          <p class="cs-body smaller">A &lsquo;Send inquiry&rsquo; button isn&rsquo;t enough. The critical moment isn&rsquo;t choosing the right animal, it&rsquo;s the transition from observer to applicant. My interviews showed how emotionally charged this moment is.</p>
-          <p class="cs-body smaller" style="margin-top:16px;">The Situations-Check prepares Maja for first contact in a structured way: what to expect, what the shelter expects, what she can say. When she hits &lsquo;Send,&rsquo; she feels like she&rsquo;s already decided.</p>
-          <figure class="cs-quote-figure">
-            <blockquote class="cs-quote small">&ldquo;I always feared they would categorically reject me as a pet owner because of my living situation in a shared flat.&rdquo;</blockquote>
-            <figcaption class="cs-quote-attr">Interview, first-time adopter</figcaption>
-          </figure>
-        </div>
-      </article>
-
-      <article class="decision-block reveal">
-        <div class="decision-left">
-          <h3 class="cs-h3">User side first, systemic question openly named.</h3>
-        </div>
-        <div class="decision-right">
-          <p class="cs-body smaller">Matching quality depends directly on data quality from the shelter side. I decided to build the user side first, because that&rsquo;s the part that can be validated, and because a working user flow is the prerequisite for bringing shelters on board as partners.</p>
-          <p class="cs-body smaller" style="margin-top:16px;">This isn&rsquo;t a forgotten problem. It&rsquo;s the next step.</p>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <!-- SECTION 04: THE SOLUTION -->
-  <section class="cs-section bg-white">
-    <div class="cs-section-inner">
       <span class="section-label accent">The Solution</span>
-      <h2 class="cs-h2">Two interventions. <br/>Two moments where adoption regularly breaks down.</h2>
+      <h2 class="cs-h2">Two moments where adoption regularly breaks down.</br>Two interventions.</h2>
 
-      <a class="proto-link" href="https://www.figma.com/proto/ja1BhQ9iAlVRXn2zY2xSQx/Compawnion---Benedikt-Faber?node-id=2600-2656&viewport=524%2C919%2C0.23&t=ZJdr7vrYRHGuGfHW-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=2600%3A2656&page-id=1%3A10">View interactive prototype <span class="arrow">&rarr;</span></a>
+      <a class="proto-link" href="https://www.figma.com/proto/ja1BhQ9iAlVRXn2zY2xSQx/Compawnion---Benedikt-Faber?node-id=2600-2656&viewport=524%2C919%2C0.23&t=ZJdr7vrYRHGuGfHW-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=2600%3A2656&page-id=1%3A10" target="_blank" rel="noopener noreferrer">View interactive prototype <span class="arrow">&rarr;</span></a>
 
       <article class="solution-block reveal">
         <div class="solution-text">
@@ -253,19 +301,96 @@
     </div>
   </section>
 
-  <!-- SECTION 05: TESTING (INVERTED) -->
-  <section class="cs-section bg-dark">
+  <!-- SECTION: DESIGN -->
+  <section class="cs-section bg-white">
+    <div class="cs-section-inner">
+      <span class="section-label accent">Design</span>
+      <h2 class="cs-h2">A visual system built around calm confidence.</h2>
+      <p class="cs-body cs-intro">The design target emotion for Compawnion is not excitement — it's calm confidence. 
+	  Every visual decision reinforces that: a warm but unsentimental palette, rounded but structured type, and a matching system that communicates clearly without overwhelming.</p>
+
+      <div class="design-grid">
+        <article class="design-block design-block-feature reveal">
+          <div class="design-block-image">
+            <div class="placeholder aspect-4-3">
+              <img src="img/placeholder_43.jpg" alt="Logo and mark, placeholder image" width="1200" height="900">
+            </div>
+          </div>
+          <div class="design-block-text">
+            <h3 class="cs-h3">Logo</h3>
+            <p class="cs-body">The Compawnion wordmark uses Knicknack, a rounded display typeface that balances approachability with clarity. 
+			The rounded forms signal warmth and accessibility — appropriate for a product that addresses anxiety and uncertainty. 
+			The name itself is a portmanteau of 'companion' and 'paw'. The wordmark needed to carry that playfulness without tipping into the generic visual language of pet product brands.</p>
+          </div>
+        </article>
+		
+		<article class="design-block reveal">
+          <div class="design-block-image">
+            <div class="placeholder aspect-4-3">
+              <img src="img/placeholder_43.jpg" alt="Typography specimen, placeholder image" width="1200" height="900">
+            </div>
+          </div>
+          <div class="design-block-text">
+            <h3 class="cs-h3">Typography</h3>
+            <p class="cs-body">The type system uses a single superfamily: Nunito for display and headings, Nunito Sans for UI text and body copy. 
+			The consistent skeleton across both cuts creates visual coherence while the distinction between rounded display and the slightly more neutral sans maintains hierarchy. 
+			The typeface feels at home in a product that is designed to feel approachable, not clinical.</p>
+          </div>
+        </article>
+
+        <article class="design-block reveal">
+          <div class="design-block-image">
+            <div class="placeholder aspect-4-3">
+              <img src="img/placeholder_43.jpg" alt="Color palette, placeholder image" width="1200" height="900">
+            </div>
+          </div>
+          <div class="design-block-text">
+            <h3 class="cs-h3">Colors</h3>
+            <p class="cs-body">The palette is built around three decisions: a primary that signals trust without coldness, an accent that creates energy without alarm, and a neutral foundation that keeps the interface from feeling clinical.</p>
+          </div>
+        </article>
+
+        <article class="design-block reveal">
+          <div class="design-block-image">
+            <div class="placeholder aspect-4-3">
+              <img src="img/placeholder_43.jpg" alt="Illustration style, placeholder image" width="1200" height="900">
+            </div>
+          </div>
+          <div class="design-block-text">
+            <h3 class="cs-h3">Illustration</h3>
+            <p class="cs-body">Illustrations in Compawnion serve a specific function: they humanize moments of uncertainty. The illustration style is deliberately simple: flat, line-based, with limited color drawn from the product palette.</p>
+          </div>
+        </article>
+
+        <article class="design-block reveal">
+          <div class="design-block-image">
+            <div class="placeholder aspect-4-3">
+              <img src="img/placeholder_43.jpg" alt="Copy examples, placeholder image" width="1200" height="900">
+            </div>
+          </div>
+          <div class="design-block-text">
+            <h3 class="cs-h3">Copy</h3>
+            <p class="cs-body">Direct, warm, without lecturing. Short sentences that meet Maja where she is, not where she should be. No pressure, no promises that are too big.
+			 Compawnion's copy follows one underlying approach: encouragement through honesty, not through optimism.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: TESTING & ITERATION -->
+  <section class="cs-section bg-bg">
     <div class="cs-section-inner">
       <span class="section-label accent">Testing &amp; Iteration</span>
-      <h2 class="cs-h2 on-dark">The concept was understood. <br/>The details needed work.</h2>
+      <h2 class="cs-h2">The concept was understood. <br/>The details needed work.</h2>
 
       <div class="testing-grid">
         <div class="testing-col">
-          <span class="section-label on-dark">What Worked</span>
+          <span class="section-label accent">What Worked</span>
           <p class="testing-body">Visual design, color palette, and information density were consistently praised. The traffic light system for daily life compatibility was understood and not perceived as discouraging. The favorites function was used intuitively as expected.</p>
         </div>
         <div class="testing-col">
-          <span class="section-label on-dark">What Changed</span>
+          <span class="section-label accent">What Changed</span>
           <div class="change-list">
 		  <div class="change-item">
               <span class="change-lead">Alltagspassung not spontaneously understood:</span>
@@ -289,14 +414,14 @@
 
       <div class="before-after">
         <div class="before-after-item">
-          <span class="section-label on-dark">Before</span>
-          <div class="placeholder on-dark aspect-4-3">
+          <span class="section-label accent">Before</span>
+          <div class="placeholder aspect-4-3">
             <img src="img/placeholder_43.jpg" alt="Before iteration screen, placeholder image" width="1200" height="900">
           </div>
         </div>
         <div class="before-after-item">
-          <span class="section-label on-dark">After</span>
-          <div class="placeholder on-dark aspect-4-3">
+          <span class="section-label accent">After</span>
+          <div class="placeholder aspect-4-3">
             <img src="img/placeholder_43.jpg" alt="After iteration screen, placeholder image" width="1200" height="900">
           </div>
         </div>
@@ -335,27 +460,30 @@
       <span class="section-label accent">Learnings &amp; Outlook</span>
       <h2 class="cs-h2">What I&rsquo;d do differently, <br/>and what remains open.</h2>
 
-      <article class="learning-block reveal">
-        <div class="learning-num">1</div>
-        <div class="learning-text">
-          <h3 class="cs-h3" style="font-size:20px;">The concept is stronger than the product without a system partner.</h3>
-          <p class="cs-body">Compawnion works only as well as the data it receives. The user side is built, but without structured animal profiles from shelters, matching remains a hypothesis. This was a deliberate scope decision, not an oversight.</p>
+      <article class="decision-block reveal">
+        <div class="decision-left">
+          <h3 class="cs-h3">The concept is stronger than the product without a system partner.</h3>
+        </div>
+        <div class="decision-right">
+          <p class="cs-body smaller">Compawnion works only as well as the data it receives. The user side is built, but without structured animal profiles from shelters, matching remains a hypothesis. This was a deliberate scope decision, not an oversight.</p>
         </div>
       </article>
 
-      <article class="learning-block reveal">
-        <div class="learning-num">2</div>
-        <div class="learning-text">
-          <h3 class="cs-h3" style="font-size:20px;">Terminology is conceptual work, not microcopy.</h3>
-          <p class="cs-body">&lsquo;Alltagspassung&rsquo; was not spontaneously understood by any test participant. That&rsquo;s not a wording problem, it shows that a new concept needs onboarding, not just a better label. Whether &lsquo;matching&rsquo; would be clearer was discussed, but the term carries too strong a dating connotation. The hypothesis that onboarding will carry the term remains to be tested.</p>
+      <article class="decision-block reveal">
+        <div class="decision-left">
+          <h3 class="cs-h3">Terminology is conceptual work, not microcopy.</h3>
+        </div>
+        <div class="decision-right">
+          <p class="cs-body smaller">&lsquo;Alltagspassung&rsquo; was not spontaneously understood by any test participant. That&rsquo;s not a wording problem, it shows that a new concept needs onboarding, not just a better label. Whether &lsquo;matching&rsquo; would be clearer was discussed, but the term carries too strong a dating connotation. The hypothesis that onboarding will carry the term remains to be tested.</p>
         </div>
       </article>
 
-      <article class="learning-block reveal">
-        <div class="learning-num">3</div>
-        <div class="learning-text">
-          <h3 class="cs-h3" style="font-size:20px;">Research was strong early. Testing earlier would have been stronger.</h3>
-          <p class="cs-body">The conceptual foundation was well-supported by survey and interview data. What I&rsquo;d do differently: earlier testing sessions with an unfinished prototype. I waited too long for the product to feel &lsquo;test-ready&rsquo;, rough, early tests would likely have been more revealing than later ones with a polished mid-fi.</p>
+      <article class="decision-block reveal">
+        <div class="decision-left">
+          <h3 class="cs-h3">Research was strong early. Testing earlier would have been stronger.</h3>
+        </div>
+        <div class="decision-right">
+          <p class="cs-body smaller">The conceptual foundation was well-supported by survey and interview data. What I&rsquo;d do differently: earlier testing sessions with an unfinished prototype. I waited too long for the product to feel &lsquo;test-ready&rsquo;, rough, early tests would likely have been more revealing than later ones with a polished mid-fi.</p>
         </div>
       </article>
     </div>
