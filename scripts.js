@@ -1,6 +1,26 @@
 (function () {
   'use strict';
 
+  // ----- Menu controller (hoisted so logo click + ESC handler can close it) -----
+  // The hamburger setup further down attaches its toggle handler; this just
+  // defines the state-setter once at the top so any other handler in this
+  // IIFE can close the menu without reaching into a nested scope.
+  const hamburger = document.querySelector('.nav-hamburger');
+  const overlay = document.querySelector('.nav-overlay');
+  const firstOverlayLink = overlay ? overlay.querySelector('a') : null;
+
+  function setMenuOpen(isOpen) {
+    if (!overlay || !hamburger) return;
+    overlay.classList.toggle('is-open', isOpen);
+    hamburger.classList.toggle('is-open', isOpen);
+    hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    hamburger.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+    if (isOpen && firstOverlayLink) {
+      requestAnimationFrame(function () { firstOverlayLink.focus(); });
+    }
+  }
+
   // ----- Scroll reveal -----
   // Elements with .reveal start faded + offset and settle in when they
   // enter the viewport. Stagger between siblings is handled in CSS via
@@ -25,12 +45,18 @@
     });
   }
 
-  // ----- Logo click — smooth scroll to top on the root page -----
-  // On project pages the default navigation to "/" runs; on the index
-  // we intercept and smooth-scroll back to the top instead.
+  // ----- Logo click — close menu if open, then smooth-scroll to top -----
+  // On project pages the default navigation to "/" runs; on the index we
+  // intercept and smooth-scroll back to the top instead. Either way, if
+  // the menu happens to be open we close it first so the click registers
+  // visually as well as functionally.
   const navLogo = document.querySelector('.nav-logo');
   if (navLogo) {
     navLogo.addEventListener('click', function (e) {
+      if (overlay && overlay.classList.contains('is-open')) {
+        setMenuOpen(false);
+      }
+
       const path = window.location.pathname;
       const onRoot = path === '/' || path.endsWith('/index.html');
       if (onRoot) {
@@ -166,29 +192,8 @@
     });
   }
 
-  // ----- Hamburger toggle (animates into X, also doubles as close) -----
-  // aria-expanded mirrors visual state so screen readers and the cursor
-  // see the same thing. ESC closes the overlay; opening it pulls focus
-  // onto the first menu link so keyboard users land where they expect.
-  const hamburger = document.querySelector('.nav-hamburger');
-  const overlay = document.querySelector('.nav-overlay');
-
+  // ----- Hamburger handlers (state setter is defined at the top) -----
   if (hamburger && overlay) {
-    const firstOverlayLink = overlay.querySelector('a');
-
-    function setMenuOpen(isOpen) {
-      overlay.classList.toggle('is-open', isOpen);
-      hamburger.classList.toggle('is-open', isOpen);
-      hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      hamburger.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
-      document.body.style.overflow = isOpen ? 'hidden' : '';
-      if (isOpen && firstOverlayLink) {
-        // Wait one frame so the transition has started before focusing —
-        // focusing during the visibility flip can drop the ring.
-        requestAnimationFrame(function () { firstOverlayLink.focus(); });
-      }
-    }
-
     hamburger.addEventListener('click', function () {
       setMenuOpen(!overlay.classList.contains('is-open'));
     });
@@ -258,8 +263,32 @@
     sections.forEach(function (s) { sectionsById[s.id] = s; });
     const intersecting = new Set();
 
+    // Threshold for "near the bottom" — within this many px of the page
+    // bottom counts as "at the footer", forcing the Contact link active.
+    // Wider than 0 because the footer is often shorter than the viewport
+    // (its top never crosses the active band's trigger line on this page).
+    const NEAR_BOTTOM_PX = 120;
+
+    function isNearBottom() {
+      return window.scrollY + window.innerHeight >=
+        document.documentElement.scrollHeight - NEAR_BOTTOM_PX;
+    }
+
     function updateActiveLink() {
-      // Pick the section whose top is closest to (but at or above)
+      // Near-bottom override runs FIRST and unconditionally — when scrolled
+      // close to the page bottom, force the last section (Contact) active
+      // even if earlier sections still intersect the active band (About's
+      // tall content does, near the page end).
+      if (isNearBottom()) {
+        const lastSection = sections[sections.length - 1];
+        navLinks.forEach(function (l) { l.classList.remove('active'); });
+        if (lastSection && linkMap[lastSection.id]) {
+          linkMap[lastSection.id].classList.add('active');
+        }
+        return;
+      }
+
+      // Regular: pick the section whose top is closest to (but at or above)
       // the 100px trigger line. If multiple intersect the band, the one
       // with the largest negative-or-near-zero top wins (topmost).
       let activeId = null;
@@ -273,15 +302,6 @@
           activeId = id;
         }
       });
-
-      // Bottomed-out fallback: when scrolled all the way down, force the
-      // last section (the footer's top may never cross the trigger line on
-      // short pages). This reads scrollY once per IO callback, not per frame.
-      if (!activeId) {
-        const nearBottom = window.scrollY + window.innerHeight >=
-          document.documentElement.scrollHeight - 10;
-        if (nearBottom) activeId = sections[sections.length - 1].id;
-      }
 
       navLinks.forEach(function (l) { l.classList.remove('active'); });
       if (activeId && linkMap[activeId]) {
@@ -305,6 +325,40 @@
     sections.forEach(function (section) {
       sectionObserver.observe(section);
     });
+
+    // Bottom sentinel: fires updateActiveLink whenever the document's
+    // bottom edge enters or leaves the "near-bottom" zone. Necessary
+    // because the section observer may not fire at all once the user
+    // reaches the footer (on this page About's tall content keeps
+    // intersecting the active band until the user is well past it).
+    //
+    // Natural flow positioning — appended at the end of <body>, after
+    // the footer, so it sits at the actual document bottom. Earlier
+    // attempts used position:absolute;bottom:0 which (with body's
+    // default static positioning) anchors to the initial containing
+    // block, not the document end, so the sentinel never fired.
+    const bottomSentinel = document.createElement('div');
+    bottomSentinel.setAttribute('aria-hidden', 'true');
+    bottomSentinel.style.cssText =
+      'width:1px;height:1px;pointer-events:none;';
+    document.body.appendChild(bottomSentinel);
+
+    const bottomObserver = new IntersectionObserver(function () {
+      updateActiveLink();
+    }, {
+      threshold: 0,
+      // Expand the viewport bottom by NEAR_BOTTOM_PX so the sentinel
+      // triggers before the user reaches the literal bottom edge.
+      rootMargin: '0px 0px ' + NEAR_BOTTOM_PX + 'px 0px',
+    });
+    bottomObserver.observe(bottomSentinel);
+
+    // Initial pass: handles the case where the page loads scrolled to
+    // the bottom (e.g., via /#contact). IO observers fire asynchronously
+    // and the section observer may not fire at all if About is the only
+    // currently-intersecting section; the explicit call here makes sure
+    // the active link is correct from the first frame.
+    updateActiveLink();
   }
 
   // ----- Scroll-velocity marquee -----
