@@ -572,8 +572,8 @@ nav {
 .reveal {
   opacity: 0;
   transform: translateY(28px);
-  transition: opacity 700ms var(--ease-out-soft),
-              transform 700ms var(--ease-out-soft);
+  transition: opacity 1100ms var(--ease-out-soft),
+              transform 1100ms var(--ease-out-soft);
   will-change: transform, opacity;
 }
 
