@@ -337,10 +337,13 @@
       }
     }
 
+    // Direction is locked leftward; scroll velocity (in either sign)
+    // only ever speeds the marquee up, never reverses it.
+    const DIRECTION = -1;
+
     let lastScrollY = window.scrollY;
     let lastTime = performance.now();
     let smoothVelocity = 0;
-    let direction = 1;
     let baseX = 0;
     let copyWidth = 0;
 
@@ -376,11 +379,10 @@
       let velocityFactor = (smoothVelocity / INPUT_RANGE) * OUTPUT_RANGE;
       velocityFactor = Math.max(-OUTPUT_RANGE, Math.min(OUTPUT_RANGE, velocityFactor));
 
-      if (velocityFactor > 0.05) direction = 1;
-      else if (velocityFactor < -0.05) direction = -1;
-
-      let moveBy = direction * BASE_VELOCITY * dt;
-      moveBy += direction * moveBy * velocityFactor;
+      // Always-leftward formula: base leftward drift multiplied by
+      // (1 + |velocityFactor|), so scrolling in either direction only
+      // accelerates the marquee, never reverses it.
+      const moveBy = DIRECTION * BASE_VELOCITY * dt * (1 + Math.abs(velocityFactor));
 
       baseX += moveBy;
 

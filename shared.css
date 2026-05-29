@@ -327,7 +327,7 @@ nav {
 .footer-copy {
   font-family: 'DM Sans', sans-serif;
   font-weight: 300;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--color-footer-muted);
 }
 
@@ -638,8 +638,11 @@ nav {
   .work-card:hover,
   .work-card:active,
   .work-feature:hover,
-  .work-feature:active {
-    transition: color 220ms linear;
+  .work-feature:active,
+  .cv-item,
+  .cv-item:hover,
+  .cv-item:active {
+    transition: color 220ms linear, border-color 220ms linear;
     transform: none;
   }
 
