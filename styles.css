@@ -1412,6 +1412,18 @@ h1, h2, h3 {
   gap: 32px;
 }
 
+/* Videos in the extra-screens grid match the 3:4 portrait shape the
+   previous image placeholders used, so both cells stay the same height
+   regardless of each video file's intrinsic aspect ratio. */
+.extra-screens video {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  display: block;
+  border-radius: 4px;
+  background: var(--color-border);
+}
+
 .proto-link {
   margin-top: 48px;
   display: inline-flex;
