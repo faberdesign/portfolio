@@ -390,7 +390,8 @@ nav {
   .work-feature,
   .nav-hamburger,
   .nav-logo,
-  .scroll-top {
+  .scroll-top,
+  .video-frame {
     cursor: none;
   }
 }
@@ -474,6 +475,44 @@ nav {
   opacity: 1;
 }
 
+/* Play-triangle icon child — used over video frames. Rounded corners
+   come from stroke-linejoin: round on the SVG path, which the JS
+   injects on cursor creation. Cream color regardless of surface so
+   the cursor reads consistently against the dark video scrim. */
+.cursor-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 18px;
+  transform: translate(-50%, -50%);
+  color: var(--color-footer-text);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms var(--ease-out-soft);
+}
+
+/* Video-hover state is self-sufficient — defines its own ring growth +
+   cream border so the cursor stays correct even when the underlying
+   overlay button flips to display:none on play (which fires mouseleave
+   on the button and would otherwise strip .is-hover). */
+.cursor.is-video-hover {
+  width: 64px;
+  height: 64px;
+  margin: -16px 0 0 -16px;
+  background: transparent;
+  border-color: var(--color-footer-text);
+}
+
+.cursor.is-video-hover .cursor-play {
+  opacity: 1;
+}
+
+/* When the play triangle is showing, hide the center dot. */
+.cursor.is-video-hover::after {
+  opacity: 0;
+}
+
 .cursor.is-hover.surface-dark {
   border-color: var(--color-white);
 }
@@ -503,6 +542,29 @@ nav {
 
 .cursor.is-click.surface-dark::after {
   background: var(--color-white);
+}
+
+/* Click state over a video frame: ring shrinks to the normal 32px click
+   size with cream border, the play triangle fades out. The ring with
+   nothing inside is the press feedback. The ::after dot stays hidden
+   (reserved for regular-hover states on non-video surfaces). */
+.cursor.is-video-hover.is-click {
+  width: 32px;
+  height: 32px;
+  margin: 0;
+  border-color: var(--color-footer-text);
+}
+
+.cursor.is-video-hover.is-click::after {
+  opacity: 0;
+}
+
+.cursor.is-video-hover.is-click .cursor-play {
+  opacity: 0;
+}
+
+.cursor.is-video-hover.is-click .cursor-play {
+  opacity: 0;
 }
 
 /* ============================================================
@@ -641,7 +703,10 @@ nav {
   .work-feature:active,
   .cv-item,
   .cv-item:hover,
-  .cv-item:active {
+  .cv-item:active,
+  .video-frame,
+  .video-frame:hover,
+  .video-frame:active {
     transition: color 220ms linear, border-color 220ms linear;
     transform: none;
   }

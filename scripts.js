@@ -107,6 +107,15 @@
   if (window.matchMedia && window.matchMedia('(pointer: fine)').matches) {
     const cursor = document.createElement('div');
     cursor.className = 'cursor';
+    // Inject the play-triangle SVG child for the video-hover state.
+    // stroke-linejoin: round gives the rounded corners; same-color stroke
+    // + fill makes the triangle read as a single chunky play button.
+    cursor.innerHTML =
+      '<svg class="cursor-play" viewBox="0 0 16 18" aria-hidden="true">' +
+      '<path d="M2.5 2 L13.5 9 L2.5 16 Z" ' +
+      'fill="currentColor" stroke="currentColor" stroke-width="2" ' +
+      'stroke-linejoin="round" stroke-linecap="round"/>' +
+      '</svg>';
     document.body.appendChild(cursor);
 
     function surfaceOf(el, y) {
@@ -166,11 +175,17 @@
       cursor.classList.add('is-active');
     });
 
-    // Click feedback — only when pressing while hovering an interactive
-    // element (i.e. .is-hover is already on the cursor). Shrinks back to
-    // the non-hover size while keeping the ring + dot visible.
+    // Click feedback — fires while hovering any interactive surface
+    // (either the regular .is-hover state or the video .is-video-hover
+    // state). Checking both is important: once a video starts playing,
+    // its overlay button gets display: none, which strips .is-hover but
+    // leaves .is-video-hover intact. Without the OR, subsequent clicks
+    // wouldn't animate.
     document.addEventListener('mousedown', function () {
-      if (cursor.classList.contains('is-hover')) {
+      if (
+        cursor.classList.contains('is-hover') ||
+        cursor.classList.contains('is-video-hover')
+      ) {
         cursor.classList.add('is-click');
       }
     });
@@ -190,7 +205,40 @@
         cursor.classList.remove('is-hover');
       });
     });
+
+    // Video frames swap the center dot for a play-triangle (.is-video-hover)
+    // while still growing the ring (.is-hover). Both classes are added
+    // together so the existing .is-hover sizing rules continue to apply.
+    document.querySelectorAll('.video-frame').forEach(function (frame) {
+      frame.addEventListener('mouseenter', function () {
+        cursor.classList.add('is-hover', 'is-video-hover');
+      });
+      frame.addEventListener('mouseleave', function () {
+        cursor.classList.remove('is-hover', 'is-video-hover');
+      });
+    });
   }
+
+  // ----- Video frames: click to play/pause, hide CTA while playing -----
+  document.querySelectorAll('.video-frame').forEach(function (frame) {
+    const video = frame.querySelector('video');
+    if (!video) return;
+
+    frame.addEventListener('click', function () {
+      if (video.paused) {
+        const playPromise = video.play();
+        // play() returns a promise in modern browsers; ignore rejection
+        // (e.g., autoplay policy blocking) so the click still feels responsive.
+        if (playPromise && typeof playPromise.catch === 'function') {
+          playPromise.catch(function () { /* swallow */ });
+        }
+        frame.classList.add('is-playing');
+      } else {
+        video.pause();
+        frame.classList.remove('is-playing');
+      }
+    });
+  });
 
   // ----- Hamburger handlers (state setter is defined at the top) -----
   if (hamburger && overlay) {

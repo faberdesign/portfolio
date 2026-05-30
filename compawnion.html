@@ -294,8 +294,18 @@
       </article>
 
       <div class="extra-screens">
-       <video autoplay loop muted playsinline><source src="img/compawnion/flow1.mp4" type="video/mp4"></video>
-       <video autoplay loop muted playsinline><source src="img/compawnion/flow2.mp4" type="video/mp4"></video>
+        <div class="video-frame">
+          <video loop muted playsinline preload="metadata"><source src="img/compawnion/flow1.mp4" type="video/mp4"></video>
+          <button class="video-play-overlay" type="button" aria-label="See it in motion">
+            <span class="video-play-label" aria-hidden="true">Watch the full onboarding flow</span>
+          </button>
+        </div>
+        <div class="video-frame">
+          <video loop muted playsinline preload="metadata"><source src="img/compawnion/flow2.mp4" type="video/mp4"></video>
+          <button class="video-play-overlay" type="button" aria-label="See it in motion">
+            <span class="video-play-label" aria-hidden="true">Watch the full contact flow</span>
+          </button>
+        </div>
       </div>
     </div>
   </section>
