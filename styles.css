@@ -1480,15 +1480,33 @@ h1, h2, h3 {
   font-weight: 500;
   font-size: 15px;
   color: var(--color-text);
-  transition: border-color 0.25s ease;
+  transform-origin: center;
+  transition: transform 320ms var(--ease-out-soft),
+              border-color 240ms var(--ease-out-soft);
 }
 
 .proto-link:hover {
   border-color: var(--color-accent);
+  transform: translateY(-3px) scale(1.1);
 }
 
 .proto-link .arrow {
   color: var(--color-accent);
+  display: inline-block;
+  transition: transform 240ms var(--ease-out-soft);
+}
+
+.proto-link:hover .arrow {
+  transform: translateX(4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proto-link,
+  .proto-link:hover,
+  .proto-link:hover .arrow {
+    transform: none;
+    transition: border-color 200ms linear;
+  }
 }
 
 /* Section 05 — Testing (inverted) */
