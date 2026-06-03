@@ -1870,47 +1870,57 @@ h1, h2, h3 {
 
 /* ============================================================
    TOUCH TAP FEEDBACK
-   Mirrors the hover color shifts on tap. Existing :active rules
-   on cards (work-card, work-feature, cv-item, video-frame)
-   already deliver the scale/translate response on both inputs;
-   these add the color signal that hover used to provide.
+   JS applies `.is-tapped` for ~360ms on touchstart so the
+   hover-equivalent flash is clearly visible. Mirrors the full
+   hover treatment (color + lift) per element — :active alone
+   was too brief on quick taps to register.
    ============================================================ */
-@media (hover: none) {
-  .hero-cta:active {
-    color: var(--color-footer-text);
-    background: transparent;
-    border-color: var(--color-accent);
-  }
-  .hero-cta:active .hero-cta-arrow {
-    transform: translateX(4px);
-  }
-  .work-feature:active .work-feature-title {
-    color: var(--color-accent);
-  }
-  .work-card:active .work-card-tile-name {
-    color: var(--color-accent);
-  }
-  .work-card-progress:active .work-card-tile-name {
-    color: var(--color-text);
-  }
-  .cv-item:active {
-    border-color: var(--color-accent);
-  }
-  .back-link:active {
-    color: var(--color-text);
-  }
-  .proto-link:active {
-    border-color: var(--color-accent);
-  }
-  .proto-link:active .arrow {
-    transform: translateX(4px);
-  }
-  .impressum-section a:active {
-    color: var(--color-accent);
-  }
-  .footer-bottom-link:active {
-    color: var(--color-accent);
-  }
+.hero-cta.is-tapped {
+  color: var(--color-footer-text);
+  background: transparent;
+  border-color: var(--color-accent);
+  transform: translateY(-3px) scale(1.1);
+}
+.hero-cta.is-tapped .hero-cta-arrow {
+  transform: translateX(4px);
+}
+.work-feature.is-tapped {
+  transform: translateY(-6px);
+}
+.work-feature.is-tapped .work-feature-title {
+  color: var(--color-accent);
+}
+.work-card.is-tapped {
+  transform: translateY(-6px);
+}
+.work-card.is-tapped .work-card-tile-name {
+  color: var(--color-accent);
+}
+.work-card-progress.is-tapped .work-card-tile-name {
+  color: var(--color-text);
+}
+.cv-item.is-tapped {
+  border-color: var(--color-accent);
+  transform: translateY(-6px);
+}
+.back-link.is-tapped {
+  color: var(--color-text);
+}
+.video-frame.is-tapped {
+  transform: translateY(-6px);
+}
+.proto-link.is-tapped {
+  border-color: var(--color-accent);
+  transform: translateY(-3px) scale(1.1);
+}
+.proto-link.is-tapped .arrow {
+  transform: translateX(4px);
+}
+.impressum-section a.is-tapped {
+  color: var(--color-accent);
+}
+.footer-bottom-link.is-tapped {
+  color: var(--color-accent);
 }
 
 /* ============================================================

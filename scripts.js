@@ -28,6 +28,74 @@
     });
   }
 
+  // ----- Touch tap feedback -----
+  // Hover styles are gated behind @media (hover: hover), so touch users
+  // get no orange/lift response from CSS hover. :active fires only while
+  // the finger is physically pressed, which is too brief on a quick tap.
+  // This adds `.is-tapped` to the nearest interactive element on
+  // touchstart and removes it after TAP_FLASH_MS, holding the
+  // hover-equivalent treatment long enough to be clearly seen.
+  // Cancelled on touchmove (so a scroll swipe doesn't leave a stale
+  // highlight) and on touchcancel.
+  const tappableSelector = [
+    '.work-card', '.work-feature', '.cv-item', '.video-frame',
+    '.proto-link', '.hero-cta', '.scroll-top', '.nav-logo',
+    '.nav-hamburger', '.nav-overlay-links a', '.footer-contact-link',
+    '.back-link', '.impressum-section a', '.footer-bottom-link',
+  ].join(', ');
+  const TAP_FLASH_MS = 360;
+  const TAP_MOVE_CANCEL_PX = 10;
+
+  let tappedEl = null;
+  let tapTimer = null;
+  let tapStartX = 0;
+  let tapStartY = 0;
+
+  function clearTapped() {
+    if (tappedEl) {
+      tappedEl.classList.remove('is-tapped');
+      tappedEl = null;
+    }
+    if (tapTimer) {
+      clearTimeout(tapTimer);
+      tapTimer = null;
+    }
+  }
+
+  document.addEventListener('touchstart', function (e) {
+    const el = e.target.closest(tappableSelector);
+    if (!el) return;
+    // Any previous flash from a rapid double-tap is dropped immediately
+    // so we don't leave a stale highlight on the prior element.
+    if (tappedEl && tappedEl !== el) {
+      tappedEl.classList.remove('is-tapped');
+    }
+    if (tapTimer) clearTimeout(tapTimer);
+    tappedEl = el;
+    const t = e.touches[0];
+    tapStartX = t.clientX;
+    tapStartY = t.clientY;
+    el.classList.add('is-tapped');
+    tapTimer = setTimeout(function () {
+      if (tappedEl) tappedEl.classList.remove('is-tapped');
+      tappedEl = null;
+      tapTimer = null;
+    }, TAP_FLASH_MS);
+  }, { passive: true });
+
+  document.addEventListener('touchmove', function (e) {
+    if (!tappedEl) return;
+    const t = e.touches[0];
+    if (
+      Math.abs(t.clientX - tapStartX) > TAP_MOVE_CANCEL_PX ||
+      Math.abs(t.clientY - tapStartY) > TAP_MOVE_CANCEL_PX
+    ) {
+      clearTapped();
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchcancel', clearTapped, { passive: true });
+
   // When a page is restored from the bfcache (back/forward navigation),
   // its DOM state is frozen exactly as we left it — including
   // data-curtain="exiting" set right before we navigated away. Without

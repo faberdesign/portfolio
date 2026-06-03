@@ -705,27 +705,28 @@ nav {
 
 /* ============================================================
    TOUCH TAP FEEDBACK
-   Hover styles are gated behind @media (hover: hover) so they
-   never stick on mobile. Mirror the color shifts as :active here
-   so a tap still gives visible confirmation. Scoped to (hover:
-   none) so desktop click flashes are unaffected.
+   Hover styles are gated behind @media (hover: hover), so touch
+   users would otherwise get no visual response. `:active` alone
+   fires too briefly on a quick tap to register. Instead, JS
+   applies `.is-tapped` on touchstart for ~360ms, holding the
+   hover-equivalent treatment long enough to be clearly seen.
+   The class is only ever added by touch events, so these rules
+   stay dormant on mouse-only desktops.
    ============================================================ */
-@media (hover: none) {
-  .nav-logo:active {
-    color: var(--color-accent);
-  }
-  .nav-hamburger:active span {
-    background: var(--color-accent);
-  }
-  .nav-overlay-links a:active {
-    color: var(--color-accent);
-  }
-  .footer-contact-link:active {
-    color: var(--color-accent);
-  }
-  .scroll-top:active {
-    background: var(--color-accent);
-  }
+.nav-logo.is-tapped {
+  color: var(--color-accent);
+}
+.nav-hamburger.is-tapped span {
+  background: var(--color-accent);
+}
+.nav-overlay-links a.is-tapped {
+  color: var(--color-accent);
+}
+.footer-contact-link.is-tapped {
+  color: var(--color-accent);
+}
+.scroll-top.is-tapped {
+  background: var(--color-accent);
 }
 
 /* ============================================================
