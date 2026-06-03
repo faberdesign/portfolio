@@ -69,11 +69,10 @@
       // External destinations skip the curtain.
       if (url.origin !== window.location.origin) return;
 
-      // Same path (e.g., logo click on the root, or a #hash on the same
-      // page) — let the page-specific handler decide. The logo handler
-      // calls preventDefault on root; on other pages the click here
-      // proceeds to set the curtain and navigate to "/".
-      if (url.pathname === window.location.pathname && url.hash !== '') {
+      // Same path — same-page anchor scroll, smooth-scroll-to-top from
+      // the logo on index, or any other intra-page link. These never
+      // navigate away, so they should never trigger the curtain.
+      if (url.pathname === window.location.pathname) {
         return;
       }
 

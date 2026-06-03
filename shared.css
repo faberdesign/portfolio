@@ -115,7 +115,10 @@ nav {
   right: 0;
   height: 56px;
   background: var(--color-dark);
-  z-index: 300;
+  /* Above the page-transition curtain (z-index 10000) so the nav stays
+     visible across navigations — gives the user a stable anchor while
+     the body content swaps behind. */
+  z-index: 10001;
 }
 
 .nav-inner {
