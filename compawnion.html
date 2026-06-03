@@ -9,8 +9,20 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="shared.css">
   <link rel="stylesheet" href="styles.css">
+  <script>
+    // Curtain transition: if we arrived here via an internal link,
+    // mount the curtain in "covering" state immediately so there's no
+    // flash of unstyled content before the fade-out.
+    try {
+      if (sessionStorage.getItem('curtainCovering') === 'true') {
+        sessionStorage.removeItem('curtainCovering');
+        document.documentElement.dataset.curtain = 'covering';
+      }
+    } catch (e) {}
+  </script>
 </head>
 <body>
+  <div class="page-transition" aria-hidden="true"></div>
 
   <!-- NAV -->
   <nav aria-label="Primary">

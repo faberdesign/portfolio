@@ -44,7 +44,7 @@ html {
 body {
   font-family: 'DM Sans', sans-serif;
   font-weight: 300;
-  background: var(--color-bg);
+  background: var(--color-dark);
   color: var(--color-text);
   padding-top: 56px;
   overflow-x: clip;
@@ -565,6 +565,69 @@ nav {
 
 .cursor.is-video-hover.is-click .cursor-play {
   opacity: 0;
+}
+
+/* ============================================================
+   PAGE TRANSITION (CURTAIN)
+   Internal link clicks raise a navy curtain from the bottom of
+   the viewport. Once it covers the screen the navigation fires;
+   the new page reads a sessionStorage flag, mounts the curtain
+   already at "covering", and fades it out after first paint.
+   ============================================================ */
+
+.page-transition {
+  position: fixed;
+  inset: 0;
+  background: var(--color-dark);
+  z-index: 10000;
+  pointer-events: none;
+  opacity: 1;
+  transform: translateY(100%);
+  will-change: transform, opacity;
+  transition: transform 600ms var(--ease-in-out-strong),
+              opacity 400ms var(--ease-out-soft);
+}
+
+/* Triggered when the user clicks a same-origin link: curtain rises
+   from the bottom of the viewport and fully covers the screen. */
+[data-curtain="exiting"] .page-transition {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Set by the inline head script on the destination page when the
+   sessionStorage flag is present. Curtain is in covering position
+   instantly, no animation, so there's no flash of new content. */
+[data-curtain="covering"] .page-transition {
+  opacity: 1;
+  transform: translateY(0);
+  transition: none;
+}
+
+/* After first paint on the destination page, JS swaps the data
+   attribute to "revealing" and the curtain fades to reveal content. */
+[data-curtain="revealing"] .page-transition {
+  opacity: 0;
+  transform: translateY(0);
+  transition: opacity 400ms var(--ease-out-soft);
+}
+
+/* After the reveal completes, JS sets this state. The curtain snaps
+   back to off-screen (translateY 100%) with full opacity, instantly,
+   so it doesn't visibly fade-to-blue and slide back down as it would
+   if we removed the data attribute and let the default transitions
+   replay. From here it's ready for the next exit. */
+[data-curtain="hidden"] .page-transition {
+  opacity: 1;
+  transform: translateY(100%);
+  transition: none;
+}
+
+/* Reduced motion: no curtain. Direct navigation, no overlay. */
+@media (prefers-reduced-motion: reduce) {
+  .page-transition {
+    display: none;
+  }
 }
 
 /* ============================================================

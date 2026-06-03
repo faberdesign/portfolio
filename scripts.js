@@ -1,6 +1,96 @@
 (function () {
   'use strict';
 
+  // ----- Page transition (curtain) -----
+  // Inline head script may have set data-curtain="covering" on <html>
+  // if we arrived via an internal link. Two requestAnimationFrames flush
+  // the layout and the initial-paint frame, then we swap to "revealing"
+  // so the CSS opacity transition runs. After the fade completes we
+  // strip the attribute so the curtain returns to its idle state.
+  const CURTAIN_REVEAL_MS = 450;
+  const CURTAIN_EXIT_MS = 600;
+
+  if (document.documentElement.dataset.curtain === 'covering') {
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        document.documentElement.dataset.curtain = 'revealing';
+        setTimeout(function () {
+          // Move to "hidden" rather than removing the attribute. The
+          // hidden state snaps the curtain back off-screen (translateY
+          // 100%) at full opacity with transition:none, so it doesn't
+          // animate through "fade-to-blue + slide-down" on its way back
+          // to the idle position. From here it's ready for the next
+          // exit, which sets data-curtain="exiting" and gets a normal
+          // 600ms rise transition again.
+          document.documentElement.dataset.curtain = 'hidden';
+        }, CURTAIN_REVEAL_MS);
+      });
+    });
+  }
+
+  // Intercept same-origin link clicks: raise the curtain, then navigate.
+  // Hash links, mailto/tel, external URLs, target=_blank, modifier-keyed
+  // clicks, and non-left-button clicks all fall through to default
+  // browser behavior. Reduced-motion users also bypass the curtain.
+  const prefersReducedMotion = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!prefersReducedMotion) {
+    document.addEventListener('click', function (e) {
+      // Only main-button clicks without modifier keys; modifier keys
+      // mean the user wants new tab / window / download.
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) {
+        return;
+      }
+
+      const link = e.target.closest('a');
+      if (!link) return;
+
+      const href = link.getAttribute('href');
+      if (!href) return;
+
+      if (
+        href.charAt(0) === '#' ||
+        href.indexOf('mailto:') === 0 ||
+        href.indexOf('tel:') === 0 ||
+        link.target === '_blank' ||
+        link.hasAttribute('download')
+      ) {
+        return;
+      }
+
+      let url;
+      try {
+        url = new URL(link.href);
+      } catch (err) {
+        return;
+      }
+
+      // External destinations skip the curtain.
+      if (url.origin !== window.location.origin) return;
+
+      // Same path (e.g., logo click on the root, or a #hash on the same
+      // page) — let the page-specific handler decide. The logo handler
+      // calls preventDefault on root; on other pages the click here
+      // proceeds to set the curtain and navigate to "/".
+      if (url.pathname === window.location.pathname && url.hash !== '') {
+        return;
+      }
+
+      e.preventDefault();
+
+      try {
+        sessionStorage.setItem('curtainCovering', 'true');
+      } catch (err) { /* private mode etc. — curtain just won't show on next page */ }
+
+      document.documentElement.dataset.curtain = 'exiting';
+
+      setTimeout(function () {
+        window.location.href = link.href;
+      }, CURTAIN_EXIT_MS);
+    });
+  }
+
   // ----- Menu controller (hoisted so logo click + ESC handler can close it) -----
   // The hamburger setup further down attaches its toggle handler; this just
   // defines the state-setter once at the top so any other handler in this
