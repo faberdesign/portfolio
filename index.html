@@ -18,20 +18,18 @@
       window.__deferredHash = window.location.hash;
       history.replaceState(null, '', window.location.pathname + window.location.search);
     }
-    // Curtain transition: if we arrived here via an internal link,
-    // mount the curtain in "covering" state immediately so there's no
-    // flash of unstyled content before the fade-out.
+    // Page fade: if we arrived here via an internal link, mark the
+    // document so the body renders at opacity 0 from first paint.
+    // scripts.js fades it back in after the first frame.
     try {
-      if (sessionStorage.getItem('curtainCovering') === 'true') {
-        sessionStorage.removeItem('curtainCovering');
-        document.documentElement.dataset.curtain = 'covering';
+      if (sessionStorage.getItem('pageFadeIn') === 'true') {
+        sessionStorage.removeItem('pageFadeIn');
+        document.documentElement.dataset.pageFade = 'covering';
       }
     } catch (e) {}
   </script>
 </head>
 <body>
-  <div class="page-transition" aria-hidden="true"></div>
-
   <!-- NAV -->
   <nav aria-label="Primary">
     <div class="nav-inner">

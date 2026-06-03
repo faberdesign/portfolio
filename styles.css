@@ -132,10 +132,13 @@ h1, h2, h3 {
   margin-top: 100px;
 }
 
+/* JS owns the transform — see scripts.js marqueeTick (rAF loop with
+   scroll-velocity multiplier). No CSS animation needed; the loop is
+   the source of truth and respects reduced-motion via its gating
+   check. */
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marquee-scroll 35s linear infinite;
 }
 
 .marquee-content {
@@ -146,11 +149,6 @@ h1, h2, h3 {
   white-space: nowrap;
   padding-right: 80px;
   line-height: 1;
-}
-
-@keyframes marquee-scroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
 }
 
 .hero-row {
@@ -223,7 +221,7 @@ h1, h2, h3 {
     color: var(--color-footer-text);
     background: transparent;
     border-color: var(--color-accent);
-    transform: translateY(-3px) scale(1.1);
+    transform: translateY(-2px) scale(1.02);
   }
 
   .hero-cta:hover .hero-cta-arrow {
@@ -231,9 +229,17 @@ h1, h2, h3 {
   }
 }
 
+/* Press feedback — fast tactile confirmation; overrides the hover lift. */
+.hero-cta:active {
+  transform: translateY(0) scale(0.96);
+  transition: transform 140ms var(--ease-out-soft),
+              border-color 200ms var(--ease-out-soft);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-cta,
   .hero-cta:hover,
+  .hero-cta:active,
   .hero-cta:hover .hero-cta-arrow {
     transform: none;
     transition: color 200ms linear,
@@ -550,7 +556,7 @@ h1, h2, h3 {
 }
 
 .work-feature:active {
-  transform: translateY(-6px) scale(0.995);
+  transform: translateY(-6px) scale(0.985);
   transition: transform 140ms var(--ease-out-soft);
 }
 
@@ -568,7 +574,7 @@ h1, h2, h3 {
   font-weight: 700;
   font-size: 22px;
   color: var(--color-text);
-  transition: color 0.25s ease;
+  transition: color 220ms var(--ease-out-soft);
 }
 
 @media (hover: hover) {
@@ -618,7 +624,7 @@ h1, h2, h3 {
 }
 
 .work-card:active {
-  transform: translateY(-6px) scale(0.995);
+  transform: translateY(-6px) scale(0.985);
   transition: transform 140ms var(--ease-out-soft);
 }
 
@@ -637,7 +643,6 @@ h1, h2, h3 {
   gap: clamp(8px, 1vw, 12px);
   position: relative;
   overflow: hidden;
-  transition: background 320ms var(--ease-out-soft);
 }
 
 .work-card-tile-eyebrow {
@@ -872,7 +877,7 @@ h1, h2, h3 {
 }
 
 .cv-item:active {
-  transform: translateY(-6px) scale(0.995);
+  transform: translateY(-6px) scale(0.985);
   transition: transform 140ms var(--ease-out-soft);
 }
 
@@ -924,7 +929,7 @@ h1, h2, h3 {
   font-weight: 300;
   font-size: 13px;
   color: var(--color-muted);
-  transition: color 0.25s ease;
+  transition: color 220ms var(--ease-out-soft);
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -1448,7 +1453,7 @@ h1, h2, h3 {
 }
 
 .video-frame:active {
-  transform: translateY(-6px) scale(0.995);
+  transform: translateY(-6px) scale(0.985);
   transition: transform 140ms var(--ease-out-soft);
 }
 
@@ -1468,6 +1473,14 @@ h1, h2, h3 {
   margin: 0;
   background: oklch(15% 0.025 262 / 0.45);
   border: none;
+  transition: background 200ms var(--ease-out-soft);
+}
+
+/* Press feedback on the play surface — slight darkening confirms the
+   click before the video kicks in. Parent .video-frame handles the
+   lift/scale on press; the overlay handles its own surface. */
+.video-play-overlay:active {
+  background: oklch(15% 0.025 262 / 0.55);
 }
 
 .video-frame.is-playing .video-play-overlay {
@@ -1506,12 +1519,19 @@ h1, h2, h3 {
 @media (hover: hover) {
   .proto-link:hover {
     border-color: var(--color-accent);
-    transform: translateY(-3px) scale(1.1);
+    transform: translateY(-2px) scale(1.02);
   }
 
   .proto-link:hover .arrow {
     transform: translateX(4px);
   }
+}
+
+/* Press feedback — fast tactile confirmation; overrides the hover lift. */
+.proto-link:active {
+  transform: translateY(0) scale(0.97);
+  transition: transform 140ms var(--ease-out-soft),
+              border-color 200ms var(--ease-out-soft);
 }
 
 .proto-link .arrow {
@@ -1523,6 +1543,7 @@ h1, h2, h3 {
 @media (prefers-reduced-motion: reduce) {
   .proto-link,
   .proto-link:hover,
+  .proto-link:active,
   .proto-link:hover .arrow {
     transform: none;
     transition: border-color 200ms linear;
@@ -1847,7 +1868,7 @@ h1, h2, h3 {
   text-decoration: underline;
   text-decoration-color: var(--color-accent);
   text-underline-offset: 3px;
-  transition: color 0.25s ease;
+  transition: color 220ms var(--ease-out-soft);
 }
 
 @media (hover: hover) {
@@ -1859,7 +1880,7 @@ h1, h2, h3 {
 /* Impressum link in the footer-bottom row */
 .footer-bottom-link {
   text-decoration: none;
-  transition: color 0.25s ease;
+  transition: color 220ms var(--ease-out-soft);
 }
 
 @media (hover: hover) {
@@ -1879,7 +1900,7 @@ h1, h2, h3 {
   color: var(--color-footer-text);
   background: transparent;
   border-color: var(--color-accent);
-  transform: translateY(-3px) scale(1.1);
+  transform: translateY(-2px) scale(1.02);
 }
 .hero-cta.is-tapped .hero-cta-arrow {
   transform: translateX(4px);
@@ -1911,7 +1932,7 @@ h1, h2, h3 {
 }
 .proto-link.is-tapped {
   border-color: var(--color-accent);
-  transform: translateY(-3px) scale(1.1);
+  transform: translateY(-2px) scale(1.02);
 }
 .proto-link.is-tapped .arrow {
   transform: translateX(4px);

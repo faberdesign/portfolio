@@ -13,17 +13,17 @@
   <link rel="stylesheet" href="shared.css">
   <link rel="stylesheet" href="styles.css">
   <script>
+    // Page fade: see scripts.js. Mark <html> before paint so body
+    // renders at opacity 0 if we arrived via an internal link.
     try {
-      if (sessionStorage.getItem('curtainCovering') === 'true') {
-        sessionStorage.removeItem('curtainCovering');
-        document.documentElement.dataset.curtain = 'covering';
+      if (sessionStorage.getItem('pageFadeIn') === 'true') {
+        sessionStorage.removeItem('pageFadeIn');
+        document.documentElement.dataset.pageFade = 'covering';
       }
     } catch (e) {}
   </script>
 </head>
 <body>
-  <div class="page-transition" aria-hidden="true"></div>
-
   <!-- NAV -->
   <nav aria-label="Primary">
     <div class="nav-inner">

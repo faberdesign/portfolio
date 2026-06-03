@@ -39,6 +39,9 @@
 html {
   scroll-behavior: smooth;
   overflow-x: clip;
+  /* Suppress the native gray rectangle on tap; the JS-driven
+     `.is-tapped` flash owns mobile touch feedback. */
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -60,7 +63,7 @@ img {
 a {
   text-decoration: none;
   color: inherit;
-  transition: color 0.25s ease;
+  transition: color 220ms var(--ease-out-soft);
 }
 
 button {
@@ -115,9 +118,8 @@ nav {
   right: 0;
   height: 56px;
   background: var(--color-dark);
-  /* Above the page-transition curtain (z-index 10000) so the nav stays
-     visible across navigations — gives the user a stable anchor while
-     the body content swaps behind. */
+  /* Stacks above all in-page content; only the custom cursor (10002)
+     sits higher. */
   z-index: 10001;
 }
 
@@ -139,7 +141,7 @@ nav {
   color: var(--color-footer-text);
   text-decoration: none;
   line-height: 1;
-  transition: color 0.25s ease;
+  transition: color 220ms var(--ease-out-soft);
 }
 
 @media (hover: hover) {
@@ -162,6 +164,11 @@ nav {
   height: 48px;
   position: relative;
   z-index: 300;
+  transition: transform 140ms var(--ease-out-soft);
+}
+
+.nav-hamburger:active {
+  transform: scale(0.94);
 }
 
 .nav-hamburger span {
@@ -203,19 +210,27 @@ nav {
   align-items: center;
   justify-content: center;
   gap: 40px;
-  /* Always rendered, hidden via opacity so it can transition. */
+  /* Always rendered, hidden via opacity so it can transition.
+     The faint scale gives the overlay weight on entry — without it
+     the panel materializes flat, which feels insubstantial for a
+     full-viewport surface. */
   opacity: 0;
+  transform: scale(0.97);
+  transform-origin: top right;
   visibility: hidden;
   pointer-events: none;
   transition: opacity 260ms var(--ease-out-soft),
-              visibility 0ms linear 260ms;
+              transform 320ms var(--ease-out-soft),
+              visibility 0ms linear 320ms;
 }
 
 .nav-overlay.is-open {
   opacity: 1;
+  transform: scale(1);
   visibility: visible;
   pointer-events: auto;
   transition: opacity 260ms var(--ease-out-soft),
+              transform 320ms var(--ease-out-soft),
               visibility 0ms linear 0ms;
 }
 
@@ -313,7 +328,7 @@ nav {
   color: var(--color-footer-text);
   text-decoration: none;
   line-height: 1.3;
-  transition: color 0.25s ease;
+  transition: color 220ms var(--ease-out-soft);
   width: fit-content;
 }
 
@@ -419,9 +434,8 @@ nav {
   background: var(--color-dark);
   border: 2px solid transparent;
   pointer-events: none;
-  /* Above the nav (10001) and curtain (10000) so the cursor stays on
-     top of every layer — it's the user's pointer, it should never be
-     occluded by anything. */
+  /* Above the nav (10001) so the cursor stays on top of every layer
+     — it's the user's pointer, it should never be occluded. */
   z-index: 10002;
   opacity: 0;
   will-change: transform;
@@ -582,65 +596,45 @@ nav {
 }
 
 /* ============================================================
-   PAGE TRANSITION (CURTAIN)
-   Internal link clicks raise a navy curtain from the bottom of
-   the viewport. Once it covers the screen the navigation fires;
-   the new page reads a sessionStorage flag, mounts the curtain
-   already at "covering", and fades it out after first paint.
+   PAGE TRANSITION (FADE)
+   Internal link clicks fade the body out over 150ms, then
+   navigate. The destination page mounts at opacity 0 (via the
+   inline head script setting data-page-fade="covering") and JS
+   fades it back in over 150ms after first paint. The data
+   attribute lives on <html>, not <body>, so the inline script
+   can set it before <body> is parsed and rendered — no FOUC.
    ============================================================ */
 
-.page-transition {
-  position: fixed;
-  inset: 0;
-  background: var(--color-dark);
-  z-index: 10000;
-  pointer-events: none;
-  opacity: 1;
-  transform: translateY(100%);
-  will-change: transform, opacity;
-  transition: transform 600ms var(--ease-in-out-strong),
-              opacity 400ms var(--ease-out-soft);
+body {
+  transition: opacity 150ms var(--ease-out-soft);
 }
 
-/* Triggered when the user clicks a same-origin link: curtain rises
-   from the bottom of the viewport and fully covers the screen. */
-[data-curtain="exiting"] .page-transition {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Set by the inline head script on the destination page when the
-   sessionStorage flag is present. Curtain is in covering position
-   instantly, no animation, so there's no flash of new content. */
-[data-curtain="covering"] .page-transition {
-  opacity: 1;
-  transform: translateY(0);
-  transition: none;
-}
-
-/* After first paint on the destination page, JS swaps the data
-   attribute to "revealing" and the curtain fades to reveal content. */
-[data-curtain="revealing"] .page-transition {
+/* Inline head script on the destination page sets this when the
+   sessionStorage flag is present. Body is opacity 0 from first
+   paint with no transition, so there's no flash of content. */
+html[data-page-fade="covering"] body {
   opacity: 0;
-  transform: translateY(0);
-  transition: opacity 400ms var(--ease-out-soft);
-}
-
-/* After the reveal completes, JS sets this state. The curtain snaps
-   back to off-screen (translateY 100%) with full opacity, instantly,
-   so it doesn't visibly fade-to-blue and slide back down as it would
-   if we removed the data attribute and let the default transitions
-   replay. From here it's ready for the next exit. */
-[data-curtain="hidden"] .page-transition {
-  opacity: 1;
-  transform: translateY(100%);
   transition: none;
 }
 
-/* Reduced motion: no curtain. Direct navigation, no overlay. */
+/* After first paint, JS swaps to "revealing" and the base body
+   transition runs the fade-in. */
+html[data-page-fade="revealing"] body {
+  opacity: 1;
+}
+
+/* Triggered when the user clicks a same-origin link. The base body
+   transition runs the fade-out before navigation fires. */
+html[data-page-fade="exiting"] body {
+  opacity: 0;
+}
+
+/* Reduced motion: no fade. Direct navigation, full opacity. */
 @media (prefers-reduced-motion: reduce) {
-  .page-transition {
-    display: none;
+  body,
+  html[data-page-fade] body {
+    transition: none;
+    opacity: 1;
   }
 }
 
@@ -692,7 +686,7 @@ nav {
 
 /* Press feedback — fast, instant confirmation that the button heard the user. */
 .scroll-top.visible:active {
-  transform: translateY(0) scale(0.92);
+  transform: translateY(0) scale(0.95);
   transition: transform 110ms var(--ease-out-soft),
               background 220ms var(--ease-out-soft);
 }
@@ -738,9 +732,9 @@ nav {
 
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 1100ms var(--ease-out-soft),
-              transform 1100ms var(--ease-out-soft);
+  transform: translateY(24px);
+  transition: opacity 600ms var(--ease-out-soft),
+              transform 600ms var(--ease-out-soft);
   will-change: transform, opacity;
 }
 
@@ -790,14 +784,14 @@ nav {
   }
 
   .nav-overlay,
+  .nav-overlay.is-open,
   .nav-overlay-links a {
+    transform: none;
     transition: opacity 100ms linear;
   }
 
-  /* The marquee is the loudest motion on the page. Park it. */
-  .marquee-track {
-    animation: none;
-  }
+  /* Marquee parking is handled by scripts.js — its rAF loop is gated
+     behind a reduced-motion check, so the track never moves. */
 
   /* Hover-lift transforms on tiles. */
   .work-card,

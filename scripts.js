@@ -1,29 +1,22 @@
 (function () {
   'use strict';
 
-  // ----- Page transition (curtain) -----
-  // Inline head script may have set data-curtain="covering" on <html>
+  // ----- Page transition (fade) -----
+  // Inline head script may have set data-page-fade="covering" on <html>
   // if we arrived via an internal link. Two requestAnimationFrames flush
   // the layout and the initial-paint frame, then we swap to "revealing"
   // so the CSS opacity transition runs. After the fade completes we
-  // strip the attribute so the curtain returns to its idle state.
-  const CURTAIN_REVEAL_MS = 450;
-  const CURTAIN_EXIT_MS = 600;
+  // strip the attribute so the body returns to its idle full-opacity
+  // state.
+  const FADE_MS = 150;
 
-  if (document.documentElement.dataset.curtain === 'covering') {
+  if (document.documentElement.dataset.pageFade === 'covering') {
     requestAnimationFrame(function () {
       requestAnimationFrame(function () {
-        document.documentElement.dataset.curtain = 'revealing';
+        document.documentElement.dataset.pageFade = 'revealing';
         setTimeout(function () {
-          // Move to "hidden" rather than removing the attribute. The
-          // hidden state snaps the curtain back off-screen (translateY
-          // 100%) at full opacity with transition:none, so it doesn't
-          // animate through "fade-to-blue + slide-down" on its way back
-          // to the idle position. From here it's ready for the next
-          // exit, which sets data-curtain="exiting" and gets a normal
-          // 600ms rise transition again.
-          document.documentElement.dataset.curtain = 'hidden';
-        }, CURTAIN_REVEAL_MS);
+          delete document.documentElement.dataset.pageFade;
+        }, FADE_MS);
       });
     });
   }
@@ -98,21 +91,21 @@
 
   // When a page is restored from the bfcache (back/forward navigation),
   // its DOM state is frozen exactly as we left it — including
-  // data-curtain="exiting" set right before we navigated away. Without
-  // this reset, the restored page would appear fully covered by the navy
-  // curtain. Also clear the sessionStorage flag so a follow-up
-  // fresh-load doesn't try to play a phantom reveal animation.
+  // data-page-fade="exiting" set right before we navigated away.
+  // Without this reset, the restored page would appear faded out.
+  // Also clear the sessionStorage flag so a follow-up fresh-load
+  // doesn't try to play a phantom fade-in.
   window.addEventListener('pageshow', function (event) {
     if (event.persisted) {
-      document.documentElement.dataset.curtain = 'hidden';
-      try { sessionStorage.removeItem('curtainCovering'); } catch (err) { /* ignore */ }
+      delete document.documentElement.dataset.pageFade;
+      try { sessionStorage.removeItem('pageFadeIn'); } catch (err) { /* ignore */ }
     }
   });
 
-  // Intercept same-origin link clicks: raise the curtain, then navigate.
+  // Intercept same-origin link clicks: fade the body out, then navigate.
   // Hash links, mailto/tel, external URLs, target=_blank, modifier-keyed
   // clicks, and non-left-button clicks all fall through to default
-  // browser behavior. Reduced-motion users also bypass the curtain.
+  // browser behavior. Reduced-motion users also bypass the fade.
   const prefersReducedMotion = window.matchMedia &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -147,12 +140,12 @@
         return;
       }
 
-      // External destinations skip the curtain.
+      // External destinations skip the fade.
       if (url.origin !== window.location.origin) return;
 
       // Same path — same-page anchor scroll, smooth-scroll-to-top from
       // the logo on index, or any other intra-page link. These never
-      // navigate away, so they should never trigger the curtain.
+      // navigate away, so they should never trigger the fade.
       if (url.pathname === window.location.pathname) {
         return;
       }
@@ -160,14 +153,14 @@
       e.preventDefault();
 
       try {
-        sessionStorage.setItem('curtainCovering', 'true');
-      } catch (err) { /* private mode etc. — curtain just won't show on next page */ }
+        sessionStorage.setItem('pageFadeIn', 'true');
+      } catch (err) { /* private mode etc. — fade-in just won't show on next page */ }
 
-      document.documentElement.dataset.curtain = 'exiting';
+      document.documentElement.dataset.pageFade = 'exiting';
 
       setTimeout(function () {
         window.location.href = link.href;
-      }, CURTAIN_EXIT_MS);
+      }, FADE_MS);
     });
   }
 
@@ -634,8 +627,7 @@
     measureCopy();
     window.addEventListener('resize', measureCopy);
 
-    // Disable the CSS keyframe so JS owns the transform.
-    marqueeTrack.style.animation = 'none';
+    // JS owns the transform from here on; hint the compositor.
     marqueeTrack.style.willChange = 'transform';
 
     function marqueeTick(now) {
