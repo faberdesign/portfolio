@@ -1869,6 +1869,51 @@ h1, h2, h3 {
 }
 
 /* ============================================================
+   TOUCH TAP FEEDBACK
+   Mirrors the hover color shifts on tap. Existing :active rules
+   on cards (work-card, work-feature, cv-item, video-frame)
+   already deliver the scale/translate response on both inputs;
+   these add the color signal that hover used to provide.
+   ============================================================ */
+@media (hover: none) {
+  .hero-cta:active {
+    color: var(--color-footer-text);
+    background: transparent;
+    border-color: var(--color-accent);
+  }
+  .hero-cta:active .hero-cta-arrow {
+    transform: translateX(4px);
+  }
+  .work-feature:active .work-feature-title {
+    color: var(--color-accent);
+  }
+  .work-card:active .work-card-tile-name {
+    color: var(--color-accent);
+  }
+  .work-card-progress:active .work-card-tile-name {
+    color: var(--color-text);
+  }
+  .cv-item:active {
+    border-color: var(--color-accent);
+  }
+  .back-link:active {
+    color: var(--color-text);
+  }
+  .proto-link:active {
+    border-color: var(--color-accent);
+  }
+  .proto-link:active .arrow {
+    transform: translateX(4px);
+  }
+  .impressum-section a:active {
+    color: var(--color-accent);
+  }
+  .footer-bottom-link:active {
+    color: var(--color-accent);
+  }
+}
+
+/* ============================================================
    PLACEHOLDER PROJECT PAGE
    ============================================================ */
 

@@ -704,6 +704,31 @@ nav {
 }
 
 /* ============================================================
+   TOUCH TAP FEEDBACK
+   Hover styles are gated behind @media (hover: hover) so they
+   never stick on mobile. Mirror the color shifts as :active here
+   so a tap still gives visible confirmation. Scoped to (hover:
+   none) so desktop click flashes are unaffected.
+   ============================================================ */
+@media (hover: none) {
+  .nav-logo:active {
+    color: var(--color-accent);
+  }
+  .nav-hamburger:active span {
+    background: var(--color-accent);
+  }
+  .nav-overlay-links a:active {
+    color: var(--color-accent);
+  }
+  .footer-contact-link:active {
+    color: var(--color-accent);
+  }
+  .scroll-top:active {
+    background: var(--color-accent);
+  }
+}
+
+/* ============================================================
    SCROLL REVEAL
    Elements with .reveal start slightly faded + offset. JS adds
    .is-visible via IntersectionObserver when they enter the viewport
