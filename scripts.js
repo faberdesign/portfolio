@@ -43,7 +43,7 @@
     '.nav-hamburger', '.nav-overlay-links a', '.footer-contact-link',
     '.back-link', '.impressum-section a', '.footer-bottom-link',
   ].join(', ');
-  const TAP_FLASH_MS = 360;
+  const TAP_FLASH_MS = 200;
   const TAP_MOVE_CANCEL_PX = 10;
 
   let tappedEl = null;
