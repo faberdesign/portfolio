@@ -458,9 +458,23 @@
   }
 
   // ----- Active section highlight (index only) -----
-  // Each section is observed against a thin "active band" near the top of
-  // the viewport. When a section's top crosses into the band, IO fires and
-  // we recompute which section currently leads. No per-frame scroll listener.
+  // For each frame the user is scrolling, pick the section whose top is
+  // closest to (but at or above) the 100px trigger line and mark its nav
+  // link active.
+  //
+  // Earlier this was IntersectionObserver-based — IO fired only when a
+  // section entered or left a thin "active band," then we read its top
+  // from inside the callback. That broke for sections taller than the
+  // band (.work has four cards stacked vertically): once the section
+  // started intersecting, the observer didn't fire again as the top
+  // slid down past 100px, so Work never got highlighted until About
+  // finally entered the band hundreds of pixels later. A scroll listener
+  // catches every frame, so the active link tracks the section the user
+  // is actually reading.
+  //
+  // The work it does each frame is cheap: a getBoundingClientRect() per
+  // section (three on this page) and a couple of classList operations.
+  // rAF throttling keeps it to at most one run per paint.
   const sections = document.querySelectorAll('section[id], footer[id]');
   const navLinks = document.querySelectorAll('.nav-overlay-links a[href*="#"]');
 
@@ -475,14 +489,17 @@
       }
     });
 
-    const sectionsById = {};
-    sections.forEach(function (s) { sectionsById[s.id] = s; });
-    const intersecting = new Set();
+    // The trigger line: a section becomes "active" when its top crosses
+    // above this many px from the viewport top. 100px clears the 56px nav
+    // with a little breathing room so the highlight feels anchored to the
+    // content under the nav, not pinned to the nav line itself.
+    const ACTIVE_TRIGGER_PX = 100;
 
-    // Threshold for "near the bottom" — within this many px of the page
-    // bottom counts as "at the footer", forcing the Contact link active.
-    // Wider than 0 because the footer is often shorter than the viewport
-    // (its top never crosses the active band's trigger line on this page).
+    // "Near the bottom" override — within this many px of the page
+    // bottom forces the last section (Contact) active even if earlier
+    // sections technically still own the trigger line. Necessary because
+    // the footer can be shorter than the band, so its own top never
+    // crosses the 100px line on tall viewports.
     const NEAR_BOTTOM_PX = 120;
 
     function isNearBottom() {
@@ -491,10 +508,6 @@
     }
 
     function updateActiveLink() {
-      // Near-bottom override runs FIRST and unconditionally — when scrolled
-      // close to the page bottom, force the last section (Contact) active
-      // even if earlier sections still intersect the active band (About's
-      // tall content does, near the page end).
       if (isNearBottom()) {
         const lastSection = sections[sections.length - 1];
         navLinks.forEach(function (l) { l.classList.remove('active'); });
@@ -504,18 +517,18 @@
         return;
       }
 
-      // Regular: pick the section whose top is closest to (but at or above)
-      // the 100px trigger line. If multiple intersect the band, the one
-      // with the largest negative-or-near-zero top wins (topmost).
+      // Pick the section whose top is closest to (but at or above) the
+      // trigger line. Iterating every section each call — between scroll
+      // frames a section's top can slide past the line without any
+      // observer-style notification (sections taller than the trigger
+      // band remain "in view" the whole time).
       let activeId = null;
       let bestTop = -Infinity;
-      intersecting.forEach(function (id) {
-        const el = sectionsById[id];
-        if (!el) return;
-        const top = el.getBoundingClientRect().top;
-        if (top <= 100 && top > bestTop) {
+      sections.forEach(function (section) {
+        const top = section.getBoundingClientRect().top;
+        if (top <= ACTIVE_TRIGGER_PX && top > bestTop) {
           bestTop = top;
-          activeId = id;
+          activeId = section.id;
         }
       });
 
@@ -525,55 +538,23 @@
       }
     }
 
-    const sectionObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) intersecting.add(entry.target.id);
-        else intersecting.delete(entry.target.id);
+    // rAF-throttled scroll handler. At most one updateActiveLink per
+    // paint. Resize uses the same path so the active link stays correct
+    // if the viewport or content reflows.
+    let activeLinkTicking = false;
+    function scheduleActiveLinkUpdate() {
+      if (activeLinkTicking) return;
+      activeLinkTicking = true;
+      requestAnimationFrame(function () {
+        updateActiveLink();
+        activeLinkTicking = false;
       });
-      updateActiveLink();
-    }, {
-      // Active band: from the 56px-nav line down to the top 25% of the
-      // viewport. A section "intersects" while its top is in this band.
-      rootMargin: '-56px 0px -75% 0px',
-      threshold: 0,
-    });
+    }
+    window.addEventListener('scroll', scheduleActiveLinkUpdate, { passive: true });
+    window.addEventListener('resize', scheduleActiveLinkUpdate, { passive: true });
 
-    sections.forEach(function (section) {
-      sectionObserver.observe(section);
-    });
-
-    // Bottom sentinel: fires updateActiveLink whenever the document's
-    // bottom edge enters or leaves the "near-bottom" zone. Necessary
-    // because the section observer may not fire at all once the user
-    // reaches the footer (on this page About's tall content keeps
-    // intersecting the active band until the user is well past it).
-    //
-    // Natural flow positioning — appended at the end of <body>, after
-    // the footer, so it sits at the actual document bottom. Earlier
-    // attempts used position:absolute;bottom:0 which (with body's
-    // default static positioning) anchors to the initial containing
-    // block, not the document end, so the sentinel never fired.
-    const bottomSentinel = document.createElement('div');
-    bottomSentinel.setAttribute('aria-hidden', 'true');
-    bottomSentinel.style.cssText =
-      'width:1px;height:1px;pointer-events:none;';
-    document.body.appendChild(bottomSentinel);
-
-    const bottomObserver = new IntersectionObserver(function () {
-      updateActiveLink();
-    }, {
-      threshold: 0,
-      // Expand the viewport bottom by NEAR_BOTTOM_PX so the sentinel
-      // triggers before the user reaches the literal bottom edge.
-      rootMargin: '0px 0px ' + NEAR_BOTTOM_PX + 'px 0px',
-    });
-    bottomObserver.observe(bottomSentinel);
-
-    // Initial pass: handles the case where the page loads scrolled to
-    // the bottom (e.g., via /#contact). IO observers fire asynchronously
-    // and the section observer may not fire at all if About is the only
-    // currently-intersecting section; the explicit call here makes sure
-    // the active link is correct from the first frame.
+    // Initial pass — handles direct loads (e.g., /#about) and the very
+    // first paint before the user has scrolled.
     updateActiveLink();
   }
 
