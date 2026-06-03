@@ -411,7 +411,10 @@ nav {
   background: var(--color-dark);
   border: 2px solid transparent;
   pointer-events: none;
-  z-index: 9999;
+  /* Above the nav (10001) and curtain (10000) so the cursor stays on
+     top of every layer — it's the user's pointer, it should never be
+     occluded by anything. */
+  z-index: 10002;
   opacity: 0;
   will-change: transform;
   transition: opacity 200ms var(--ease-out-soft),
