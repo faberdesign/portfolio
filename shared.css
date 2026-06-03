@@ -142,8 +142,10 @@ nav {
   transition: color 0.25s ease;
 }
 
-.nav-logo:hover {
-  color: var(--color-accent);
+@media (hover: hover) {
+  .nav-logo:hover {
+    color: var(--color-accent);
+  }
 }
 
 .nav-hamburger {
@@ -174,8 +176,10 @@ nav {
               background 220ms var(--ease-out-soft);
 }
 
-.nav-hamburger:hover span {
-  background: var(--color-accent);
+@media (hover: hover) {
+  .nav-hamburger:hover span {
+    background: var(--color-accent);
+  }
 }
 
 .nav-hamburger.is-open span:first-child {
@@ -250,8 +254,10 @@ nav {
 .nav-overlay.is-open .nav-overlay-links li:nth-child(2) a { transition-delay: 140ms; }
 .nav-overlay.is-open .nav-overlay-links li:nth-child(3) a { transition-delay: 200ms; }
 
-.nav-overlay-links a:hover {
-  color: var(--color-accent);
+@media (hover: hover) {
+  .nav-overlay-links a:hover {
+    color: var(--color-accent);
+  }
 }
 
 .nav-overlay-links a.active {
@@ -311,8 +317,10 @@ nav {
   width: fit-content;
 }
 
-.footer-contact-link:hover {
-  color: var(--color-accent);
+@media (hover: hover) {
+  .footer-contact-link:hover {
+    color: var(--color-accent);
+  }
 }
 
 .footer-bottom {
@@ -676,8 +684,10 @@ nav {
               visibility 0s linear 0s;
 }
 
-.scroll-top:hover {
-  background: var(--color-accent);
+@media (hover: hover) {
+  .scroll-top:hover {
+    background: var(--color-accent);
+  }
 }
 
 /* Press feedback — fast, instant confirmation that the button heard the user. */

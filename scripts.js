@@ -28,6 +28,19 @@
     });
   }
 
+  // When a page is restored from the bfcache (back/forward navigation),
+  // its DOM state is frozen exactly as we left it — including
+  // data-curtain="exiting" set right before we navigated away. Without
+  // this reset, the restored page would appear fully covered by the navy
+  // curtain. Also clear the sessionStorage flag so a follow-up
+  // fresh-load doesn't try to play a phantom reveal animation.
+  window.addEventListener('pageshow', function (event) {
+    if (event.persisted) {
+      document.documentElement.dataset.curtain = 'hidden';
+      try { sessionStorage.removeItem('curtainCovering'); } catch (err) { /* ignore */ }
+    }
+  });
+
   // Intercept same-origin link clicks: raise the curtain, then navigate.
   // Hash links, mailto/tel, external URLs, target=_blank, modifier-keyed
   // clicks, and non-left-button clicks all fall through to default

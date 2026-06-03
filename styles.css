@@ -218,15 +218,17 @@ h1, h2, h3 {
   transition: transform 240ms var(--ease-out-soft);
 }
 
-.hero-cta:hover {
-  color: var(--color-footer-text);
-  background: transparent;
-  border-color: var(--color-accent);
-  transform: translateY(-3px) scale(1.1);
-}
+@media (hover: hover) {
+  .hero-cta:hover {
+    color: var(--color-footer-text);
+    background: transparent;
+    border-color: var(--color-accent);
+    transform: translateY(-3px) scale(1.1);
+  }
 
-.hero-cta:hover .hero-cta-arrow {
-  transform: translateX(4px);
+  .hero-cta:hover .hero-cta-arrow {
+    transform: translateX(4px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -541,8 +543,10 @@ h1, h2, h3 {
   transition: transform 320ms var(--ease-out-soft);
 }
 
-.work-feature:hover {
-  transform: translateY(-6px);
+@media (hover: hover) {
+  .work-feature:hover {
+    transform: translateY(-6px);
+  }
 }
 
 .work-feature:active {
@@ -567,8 +571,10 @@ h1, h2, h3 {
   transition: color 0.25s ease;
 }
 
-.work-feature:hover .work-feature-title {
-  color: var(--color-accent);
+@media (hover: hover) {
+  .work-feature:hover .work-feature-title {
+    color: var(--color-accent);
+  }
 }
 
 .work-feature-desc {
@@ -605,8 +611,10 @@ h1, h2, h3 {
   transition: transform 320ms var(--ease-out-soft);
 }
 
-.work-card:hover {
-  transform: translateY(-6px);
+@media (hover: hover) {
+  .work-card:hover {
+    transform: translateY(-6px);
+  }
 }
 
 .work-card:active {
@@ -651,8 +659,10 @@ h1, h2, h3 {
   transition: color 240ms var(--ease-out-soft);
 }
 
-.work-card:hover .work-card-tile-name {
-  color: var(--color-accent);
+@media (hover: hover) {
+  .work-card:hover .work-card-tile-name {
+    color: var(--color-accent);
+  }
 }
 
 /* Image-led variant: tile becomes a pure image holder. The eyebrow +
@@ -696,8 +706,10 @@ h1, h2, h3 {
   color: var(--color-muted);
 }
 
-.work-card-progress:hover .work-card-tile-name {
-  color: var(--color-text);
+@media (hover: hover) {
+  .work-card-progress:hover .work-card-tile-name {
+    color: var(--color-text);
+  }
 }
 
 .work-card-tag {
@@ -852,9 +864,11 @@ h1, h2, h3 {
               transform 320ms var(--ease-out-soft);
 }
 
-.cv-item:hover {
-  border-color: var(--color-accent);
-  transform: translateY(-6px);
+@media (hover: hover) {
+  .cv-item:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-6px);
+  }
 }
 
 .cv-item:active {
@@ -915,8 +929,10 @@ h1, h2, h3 {
   margin: 0 auto;
 }
 
-.back-link:hover {
-  color: var(--color-text);
+@media (hover: hover) {
+  .back-link:hover {
+    color: var(--color-text);
+  }
 }
 
 /* Case study hero */
@@ -1425,8 +1441,10 @@ h1, h2, h3 {
   transition: transform 320ms var(--ease-out-soft);
 }
 
-.video-frame:hover {
-  transform: translateY(-6px);
+@media (hover: hover) {
+  .video-frame:hover {
+    transform: translateY(-6px);
+  }
 }
 
 .video-frame:active {
@@ -1485,19 +1503,21 @@ h1, h2, h3 {
               border-color 240ms var(--ease-out-soft);
 }
 
-.proto-link:hover {
-  border-color: var(--color-accent);
-  transform: translateY(-3px) scale(1.1);
+@media (hover: hover) {
+  .proto-link:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-3px) scale(1.1);
+  }
+
+  .proto-link:hover .arrow {
+    transform: translateX(4px);
+  }
 }
 
 .proto-link .arrow {
   color: var(--color-accent);
   display: inline-block;
   transition: transform 240ms var(--ease-out-soft);
-}
-
-.proto-link:hover .arrow {
-  transform: translateX(4px);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1830,8 +1850,10 @@ h1, h2, h3 {
   transition: color 0.25s ease;
 }
 
-.impressum-section a:hover {
-  color: var(--color-accent);
+@media (hover: hover) {
+  .impressum-section a:hover {
+    color: var(--color-accent);
+  }
 }
 
 /* Impressum link in the footer-bottom row */
@@ -1840,8 +1862,10 @@ h1, h2, h3 {
   transition: color 0.25s ease;
 }
 
-.footer-bottom-link:hover {
-  color: var(--color-accent);
+@media (hover: hover) {
+  .footer-bottom-link:hover {
+    color: var(--color-accent);
+  }
 }
 
 /* ============================================================
