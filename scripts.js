@@ -1,14 +1,19 @@
 (function () {
   'use strict';
 
-  // ----- Page transition (fade) -----
+  // ----- Page transition (asymmetric lift) -----
   // Inline head script may have set data-page-fade="covering" on <html>
   // if we arrived via an internal link. Two requestAnimationFrames flush
   // the layout and the initial-paint frame, then we swap to "revealing"
-  // so the CSS opacity transition runs. After the fade completes we
-  // strip the attribute so the body returns to its idle full-opacity
-  // state.
-  const FADE_MS = 150;
+  // so the CSS settle-in transition runs. After the enter completes we
+  // strip the attribute so the body returns to its idle state.
+  //
+  // Asymmetric timings: exit is brisk (the user already committed by
+  // clicking), enter is longer with a stronger deceleration so the
+  // new page arrives with weight. CSS owns the durations; JS just
+  // matches them for the navigation/teardown timeouts.
+  const PAGE_EXIT_MS = 160;
+  const PAGE_ENTER_MS = 320;
 
   if (document.documentElement.dataset.pageFade === 'covering') {
     requestAnimationFrame(function () {
@@ -16,7 +21,7 @@
         document.documentElement.dataset.pageFade = 'revealing';
         setTimeout(function () {
           delete document.documentElement.dataset.pageFade;
-        }, FADE_MS);
+        }, PAGE_ENTER_MS);
       });
     });
   }
@@ -160,7 +165,7 @@
 
       setTimeout(function () {
         window.location.href = link.href;
-      }, FADE_MS);
+      }, PAGE_EXIT_MS);
     });
   }
 

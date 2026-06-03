@@ -39,6 +39,11 @@
 html {
   scroll-behavior: smooth;
   overflow-x: clip;
+  /* Navy canvas: shows through during the page-transition translate
+     (when body is offset and reveals html behind it) and during iOS
+     overscroll rubber-band. Matching the nav surface means the
+     exposed strip reads as nav thickness rather than an empty gap. */
+  background: var(--color-dark);
   /* Suppress the native gray rectangle on tap; the JS-driven
      `.is-tapped` flash owns mobile touch feedback. */
   -webkit-tap-highlight-color: transparent;
@@ -596,45 +601,63 @@ nav {
 }
 
 /* ============================================================
-   PAGE TRANSITION (FADE)
-   Internal link clicks fade the body out over 150ms, then
-   navigate. The destination page mounts at opacity 0 (via the
-   inline head script setting data-page-fade="covering") and JS
-   fades it back in over 150ms after first paint. The data
-   attribute lives on <html>, not <body>, so the inline script
-   can set it before <body> is parsed and rendered — no FOUC.
+   PAGE TRANSITION (ASYMMETRIC LIFT)
+   Exit is fast and intentional (the user already committed),
+   enter is slower with a stronger deceleration (arrival sets
+   context). The translateY echoes the card-lift vocabulary and
+   the navy gap exposed during the slide matches the nav surface,
+   so the composition reads as "content sliding into the nav
+   frame" rather than a flat opacity swap.
+
+   Sequence:
+   • Click link → data-page-fade="exiting" (160ms exit) → nav
+   • Destination page paints with data-page-fade="covering"
+     (no transition, content parked 12px below opacity 0)
+   • rAF×2 → data-page-fade="revealing" (320ms enter)
+   • After enter, JS strips the attribute.
+
+   The data attribute lives on <html>, set by the inline head
+   script before <body> parses, so there's no FOUC.
    ============================================================ */
 
 body {
-  transition: opacity 150ms var(--ease-out-soft);
+  transition: opacity 320ms var(--ease-drawer),
+              transform 320ms var(--ease-drawer);
 }
 
 /* Inline head script on the destination page sets this when the
-   sessionStorage flag is present. Body is opacity 0 from first
-   paint with no transition, so there's no flash of content. */
+   sessionStorage flag is present. Body is parked at opacity 0 and
+   translated 12px down from first paint, with no transition so it
+   snaps to position without animating from idle. */
 html[data-page-fade="covering"] body {
   opacity: 0;
+  transform: translateY(12px);
   transition: none;
 }
 
 /* After first paint, JS swaps to "revealing" and the base body
-   transition runs the fade-in. */
+   transition runs the settle-in. */
 html[data-page-fade="revealing"] body {
   opacity: 1;
+  transform: translateY(0);
 }
 
-/* Triggered when the user clicks a same-origin link. The base body
-   transition runs the fade-out before navigation fires. */
+/* Triggered when the user clicks a same-origin link. Faster
+   curve override — exit is brisk so the click feels responsive. */
 html[data-page-fade="exiting"] body {
   opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 160ms var(--ease-out-soft),
+              transform 160ms var(--ease-out-soft);
 }
 
-/* Reduced motion: no fade. Direct navigation, full opacity. */
+/* Reduced motion: no fade, no translate. Direct navigation. */
 @media (prefers-reduced-motion: reduce) {
   body,
   html[data-page-fade] body {
     transition: none;
     opacity: 1;
+    transform: none;
   }
 }
 
