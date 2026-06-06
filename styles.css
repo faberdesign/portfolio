@@ -260,7 +260,7 @@ h1, h2, h3 {
   display: block;
   font-family: 'DM Sans', sans-serif;
   font-weight: 500;
-  font-size: 11px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: rgba(247, 244, 239, 0.6);
@@ -596,7 +596,7 @@ h1, h2, h3 {
 .work-feature-tag {
   font-family: 'DM Sans', sans-serif;
   font-weight: 500;
-  font-size: 11px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--color-muted);
@@ -648,7 +648,7 @@ h1, h2, h3 {
 .work-card-tile-eyebrow {
   font-family: 'DM Sans', sans-serif;
   font-weight: 500;
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-accent);
@@ -1108,9 +1108,10 @@ h1, h2, h3 {
 .stat-number {
   font-family: 'Syne', sans-serif;
   font-weight: 700;
-  font-size: 64px;
+  font-size: clamp(48px, 6vw, 72px);
   color: var(--color-accent);
   line-height: 1;
+  letter-spacing: -0.01em;
 }
 
 .stat-text {
@@ -1123,17 +1124,22 @@ h1, h2, h3 {
 }
 
 /* Editorial pull-quote: vermilion display glyph as the leading
-   affordance, italic body. No card surround, no side stripe. */
+   affordance, italic body. No card surround, no side stripe.
+   Sized 1.4–1.9× body so the quote reads as a moment of pause in
+   the case-study flow, not as another paragraph. Line-height is
+   intentionally tighter than the surrounding body (1.45 vs 1.8)
+   so the block reads as a single statement. */
 .cs-quote {
   position: relative;
-  margin: 40px 0;
-  padding: 28px 0 8px 64px;
+  margin: 48px 0;
+  padding: 32px 0 8px clamp(56px, 6vw, 76px);
   font-family: 'DM Sans', sans-serif;
   font-weight: 300;
   font-style: italic;
-  font-size: 18px;
+  font-size: clamp(22px, 2.8vw, 30px);
   color: var(--color-text);
-  line-height: 1.7;
+  line-height: 1.45;
+  letter-spacing: -0.005em;
   background: transparent;
   border: none;
   border-radius: 0;
@@ -1146,19 +1152,20 @@ h1, h2, h3 {
   top: -8px;
   font-family: 'Syne', sans-serif;
   font-weight: 800;
-  font-size: 80px;
+  font-size: clamp(64px, 8.5vw, 96px);
   line-height: 1;
   color: var(--color-accent);
 }
 
 .cs-quote.small {
-  margin: 28px 0;
-  padding: 22px 0 4px 52px;
-  font-size: 16px;
+  margin: 32px 0;
+  padding: 24px 0 4px clamp(44px, 4.8vw, 60px);
+  font-size: clamp(19px, 2.2vw, 24px);
+  line-height: 1.5;
 }
 
 .cs-quote.small::before {
-  font-size: 60px;
+  font-size: clamp(52px, 6.5vw, 72px);
 }
 
 /* Dark surface — italic body shifts to cream; vermilion glyph stays. */
@@ -1176,7 +1183,7 @@ h1, h2, h3 {
 }
 
 .cs-quote-attr {
-  padding-left: 64px;
+  padding-left: clamp(56px, 6vw, 76px);
   margin-bottom: 32px;
   font-family: 'DM Sans', sans-serif;
   font-weight: 500;
@@ -1187,7 +1194,7 @@ h1, h2, h3 {
 }
 
 .cs-quote-figure .cs-quote.small + .cs-quote-attr {
-  padding-left: 52px;
+  padding-left: clamp(44px, 4.8vw, 60px);
   margin-bottom: 24px;
 }
 
