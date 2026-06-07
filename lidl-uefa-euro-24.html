@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Lidl at UEFA EURO 2024: a modular fan activation system for Europe's biggest football tournament. Experience design case by Benedikt Faber.">
+  <title>Benedikt Faber, Lidl at UEFA EURO 2024</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="shared.css">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // Page fade: see scripts.js. Mark <html> before paint so body
+    // renders at opacity 0 if we arrived via an internal link.
+    try {
+      if (sessionStorage.getItem('pageFadeIn') === 'true') {
+        sessionStorage.removeItem('pageFadeIn');
+        document.documentElement.dataset.pageFade = 'covering';
+      }
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <!-- NAV -->
+  <nav aria-label="Primary">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">Benedikt Faber</a>
+      <button class="nav-hamburger" type="button" aria-label="Open menu" aria-controls="nav-overlay" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="nav-overlay" id="nav-overlay" role="dialog" aria-modal="true" aria-label="Menu">
+    <ul class="nav-overlay-links">
+      <li><a href="/#work">Work</a></li>
+      <li><a href="/#about">About</a></li>
+      <li><a href="/#contact">Contact</a></li>
+    </ul>
+  </div>
+
+  <!-- SECTION 01: HERO -->
+  <section class="cs-hero">
+    <div class="cs-hero-inner">
+      <span class="section-label">Creative Concept Case &middot; 2023/2024</span>
+      <h1 class="cs-title">Lidl at UEFA EURO 2024</h1>
+      <p class="cs-tagline">Designing a modular fan activation system for Europe&rsquo;s biggest football tournament, where freshness had to compete with 50,000 fans, rival sponsors, and UEFA catering rules.</p>
+
+      <div class="cs-hero-grid">
+        <div class="cs-meta">
+          <div>
+            <span class="section-label cs-meta-item-label">Role</span>
+            <span class="cs-meta-item-value">Junior Concept Creative</span>
+          </div>
+          <div>
+            <span class="section-label cs-meta-item-label">Timeline</span>
+            <span class="cs-meta-item-value">2023/2024</span>
+          </div>
+          <div>
+            <span class="section-label cs-meta-item-label">Client</span>
+            <span class="cs-meta-item-value">Lidl International / Lidl Deutschland</span>
+          </div>
+        </div>
+
+        <div class="cs-hero-image">
+          <img src="img/lidl-euro/frische-stadion-duesseldorf.jpg" alt="The Lidl Frische Stadion at the UEFA EURO 2024 Fan Zone in Düsseldorf, showing the branded blue container structure with oversized lemon on top and fans gathered outside." width="1800" height="1000">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 02: TEAM & ROLE -->
+  <section class="cs-section bg-white">
+    <div class="cs-section-inner">
+      <span class="section-label accent">Team &amp; Role</span>
+      <h2 class="cs-h2">Concept development, <br/>with DO IT!</h2>
+
+      <div class="testing-grid">
+        <div class="testing-col">
+          <span class="section-label accent">My Role</span>
+          <p class="testing-body">Junior Concept Creative at DO IT! GmbH, working in close collaboration with Creative Director Sebastian Heise. My contribution focused on the conceptual development of the individual activation formats: the mechanics, the brand logic behind each module, and how they connected to Lidl&rsquo;s positioning as Official Fresh Food Partner.</p>
+        </div>
+        <div class="testing-col">
+          <span class="section-label accent">Project Team</span>
+          <div class="change-list">
+            <div class="change-item">
+              <span class="change-lead">Concept:</span>
+              <span class="change-rest">Benedikt Faber &amp; Sebastian Heise (DO IT!).</span>
+            </div>
+            <div class="change-item">
+              <span class="change-lead">Project Management &amp; Production:</span>
+              <span class="change-rest">DO IT! GmbH.</span>
+            </div>
+            <div class="change-item">
+              <span class="change-lead">Client:</span>
+              <span class="change-rest">Lidl International / Lidl in Deutschland.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 03: THE BRIEF -->
+  <section class="cs-section bg-bg">
+    <div class="cs-section-inner">
+      <span class="section-label accent">The Brief</span>
+      <h2 class="cs-h2">The freshness kick, <br/> at the biggest stage.</h2>
+      <p class="cs-body cs-intro">Lidl entered UEFA EURO 2024 as Official Fresh Food Partner: not as a kit sponsor, not as a tech brand, but as the supermarket that feeds the nation. The challenge was to translate that into something fans would actually notice, enjoy, and remember &mdash; across 8 UEFA Fan Zones in host cities and 5 stadium venues throughout Germany.</p>
+      <p class="cs-body cs-intro">The activation had to work at scale. A single concept, deployable across 13 locations with different footprints, different audiences, and different operational constraints. Consistent enough to be recognizable. Flexible enough to adapt.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 04: THE DESIGN PROBLEM -->
+  <section class="cs-section bg-white">
+    <div class="cs-section-inner">
+      <span class="section-label accent">The Design Problem</span>
+      <h2 class="cs-h2">Sponsor presence is noise. <br/> Freshness isn't.</h2>
+
+      <article class="solution-block reveal">
+        <div class="solution-text">
+          <p class="cs-body">Sponsor presence at major sporting events is noise. Banners, logos, free samples &mdash; fans have learned to tune them out. For Lidl, the risk was doubly acute: as a discounter, the brand needed to earn its place at a football event, not just buy it. A presence that felt transactional or out of place would have done more harm than good.</p>
+          <p class="cs-body" style="margin-top:16px;">There was also a hard constraint to navigate. At the time of concept development, UEFA regulations restricted Fresh Food sampling within the official Fan Zones, though Lidl was actively negotiating to loosen that restriction. The concept was built to work either way: robust enough without sampling, stronger with it.</p>
+        </div>
+        <div class="solution-image">
+          <div class="placeholder aspect-4-3">
+            <img src="img/lidl-euro/lidl_uefa_euro_booth.jpg" alt="Concept rendering of the Lidl hub at a stadium venue, showing the oversized fruit crate structure with activation formats arranged around it including a dribbling course and shooting station." width="1200" height="900">
+          </div>
+        </div>
+      </article>
+
+      <p class="problem-close">The real problem: how do you make freshness feel like part of the football experience, not an interruption of it?</p>
+    </div>
+  </section>
+
+  <!-- SECTION 05: THE CONCEPT -->
+  <section class="cs-section bg-bg">
+    <div class="cs-section-inner">
+      <span class="section-label accent">The Concept</span>
+      <h2 class="cs-h2">Aus Lidl zum Spiel &mdash; <br/>from claim to activation system.</h2>
+      <p class="cs-body cs-intro">Lidl&rsquo;s campaign claim &ldquo;Aus Lidl zum Spiel&rdquo; became more than a tagline. It became the structural principle of the entire activation. The phrase describes a journey: from Lidl&rsquo;s products to the match itself. The activations were designed to make that journey tangible and fun.</p>
+
+      <article class="decision-block reveal">
+        <div class="decision-left">
+          <h3 class="cs-h3">A modular hub, scaled to each venue.</h3>
+        </div>
+        <div class="decision-right">
+          <p class="cs-body smaller">The core system was a modular hub, scalable to each venue, that served as the anchor point for all activations. Around it, a selection of interchangeable formats per location, each designed to connect physical play with the Fresh Food brand in a way that felt natural rather than forced.</p>
+        </div>
+      </article>
+
+      <article class="solution-block reveal">
+        <div class="solution-text">
+          <span class="section-label">The Activations</span>
+          <h3 class="cs-h3">One principal. Many formats.</h3>
+          <p class="cs-body">Each activation format was designed around the same principle: connect physical play with the Fresh Food brand in a way that felt immediate and fun. Shooting challenges, dribbling courses, juggling stations — every format was self-explanatory, family-friendly, and carried the Fresh Food visual language through oversized fruit props, branded surfaces, and Lidl's campaign identity.</p>
+		  <p class="cs-body">The signature format was Fruit Football: an analog-digital game where participants shoot at falling digital fruit on a goal-sized screen. It merged the two things Lidl brought to the tournament, football and fresh produce, into a single immediately understandable interaction — and was designed for a digital extension via the Lidl Plus app and personal highscore tracking.</p>
+        </div>
+        <div class="solution-image">
+          <div class="placeholder aspect-4-3">
+            <img src="img/lidl-euro/lidl_uefa_euro_fruitfootball.jpg" alt="Concept illustration of the Fruit Football activation: a child shoots at a goal-sized digital screen displaying falling fruit, with oversized fruit props and a Lidl promoter in the background." width="1200" height="900">
+          </div>
+        </div>
+      </article>
+
+      <article class="solution-block reveal">
+        <div class="solution-text">
+          <span class="section-label">The Lidl Freshies</span>
+          <h3 class="cs-h3">The Freshies roaming through Fan Zones</h3>
+          <p class="cs-body">Anthropomorphic fruit and vegetable walking acts, served as mobile eye-catchers, extending the Fresh Food visibility beyond the fixed hub locations.</p>
+        </div>
+        <div class="solution-image">
+          <div class="placeholder aspect-4-3">
+            <img src="img/lidl-euro/lidl_uefa_euro_freshies.jpg" alt="The three Lidl Freshies characters: an apple, a leek, and a pear, dressed as football fans with Lidl-branded accessories." width="1200" height="900">
+          </div>
+        </div>
+      </article>
+
+      <article class="decision-block reveal">
+        <div class="decision-left">
+          <h3 class="cs-h3">Private Screening.</h3>
+        </div>
+        <div class="decision-right">
+          <p class="cs-body smaller">A third format extended the reach beyond official venues: 21 community groups, clubs and neighborhoods won a private screening experience, with full catering and a dedicated activation setup, bringing the Lidl fan experience into local contexts the tournament itself could not reach.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- SECTION 06: VISUAL — FRISCHE STADION -->
+  <section class="cs-section bg-white">
+    <div class="cs-section-inner">
+      <div class="placeholder aspect-16-9">
+        <img src="img/lidl-euro/frische-stadion-duesseldorf.jpg" alt="The Lidl Frische Stadion at the UEFA EURO 2024 Fan Zone in Düsseldorf, showing the branded blue container structure with oversized lemon on top and fans gathered outside." width="1600" height="900">
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 07: IN ACTION -->
+  <section class="cs-section bg-bg">
+    <div class="cs-section-inner">
+      <span class="section-label accent">In Action</span>
+      <h2 class="cs-h2">The activation, as experienced.</h2>
+      <p class="cs-body cs-intro">Three official Lidl videos from Fan Zones across Germany.</p>
+
+      <div class="in-action-grid">
+        <!-- Video 1 — Berlin (TikTok) -->
+        <div>
+          <a class="video-frame" href="https://www.tiktok.com/@lidlde/video/7388450589933440288" target="_blank" rel="noopener noreferrer" aria-label="Watch the Berlin activation on TikTok (opens in a new tab)">
+            <img src="img/lidl-euro/fanzone-berlin.jpg" alt="Thumbnail for the Lidl Frische Stadion Berlin activation video." width="900" height="1600">
+            <span class="video-play-overlay" aria-hidden="true">
+              <span class="video-play-label">Watch the XL Frische Stadion activation</span>
+            </span>
+          </a>
+          <p class="in-action-caption">XL Frische Stadion Berlin &mdash; Fruit Football, fresh fruit bar, photo booth, and the Freshies walking acts.</p>
+        </div>
+
+        <!-- Video 2 — Stuttgart (YouTube Shorts) -->
+        <div>
+          <a class="video-frame" href="https://www.youtube.com/shorts/Q2AuHfh4RAU" target="_blank" rel="noopener noreferrer" aria-label="Watch the stadium activation on YouTube (opens in a new tab)">
+            <img src="img/lidl-euro/fanzone-stuttgart.jpg" alt="Thumbnail for the Frische Stadion stadium activation video." width="900" height="1600">
+            <span class="video-play-overlay" aria-hidden="true">
+              <span class="video-play-label">Watch the stadium activation</span>
+            </span>
+          </a>
+          <p class="in-action-caption">Frische Stadion at the stadium venue &mdash; the activation in match-day context.</p>
+        </div>
+
+        <!-- Video 3 — München (YouTube Shorts) -->
+        <div>
+          <a class="video-frame" href="https://www.youtube.com/shorts/mr9hxZ-iMR4" target="_blank" rel="noopener noreferrer" aria-label="Watch the München Fan Zone on YouTube (opens in a new tab)">
+            <img src="img/lidl-euro/fanzone-muenchen.jpg" alt="Thumbnail for the Lidl Fan Zone München activation video." width="900" height="1600">
+            <span class="video-play-overlay" aria-hidden="true">
+              <span class="video-play-label">Watch the München Fan Zone activation</span>
+            </span>
+          </a>
+          <p class="in-action-caption">Fan Zone München &mdash; photo booth, flipper activation, and fan giveaways.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 08: OUTCOME -->
+  <section class="cs-section bg-white">
+    <div class="cs-section-inner">
+      <span class="section-label accent">Outcome</span>
+      <h2 class="cs-h2">Freshness, at scale.</h2>
+
+      <div class="change-list">
+        <div class="change-item">
+          <span class="change-lead">13 venues across Germany.</span>
+          <span class="change-rest">Activation across 8 UEFA Fan Zones in host cities and 5 stadium venues throughout the country.</span>
+        </div>
+        <div class="change-item">
+          <span class="change-lead">21 private screening events</span>
+          <span class="change-rest">Private screening events awarded to community groups, clubs and neighborhoods across Germany.</span>
+        </div>
+        <div class="change-item">
+          <span class="change-lead">91 tonnes of fresh fruit.</span>
+          <span class="change-rest">Distributed across Fan Zones and stadiums over the course of the tournament.</span>
+        </div>
+        <div class="change-item">
+          <span class="change-lead">1,100+ children as player escorts.</span>
+          <span class="change-rest">Lidl's Kids Team programme brought children from across Europe onto the pitch at tournament matches, with 209 places allocated via the Lidl Plus app in Germany alone.</span>
+        </div>
+        <div class="change-item">
+          <span class="change-lead">Strong fan engagement.</span>
+          <span class="change-rest">Positive community response documented across social media throughout the tournament.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="contact">
+    <div class="footer-inner">
+      <h2 class="footer-headline">Open to new<br>opportunities.</h2>
+      <p class="footer-subhead">Full-time roles and select freelance in UX/Product Design.</p>
+
+      <div class="footer-contacts">
+        <a class="footer-contact-link" href="mailto:moin@benediktfaber.com">moin@benediktfaber.com</a>
+        <a class="footer-contact-link" href="https://www.linkedin.com/in/benediktfaber/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2026 Benedikt Faber</span>
+      <a class="footer-copy footer-bottom-link" href="/impressum">Impressum</a>
+    </div>
+  </footer>
+
+  <button class="scroll-top" aria-label="Scroll to top">
+    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path d="M10 16V4M10 4L5 9M10 4L15 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <script src="scripts.js"></script>
+</body>
+</html>

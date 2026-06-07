@@ -1476,10 +1476,11 @@ h1, h2, h3 {
 .video-play-overlay {
   position: absolute;
   inset: 0;
-  padding: 0;
+  padding: clamp(20px, 2.5vw, 32px);
   margin: 0;
   background: oklch(15% 0.025 262 / 0.45);
   border: none;
+  text-align: left;
   transition: background 200ms var(--ease-out-soft);
 }
 
@@ -1495,15 +1496,92 @@ h1, h2, h3 {
 }
 
 .video-play-label {
-  position: absolute;
-  top: clamp(20px, 2.5vw, 32px);
-  left: clamp(20px, 2.5vw, 32px);
+  display: block;
   font-family: 'Syne', sans-serif;
   font-weight: 700;
   font-size: clamp(14px, 1.4vw, 17px);
   letter-spacing: 0.02em;
   color: var(--color-footer-text);
-  line-height: 1;
+  line-height: 1.2;
+}
+
+/* ============================================================
+   IN ACTION — vertical (9:16) embed grid
+   Reuses .video-frame for the container; overrides aspect-ratio
+   and image sizing here so the existing landscape video pattern
+   stays untouched. JS replaces thumbnail+overlay with an iframe
+   on click (see scripts.js).
+   ============================================================ */
+
+/* Three equal-size thumbnails. 3-col at desktop, 2+1 at tablet, 1-col
+   on mobile. Column width caps at 320px (suited to 9:16 vertical),
+   `justify-content: center` keeps the grid balanced inside its inner. */
+.in-action-grid {
+  margin-top: 56px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 320px));
+  justify-content: center;
+  gap: 32px;
+}
+
+.in-action-grid .video-frame {
+  display: block;
+  aspect-ratio: 9 / 16;
+}
+
+.in-action-grid .video-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Landscape (16:9) variant — two thumbnails side by side, stacking on
+   mobile. Used for embedded YouTube/Vimeo links where the source is
+   widescreen rather than vertical. */
+.in-action-grid-wide {
+  margin-top: 56px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.in-action-grid-wide .video-frame {
+  display: block;
+  aspect-ratio: 16 / 9;
+}
+
+.in-action-grid-wide .video-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.in-action-caption {
+  margin-top: 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  color: var(--color-muted);
+  line-height: 1.55;
+  text-align: left;
+}
+
+@media (max-width: 1024px) {
+  .in-action-grid {
+    grid-template-columns: repeat(2, minmax(0, 320px));
+  }
+}
+
+@media (max-width: 768px) {
+  .in-action-grid {
+    grid-template-columns: minmax(0, 320px);
+  }
+
+  .in-action-grid-wide {
+    grid-template-columns: 1fr;
+  }
 }
 
 .proto-link {
