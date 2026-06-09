@@ -1476,6 +1476,9 @@ h1, h2, h3 {
 .video-play-overlay {
   position: absolute;
   inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   padding: clamp(20px, 2.5vw, 32px);
   margin: 0;
   background: oklch(15% 0.025 262 / 0.45);
