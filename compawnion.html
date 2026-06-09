@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Compawnion: pet adoption case study by Benedikt Faber.">
   <title>Benedikt Faber, Compawnion Case Study</title>
+  <link rel="icon" type="image/x-icon" href="img/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="shared.css">
@@ -75,7 +76,7 @@
         </div>
 
         <div class="cs-hero-image">
-          <img src="img/compawnion/main_screen.jpg" alt="Compawnion app on three iPhone screens: welcome with a hand-drawn dog and cat illustrating &ldquo;Finde ein Tier, das wirklich zu dir passt&rdquo;, an animal browse list with everyday-life fit scores, and a detail view for Luke, a golden retriever." width="1200" height="900">
+          <img class="lightbox-trigger" src="img/compawnion/main_screen.jpg" alt="Compawnion app on three iPhone screens: welcome with a hand-drawn dog and cat illustrating &ldquo;Finde ein Tier, das wirklich zu dir passt&rdquo;, an animal browse list with everyday-life fit scores, and a detail view for Luke, a golden retriever." width="1200" height="900">
         </div>
       </div>
     </div>
@@ -285,8 +286,8 @@
           <p class="cs-body">The Alltagscheck questionnaire captures the relevant dimensions of Maja's daily life. The answers feed directly into the matching logic: each animal in the list shows an Alltagspassung score. Tapping it reveals a breakdown by dimension, showing how well the animal's needs align with Maja's profile. The number is not a verdict. It's an invitation to look closer.</p>
         </div>
         <div class="solution-image">
-          <div class="placeholder aspect-4-3">
-            <img src="img/compawnion/alltagscheck_screen.jpg" alt="Alltagscheck flow, placeholder image" width="1200" height="900">
+          <div class="image-frame aspect-4-3">
+            <img class="lightbox-trigger" src="img/compawnion/alltagscheck_screen.jpg" alt="Alltagscheck flow, placeholder image" width="1200" height="900">
           </div>
         </div>
       </article>
@@ -298,8 +299,8 @@
           <p class="cs-body">Before reaching the contact form, Maja sees a structured overview of how her profile compares to the shelter's requirements. A low score on individual criteria is not a dealbreaker — a tip reminds her that meeting in person often reveals more than any checklist. Once sent, a confirmation screen shows clear next steps, giving Maja visibility into what happens next and reducing the uncertainty that follows first contact.</p>
         </div>
         <div class="solution-image">
-          <div class="placeholder aspect-4-3">
-            <img src="img/compawnion/situationscheck_screen.jpg" alt="Situations-Check, placeholder image" width="1200" height="900">
+          <div class="image-frame aspect-4-3">
+            <img class="lightbox-trigger" src="img/compawnion/situationscheck_screen.jpg" alt="Situations-Check, placeholder image" width="1200" height="900">
           </div>
         </div>
       </article>
@@ -332,7 +333,7 @@
       <div class="design-grid">
         <article class="design-block design-block-feature reveal">
           <div class="design-block-image">
-            <div class="placeholder aspect-4-3">
+            <div class="image-frame aspect-4-3">
               <img src="img/compawnion/compawnion_logo.jpg" alt="Logo and mark, placeholder image" width="1200" height="900">
             </div>
           </div>
@@ -346,7 +347,7 @@
 		
 		<article class="design-block reveal">
           <div class="design-block-image">
-            <div class="placeholder aspect-4-3">
+            <div class="image-frame aspect-4-3">
               <img src="img/compawnion/compawnion_typography.jpg" alt="Typography specimen, placeholder image" width="1200" height="900">
             </div>
           </div>
@@ -360,7 +361,7 @@
 
         <article class="design-block reveal">
           <div class="design-block-image">
-            <div class="placeholder aspect-4-3">
+            <div class="image-frame aspect-4-3">
               <img src="img/compawnion/compawnion_color.jpg" alt="Color palette, placeholder image" width="1200" height="900">
             </div>
           </div>
@@ -372,7 +373,7 @@
 
         <article class="design-block reveal">
           <div class="design-block-image">
-            <div class="placeholder aspect-4-3">
+            <div class="image-frame aspect-4-3">
               <img src="img/compawnion/compawnion_illustration.jpg" alt="Illustration style, placeholder image" width="1200" height="900">
             </div>
           </div>
@@ -384,7 +385,7 @@
 
         <article class="design-block reveal">
           <div class="design-block-image">
-            <div class="placeholder aspect-4-3">
+            <div class="image-frame aspect-4-3">
               <img src="img/compawnion/compawnion_copy.jpg" alt="Copy examples, placeholder image" width="1200" height="900">
             </div>
           </div>
@@ -439,13 +440,13 @@
       <div class="before-after">
         <div class="before-after-item">
           <span class="section-label accent">Before</span>
-          <div class="placeholder aspect-3-4">
+          <div class="image-frame aspect-3-4">
             <img src="img/compawnion/compawnion_before.jpg" alt="Before iteration screen, placeholder image" width="900" height="1200">
           </div>
         </div>
         <div class="before-after-item">
           <span class="section-label accent">After</span>
-          <div class="placeholder aspect-3-4">
+          <div class="image-frame aspect-3-4">
             <img src="img/compawnion/compawnion_after.jpg" alt="After iteration screen, placeholder image" width="900" height="1200">
           </div>
         </div>
@@ -470,7 +471,7 @@
         </div>
 
         <div class="ai-image-col">
-          <div class="placeholder aspect-3-4">
+          <div class="image-frame aspect-3-4">
             <img src="img/compawnion/compawnion_ai.jpg" alt="AI in the design process, placeholder image" width="900" height="1200">
           </div>
         </div>
@@ -535,6 +536,17 @@
       <path d="M10 16V4M10 4L5 9M10 4L15 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </button>
+
+  <!-- Lightbox overlay — one per page, scripts.js wires up triggers. -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged image" aria-hidden="true">
+    <div class="lightbox-backdrop"></div>
+    <div class="lightbox-content">
+      <img src="" alt="" id="lightbox-img">
+      <button class="lightbox-close" type="button" aria-label="Close enlarged image">
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
 
   <script src="scripts.js"></script>
 </body>

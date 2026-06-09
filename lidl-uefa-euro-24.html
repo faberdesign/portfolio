@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Lidl at UEFA EURO 2024: a modular fan activation system for Europe's biggest football tournament. Experience design case by Benedikt Faber.">
   <title>Benedikt Faber, Lidl at UEFA EURO 2024</title>
+  <link rel="icon" type="image/x-icon" href="img/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="shared.css">
@@ -64,7 +65,7 @@
         </div>
 
         <div class="cs-hero-image">
-          <img src="img/lidl-euro/frische-stadion-duesseldorf.jpg" alt="The Lidl Frische Stadion at the UEFA EURO 2024 Fan Zone in Düsseldorf, showing the branded blue container structure with oversized lemon on top and fans gathered outside." width="1800" height="1000">
+          <img class="lightbox-trigger" src="img/lidl-euro/frische-stadion-duesseldorf.jpg" alt="The Lidl Frische Stadion at the UEFA EURO 2024 Fan Zone in Düsseldorf, showing the branded blue container structure with oversized lemon on top and fans gathered outside." width="1800" height="1000">
         </div>
       </div>
     </div>
@@ -124,8 +125,8 @@
           <p class="cs-body" style="margin-top:16px;">There was also a hard constraint to navigate. At the time of concept development, UEFA regulations restricted Fresh Food sampling within the official Fan Zones, though Lidl was actively negotiating to loosen that restriction. The concept was built to work either way: robust enough without sampling, stronger with it.</p>
         </div>
         <div class="solution-image">
-          <div class="placeholder aspect-4-3">
-            <img src="img/lidl-euro/lidl_uefa_euro_booth.jpg" alt="Concept rendering of the Lidl hub at a stadium venue, showing the oversized fruit crate structure with activation formats arranged around it including a dribbling course and shooting station." width="1200" height="900">
+          <div class="image-frame aspect-4-3">
+            <img class="lightbox-trigger" src="img/lidl-euro/lidl_uefa_euro_booth.jpg" alt="Concept rendering of the Lidl hub at a stadium venue, showing the oversized fruit crate structure with activation formats arranged around it including a dribbling course and shooting station." width="1200" height="900">
           </div>
         </div>
       </article>
@@ -158,8 +159,8 @@
 		  <p class="cs-body">The signature format was Fruit Football: an analog-digital game where participants shoot at falling digital fruit on a goal-sized screen. It merged the two things Lidl brought to the tournament, football and fresh produce, into a single immediately understandable interaction — and was designed for a digital extension via the Lidl Plus app and personal highscore tracking.</p>
         </div>
         <div class="solution-image">
-          <div class="placeholder aspect-4-3">
-            <img src="img/lidl-euro/lidl_uefa_euro_fruitfootball.jpg" alt="Concept illustration of the Fruit Football activation: a child shoots at a goal-sized digital screen displaying falling fruit, with oversized fruit props and a Lidl promoter in the background." width="1200" height="900">
+          <div class="image-frame aspect-4-3">
+            <img class="lightbox-trigger" src="img/lidl-euro/lidl_uefa_euro_fruitfootball.jpg" alt="Concept illustration of the Fruit Football activation: a child shoots at a goal-sized digital screen displaying falling fruit, with oversized fruit props and a Lidl promoter in the background." width="1200" height="900">
           </div>
         </div>
       </article>
@@ -171,8 +172,8 @@
           <p class="cs-body">Anthropomorphic fruit and vegetable walking acts, served as mobile eye-catchers, extending the Fresh Food visibility beyond the fixed hub locations.</p>
         </div>
         <div class="solution-image">
-          <div class="placeholder aspect-4-3">
-            <img src="img/lidl-euro/lidl_uefa_euro_freshies.jpg" alt="The three Lidl Freshies characters: an apple, a leek, and a pear, dressed as football fans with Lidl-branded accessories." width="1200" height="900">
+          <div class="image-frame aspect-4-3">
+            <img class="lightbox-trigger" src="img/lidl-euro/lidl_uefa_euro_freshies.jpg" alt="The three Lidl Freshies characters: an apple, a leek, and a pear, dressed as football fans with Lidl-branded accessories." width="1200" height="900">
           </div>
         </div>
       </article>
@@ -191,7 +192,7 @@
   <!-- SECTION 06: VISUAL — FRISCHE STADION -->
   <section class="cs-section bg-white">
     <div class="cs-section-inner">
-      <div class="placeholder aspect-16-9">
+      <div class="image-frame aspect-16-9">
         <img src="img/lidl-euro/frische-stadion-duesseldorf.jpg" alt="The Lidl Frische Stadion at the UEFA EURO 2024 Fan Zone in Düsseldorf, showing the branded blue container structure with oversized lemon on top and fans gathered outside." width="1600" height="900">
       </div>
     </div>
@@ -294,6 +295,18 @@
       <path d="M10 16V4M10 4L5 9M10 4L15 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </button>
+
+  <!-- Lightbox overlay — one per page; scripts.js wires up any image
+       that carries class="lightbox-trigger" on this page. -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged image" aria-hidden="true">
+    <div class="lightbox-backdrop"></div>
+    <div class="lightbox-content">
+      <img src="" alt="" id="lightbox-img">
+      <button class="lightbox-close" type="button" aria-label="Close enlarged image">
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
 
   <script src="scripts.js"></script>
 </body>

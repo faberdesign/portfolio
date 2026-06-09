@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Opening Show for a Global Developer Kick-Off: a five-minute opening show that frames artificial intelligence not as a threat, but as a superpower waiting to be claimed. Concept case by Benedikt Faber.">
   <title>Benedikt Faber, Opening Show for a Global Developer Kick-Off</title>
+  <link rel="icon" type="image/x-icon" href="img/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="shared.css">
@@ -64,7 +65,7 @@
         </div>
 
         <div class="cs-hero-image">
-          <img src="img/developer-kickoff/developer-kickoff-1.jpg" alt="Dundu, a three-meter illuminated puppet figure, with outstretched arms behind a dancer in the foreground and a large LED screen displaying digital content." width="1800" height="1000">
+          <img class="lightbox-trigger" src="img/developer-kickoff/developer-kickoff-1.jpg" alt="Dundu, a three-meter illuminated puppet figure, with outstretched arms behind a dancer in the foreground and a large LED screen displaying digital content." width="1800" height="1000">
         </div>
       </div>
     </div>
@@ -120,8 +121,8 @@
           <p class="cs-body" style="margin-top:16px;">The brief: open the keynote with a show that serves not just as a spectacular entry point, but as an emotional prologue to the year, setting the tone before a single slide appears.</p>
         </div>
         <div class="solution-image">
-          <div class="placeholder aspect-4-3">
-            <img src="img/developer-kickoff/developer-kickoff-2.jpg" alt="LED-suit performer on stage in front of a large LED screen showing abstract blue digital content, with camera crew filming from the side &mdash; illustrating the hybrid production setup for onsite and virtual audiences." width="1200" height="900">
+          <div class="image-frame aspect-4-3">
+            <img class="lightbox-trigger" src="img/developer-kickoff/developer-kickoff-2.jpg" alt="LED-suit performer on stage in front of a large LED screen showing abstract blue digital content, with camera crew filming from the side &mdash; illustrating the hybrid production setup for onsite and virtual audiences." width="1200" height="900">
           </div>
         </div>
       </article>
@@ -152,8 +153,8 @@
           <p class="cs-body" style="margin-top:16px;">The opening narration closes with three questions: &ldquo;What if this superpower was under your command? How would you use it? Would you even dare to use it?&rdquo; The show never answers them directly. Instead, it shows what becomes possible when the answer is yes. The show ends where the narration left off: the superpower is handed over to the audience. It now belongs to the community, for them to use it.</p>
         </div>
         <div class="solution-image">
-          <div class="placeholder aspect-4-3">
-            <img src="img/developer-kickoff/developer-kickoff-4.jpg" alt="Two dancers performing in front of a large LED screen showing fiery digital content, embodying the emotional arc of the show." width="1200" height="900">
+          <div class="image-frame aspect-4-3">
+            <img class="lightbox-trigger" src="img/developer-kickoff/developer-kickoff-4.jpg" alt="Two dancers performing in front of a large LED screen showing fiery digital content, embodying the emotional arc of the show." width="1200" height="900">
           </div>
         </div>
       </article>
@@ -174,8 +175,8 @@
           <p class="cs-body" style="margin-top:16px;">The second layer was the interplay between physical stage and LED screen content. Dancers move in and out of digital worlds projected behind them, the boundary between real and virtual deliberately blurred and repeatedly crossed. For an audience that lives at exactly that boundary in their daily work, this wasn&rsquo;t just aesthetic. It was a mirror.</p>
         </div>
         <div class="solution-image">
-          <div class="placeholder aspect-4-3">
-            <img src="img/developer-kickoff/developer-kickoff-5.jpg" alt="Dundu, a three-meter illuminated puppet figure, facing an LED-suit dancer on stage &mdash; two representations of AI in dialogue." width="1200" height="900">
+          <div class="image-frame aspect-4-3">
+            <img class="lightbox-trigger" src="img/developer-kickoff/developer-kickoff-5.jpg" alt="Dundu, a three-meter illuminated puppet figure, facing an LED-suit dancer on stage &mdash; two representations of AI in dialogue." width="1200" height="900">
           </div>
         </div>
       </article>
@@ -185,7 +186,7 @@
   <!-- VISUAL BREAK -->
   <section class="cs-section bg-bg">
     <div class="cs-section-inner">
-      <div class="placeholder aspect-16-7">
+      <div class="image-frame aspect-16-7">
         <img src="img/developer-kickoff/developer-kickoff-3.jpg" alt="Tech crew at lighting and production control desks during the show rehearsal." width="1600" height="700">
       </div>
     </div>
@@ -236,6 +237,18 @@
       <path d="M10 16V4M10 4L5 9M10 4L15 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </button>
+
+  <!-- Lightbox overlay — one per page; scripts.js wires up any image
+       that carries class="lightbox-trigger" on this page. -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged image" aria-hidden="true">
+    <div class="lightbox-backdrop"></div>
+    <div class="lightbox-content">
+      <img src="" alt="" id="lightbox-img">
+      <button class="lightbox-close" type="button" aria-label="Close enlarged image">
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
 
   <script src="scripts.js"></script>
 </body>

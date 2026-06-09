@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Benedikt Faber, UX & Product Designer based in Hamburg.">
   <title>Benedikt Faber, [Project Name]</title>
+  <link rel="icon" type="image/x-icon" href="img/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="shared.css">
@@ -67,20 +68,20 @@
       </div>
 
       <div class="cs-hero-image">
-        <div class="placeholder aspect-16-8">
+        <div class="image-frame aspect-16-8">
           <img src="img/placeholder_168.jpg" alt="Project key screen, placeholder image" width="1800" height="900">
         </div>
       </div>
     </div>
   </section>
 
-  <!-- BODY PLACEHOLDER -->
-  <section class="placeholder-page-body">
-    <div class="placeholder-page-inner">
+  <!-- BODY — coming-soon stub -->
+  <section class="coming-soon-body">
+    <div class="coming-soon-inner">
       <span class="section-label">[Project Name]</span>
-      <h2 class="placeholder-page-title">Case study coming soon.</h2>
+      <h2 class="coming-soon-title">Case study coming soon.</h2>
       <p>This project is currently being documented.</p>
-      <a class="placeholder-back" href="/#work">&larr; Back to Work</a>
+      <a class="coming-soon-back" href="/#work">&larr; Back to Work</a>
     </div>
   </section>
 
@@ -106,6 +107,18 @@
       <path d="M10 16V4M10 4L5 9M10 4L15 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </button>
+
+  <!-- Lightbox overlay — one per page; scripts.js wires up any image
+       that carries class="lightbox-trigger" on this page. -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged image" aria-hidden="true">
+    <div class="lightbox-backdrop"></div>
+    <div class="lightbox-content">
+      <img src="" alt="" id="lightbox-img">
+      <button class="lightbox-close" type="button" aria-label="Close enlarged image">
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
 
   <script src="scripts.js"></script>
 </body>

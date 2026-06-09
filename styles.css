@@ -44,10 +44,14 @@ h1, h2, h3 {
 }
 
 /* ============================================================
-   PLACEHOLDER (shared pattern)
+   IMAGE FRAME (shared pattern)
+   Aspect-ratio container for case-study and hero imagery. Modifiers
+   `.aspect-*` set the ratio; `.on-dark` switches the empty-state
+   colors for dark sections. When the frame holds a real image, the
+   img fills it edge-to-edge.
    ============================================================ */
 
-.placeholder {
+.image-frame {
   background: var(--color-bg-tinted);
   background-image: repeating-linear-gradient(
     45deg,
@@ -63,7 +67,7 @@ h1, h2, h3 {
   width: 100%;
 }
 
-.placeholder-label {
+.image-frame-label {
   font-family: 'DM Sans', sans-serif;
   font-weight: 500;
   font-size: 12px;
@@ -74,9 +78,9 @@ h1, h2, h3 {
   text-align: center;
 }
 
-/* When a placeholder holds an actual image, the img fills the wrapper
+/* When the frame holds a real image, the img fills the wrapper
    edge-to-edge and inherits the 4px corner radius. */
-.placeholder > img {
+.image-frame > img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -84,13 +88,13 @@ h1, h2, h3 {
   border-radius: inherit;
 }
 
-.placeholder.aspect-16-9 { aspect-ratio: 16 / 9; }
-.placeholder.aspect-16-8 { aspect-ratio: 16 / 8; }
-.placeholder.aspect-16-7 { aspect-ratio: 16 / 7; }
-.placeholder.aspect-4-3  { aspect-ratio: 4 / 3; }
-.placeholder.aspect-3-4  { aspect-ratio: 3 / 4; }
+.image-frame.aspect-16-9 { aspect-ratio: 16 / 9; }
+.image-frame.aspect-16-8 { aspect-ratio: 16 / 8; }
+.image-frame.aspect-16-7 { aspect-ratio: 16 / 7; }
+.image-frame.aspect-4-3  { aspect-ratio: 4 / 3; }
+.image-frame.aspect-3-4  { aspect-ratio: 3 / 4; }
 
-.placeholder.on-dark {
+.image-frame.on-dark {
   background-color: var(--color-dark-border);
   background-image: repeating-linear-gradient(
     45deg,
@@ -101,7 +105,7 @@ h1, h2, h3 {
   );
 }
 
-.placeholder.on-dark .placeholder-label {
+.image-frame.on-dark .image-frame-label {
   color: var(--color-footer-muted);
   font-weight: 300;
 }
@@ -2033,34 +2037,35 @@ h1, h2, h3 {
 }
 
 /* ============================================================
-   PLACEHOLDER PROJECT PAGE
+   COMING SOON PAGE
+   The stub used by case studies that aren't fully documented yet.
    ============================================================ */
 
-.placeholder-page-body {
+.coming-soon-body {
   background: var(--color-white);
   width: 100%;
   padding: 180px 0 160px;
 }
 
-.placeholder-page-inner {
+.coming-soon-inner {
   max-width: 560px;
   margin: 0 auto;
   text-align: center;
   padding: 0 48px;
 }
 
-.placeholder-page-inner .section-label {
+.coming-soon-inner .section-label {
   margin-bottom: 24px;
 }
 
-.placeholder-page-title {
+.coming-soon-title {
   font-family: 'Syne', sans-serif;
   font-weight: 700;
   font-size: 32px;
   color: var(--color-text);
 }
 
-.placeholder-page-body p {
+.coming-soon-body p {
   margin-top: 16px;
   font-family: 'DM Sans', sans-serif;
   font-weight: 300;
@@ -2069,7 +2074,7 @@ h1, h2, h3 {
   line-height: 1.7;
 }
 
-.placeholder-back {
+.coming-soon-back {
   display: block;
   margin-top: 40px;
   font-family: 'DM Sans', sans-serif;
@@ -2089,7 +2094,7 @@ h1, h2, h3 {
   .cs-section-inner,
   .cs-hero-inner,
   .ai-inner,
-  .placeholder-page-inner {
+  .coming-soon-inner {
     padding-left: 32px;
     padding-right: 32px;
   }
@@ -2213,11 +2218,11 @@ h1, h2, h3 {
     gap: 24px 40px;
   }
 
-  .placeholder-page-body {
+  .coming-soon-body {
     padding: 96px 0;
   }
 
-  .placeholder-page-inner {
+  .coming-soon-inner {
     padding: 0 24px;
   }
 }

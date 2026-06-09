@@ -40,6 +40,7 @@
     '.proto-link', '.hero-cta', '.scroll-top', '.nav-logo',
     '.nav-hamburger', '.nav-overlay-links a', '.footer-contact-link',
     '.back-link', '.impressum-section a', '.footer-bottom-link',
+    '.lightbox-trigger',
   ].join(', ');
   const TAP_FLASH_MS = 200;
   const TAP_MOVE_CANCEL_PX = 10;
@@ -275,18 +276,34 @@
   if (window.matchMedia && window.matchMedia('(pointer: fine)').matches) {
     const cursor = document.createElement('div');
     cursor.className = 'cursor';
-    // Inject the play-triangle SVG child for the video-hover state.
-    // stroke-linejoin: round gives the rounded corners; same-color stroke
-    // + fill makes the triangle read as a single chunky play button.
+    // Inject the play-triangle SVG child for the video-hover state and a
+    // plus-glyph for the lightbox-hover state. stroke-linejoin: round
+    // gives both glyphs their soft rounded corners; the cursor's color
+    // (set per surface state in CSS) is inherited via currentColor.
     cursor.innerHTML =
       '<svg class="cursor-play" viewBox="0 0 16 18" aria-hidden="true">' +
       '<path d="M2.5 2 L13.5 9 L2.5 16 Z" ' +
       'fill="currentColor" stroke="currentColor" stroke-width="2" ' +
       'stroke-linejoin="round" stroke-linecap="round"/>' +
+      '</svg>' +
+      '<svg class="cursor-plus" viewBox="0 0 16 16" aria-hidden="true">' +
+      '<path d="M8 2 V14 M2 8 H14" stroke="currentColor" ' +
+      'stroke-width="2" stroke-linecap="round"/>' +
       '</svg>';
     document.body.appendChild(cursor);
 
     function surfaceOf(el, y) {
+      // The enlarged image inside the open lightbox is the only area
+      // where we don't want the dark-surface treatment — the orange
+      // surface-dark cursor competes with the image content. Return
+      // 'light' so the default navy cursor shows over the image; the
+      // surrounding backdrop and close button still fall through to
+      // the .lightbox dark check below and stay on the white-ring
+      // variant.
+      if (el && el.id === 'lightbox-img') {
+        return 'light';
+      }
+
       // The bobblehead is positioned absolute inside .hero but bleeds
       // visually past the hero's bottom edge into the section below.
       // When the cursor is on the illustration but its y position is
@@ -301,11 +318,13 @@
 
       let node = el;
       while (node && node !== document.body) {
-        // Dark surfaces (nav, hero, footer, overlay, .bg-dark case-study sections)
+        // Dark surfaces (nav, hero, footer, overlay, .bg-dark case-study
+        // sections, open lightbox backdrop).
         if (
           node.tagName === 'NAV' ||
           node.classList.contains('footer') ||
           node.classList.contains('nav-overlay') ||
+          node.classList.contains('lightbox') ||
           (node.tagName === 'HEADER' && node.classList.contains('hero')) ||
           (node.classList.contains('cs-section') &&
             node.classList.contains('bg-dark'))
@@ -358,9 +377,17 @@
       }
     });
 
-    document.addEventListener('mouseup', function () {
+    // Release the click state. Listening to multiple terminators because
+    // mouseup alone is unreliable: browser-native image drag swallows
+    // mouseup and fires dragend instead, releases outside the window
+    // don't bubble to document, and tab-switching mid-press leaves the
+    // state stuck. Any of these signals is a safe "interaction ended."
+    function releaseClick() {
       cursor.classList.remove('is-click');
-    });
+    }
+    document.addEventListener('mouseup', releaseClick);
+    document.addEventListener('dragend', releaseClick);
+    window.addEventListener('blur', releaseClick);
 
     // Grow over interactive elements
     const interactiveSelector =
@@ -383,6 +410,32 @@
       });
       frame.addEventListener('mouseleave', function () {
         cursor.classList.remove('is-hover', 'is-video-hover');
+      });
+    });
+
+    // Lightbox triggers swap the center dot for a plus (.is-lightbox-hover)
+    // and grow the ring — signaling "enlarge" without the browser's
+    // zoom-in magnifier glyph. Wired explicitly because the generic
+    // interactiveSelector loop runs before the lightbox controller adds
+    // role="button" to the trigger images.
+    document.querySelectorAll('.lightbox-trigger').forEach(function (img) {
+      img.addEventListener('mouseenter', function () {
+        cursor.classList.add('is-hover', 'is-lightbox-hover');
+      });
+      img.addEventListener('mouseleave', function () {
+        cursor.classList.remove('is-hover', 'is-lightbox-hover');
+      });
+    });
+
+    // Open-lightbox backdrop closes the dialog on click — give it the
+    // hover ring so the cursor reads as clickable. Surface detection
+    // returns 'dark' inside .lightbox, so the ring renders white.
+    document.querySelectorAll('.lightbox-backdrop').forEach(function (el) {
+      el.addEventListener('mouseenter', function () {
+        cursor.classList.add('is-hover');
+      });
+      el.addEventListener('mouseleave', function () {
+        cursor.classList.remove('is-hover');
       });
     });
   }
@@ -643,5 +696,93 @@
     }
 
     requestAnimationFrame(marqueeTick);
+  }
+
+  // ----- Lightbox -----
+  // Click any .lightbox-trigger image to view it full-screen over a
+  // navy backdrop. Closes on backdrop click, the ✕ button, or Escape.
+  // Null-guarded so the same scripts.js can ship to pages that don't
+  // include the lightbox markup or have no triggers.
+  const lightboxEl = document.getElementById('lightbox');
+  const lightboxImg = lightboxEl ? document.getElementById('lightbox-img') : null;
+  const lightboxTriggers = document.querySelectorAll('.lightbox-trigger');
+
+  if (lightboxEl && lightboxImg && lightboxTriggers.length) {
+    const lightboxBackdrop = lightboxEl.querySelector('.lightbox-backdrop');
+    const lightboxClose = lightboxEl.querySelector('.lightbox-close');
+    let lightboxLastFocus = null;
+
+    function openLightbox(img) {
+      // currentSrc honors srcset if one is ever added; falls back to src.
+      lightboxImg.src = img.currentSrc || img.src;
+      lightboxImg.alt = img.alt || '';
+      lightboxLastFocus = document.activeElement;
+      lightboxEl.classList.add('is-open');
+      lightboxEl.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      if (lightboxClose) {
+        // Defer focus until after the CSS transition starts so the focus
+        // ring lands on the visible button, not on a hidden one.
+        requestAnimationFrame(function () { lightboxClose.focus(); });
+      }
+    }
+
+    function closeLightbox() {
+      if (!lightboxEl.classList.contains('is-open')) return;
+      lightboxEl.classList.remove('is-open');
+      lightboxEl.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+
+      // The lightbox vanishing under a stationary cursor fires no mouse
+      // events, so the custom cursor's surface + hover classes would
+      // linger until the next mouse move — leaving an orange dot or
+      // white ring where the navy default should already be. Strip the
+      // stale state explicitly; the next real mousemove re-applies it
+      // if the cursor is genuinely over a dark surface or hover target.
+      const cursorEl = document.querySelector('.cursor');
+      if (cursorEl) {
+        cursorEl.classList.remove(
+          'is-hover',
+          'is-lightbox-hover',
+          'is-video-hover',
+          'surface-dark',
+          'surface-orange'
+        );
+      }
+
+      if (lightboxLastFocus && typeof lightboxLastFocus.focus === 'function') {
+        lightboxLastFocus.focus();
+      }
+    }
+
+    lightboxTriggers.forEach(function (img) {
+      // <img> isn't focusable by default — promote each trigger to a
+      // keyboard-operable button.
+      if (!img.hasAttribute('tabindex')) img.setAttribute('tabindex', '0');
+      if (!img.hasAttribute('role')) img.setAttribute('role', 'button');
+      // Disable the browser's native image drag — these images are
+      // click-to-enlarge, not drag-to-save. Native drag would also
+      // suppress mouseup and leave the cursor's is-click state stuck.
+      img.setAttribute('draggable', 'false');
+
+      img.addEventListener('click', function () { openLightbox(img); });
+      img.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openLightbox(img);
+        }
+      });
+    });
+
+    if (lightboxBackdrop) {
+      lightboxBackdrop.addEventListener('click', closeLightbox);
+    }
+    if (lightboxClose) {
+      lightboxClose.addEventListener('click', closeLightbox);
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
   }
 })();

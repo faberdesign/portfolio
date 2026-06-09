@@ -546,6 +546,44 @@ nav {
   opacity: 0;
 }
 
+/* Plus-icon child — used over .lightbox-trigger images. Sits in the
+   ring's center instead of the dot to signal "enlarge" without the
+   browser's zoom-in magnifier glyph. */
+.cursor-plus {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  transform: translate(-50%, -50%);
+  color: var(--color-accent);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms var(--ease-out-soft);
+}
+
+.cursor.is-lightbox-hover .cursor-plus {
+  opacity: 1;
+}
+
+/* When the plus is showing, hide the center dot. */
+.cursor.is-lightbox-hover::after {
+  opacity: 0;
+}
+
+/* On dark surfaces (the open lightbox backdrop), the plus turns cream
+   to match the white ring. */
+.cursor.is-lightbox-hover.surface-dark .cursor-plus {
+  color: var(--color-white);
+}
+
+/* Press state keeps the plus visible — without this rule the generic
+   .is-click::after { opacity: 1 } would reveal the center dot
+   underneath the plus on mousedown. */
+.cursor.is-lightbox-hover.is-click::after {
+  opacity: 0;
+}
+
 .cursor.is-hover.surface-dark {
   border-color: var(--color-white);
 }
@@ -675,7 +713,6 @@ html[data-page-fade="exiting"] body {
   background: var(--color-dark);
   color: var(--color-footer-text);
   border: 1.5px solid var(--color-footer-text);
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -718,6 +755,159 @@ html[data-page-fade="exiting"] body {
   width: 18px;
   height: 18px;
   display: block;
+}
+
+/* ============================================================
+   LIGHTBOX
+   Click any .lightbox-trigger image to view it full-screen over a
+   navy backdrop. Closes via backdrop click, the ✕ button, or Escape.
+   The markup lives on each page that needs it (#lightbox before
+   </body>); scripts.js attaches handlers only if the markup and at
+   least one .lightbox-trigger are present.
+   ============================================================ */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 280ms var(--ease-out-soft),
+              visibility 0ms linear 280ms;
+}
+
+.lightbox.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 280ms var(--ease-out-soft),
+              visibility 0ms linear 0ms;
+}
+
+.lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background: oklch(20% 0.04 262 / 0.92);
+}
+
+.lightbox-content {
+  position: relative;
+  z-index: 1;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.lightbox-content img {
+  display: block;
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 4px;
+  transform: scale(0.96);
+  transition: transform 320ms var(--ease-out-soft);
+  will-change: transform;
+}
+
+.lightbox.is-open .lightbox-content img {
+  transform: scale(1);
+}
+
+/* Close affordance — same X pattern as the nav hamburger, pinned to
+   the image's top-right corner across all viewports. Inside the image
+   bounds (instead of floating above) so the close target never clips
+   off-screen on tall images or short viewports. Solid navy disc
+   provides contrast against any image content. */
+.lightbox-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 48px;
+  height: 48px;
+  background: var(--color-dark);
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 140ms var(--ease-out-soft),
+              background 220ms var(--ease-out-soft);
+}
+
+@media (hover: hover) {
+  .lightbox-close:hover {
+    background: var(--color-accent);
+  }
+}
+
+.lightbox-close:active {
+  transform: scale(0.94);
+}
+
+.lightbox-close span {
+  position: absolute;
+  width: 24px;
+  height: 2px;
+  background: var(--color-footer-text);
+  border-radius: 1px;
+  transition: background 220ms var(--ease-out-soft);
+}
+
+.lightbox-close span:first-child {
+  transform: rotate(45deg);
+}
+
+.lightbox-close span:last-child {
+  transform: rotate(-45deg);
+}
+
+/* Trigger images — desktop gets a custom cursor with a "+" glyph
+   instead of the browser's zoom-in magnifier (see .cursor-plus). On
+   touch / coarse-pointer devices no cursor shows at all.
+
+   Pop effect — applied to the wrapper (.image-frame for in-section
+   images, .cs-hero-image for hero images) via :has() so the image
+   and its frame lift together. Putting transform on the image
+   directly would slide it out of its bounds and expose the wrapper's
+   background. Matches the work-card / video-frame hover language
+   (-6px lift, 0.985 press scale). */
+.image-frame:has(.lightbox-trigger),
+.cs-hero-image:has(.lightbox-trigger) {
+  transition: transform 320ms var(--ease-out-soft);
+}
+
+@media (hover: hover) {
+  .image-frame:has(.lightbox-trigger):hover,
+  .cs-hero-image:has(.lightbox-trigger):hover {
+    transform: translateY(-6px);
+  }
+}
+
+.image-frame:has(.lightbox-trigger):active,
+.cs-hero-image:has(.lightbox-trigger):active {
+  transform: translateY(-6px) scale(0.985);
+  transition: transform 140ms var(--ease-out-soft);
+}
+
+/* Mobile tap feedback — JS adds .is-tapped on the trigger image for
+   ~360ms; mirror the lift onto the parent wrapper. */
+.image-frame:has(.lightbox-trigger.is-tapped),
+.cs-hero-image:has(.lightbox-trigger.is-tapped) {
+  transform: translateY(-6px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox,
+  .lightbox.is-open,
+  .lightbox-content img,
+  .lightbox.is-open .lightbox-content img {
+    transition: none;
+    transform: none;
+  }
 }
 
 /* ============================================================

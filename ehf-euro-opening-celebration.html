@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="EHF EURO 2024 Opening Celebration: a music-driven campaign that turned the opening match into a community moment. Experience design case by Benedikt Faber.">
   <title>Benedikt Faber, EHF EURO 2024 Opening Celebration</title>
+  <link rel="icon" type="image/x-icon" href="img/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="shared.css">
@@ -64,7 +65,7 @@
         </div>
 
         <div class="cs-hero-image">
-          <img src="img/ehf-euro/ehf-euro-1.jpg" alt="Official &lsquo;Celebration&rsquo; artwork featuring Culcha Candela with the EHF EURO 2024 logo." width="1800" height="1000">
+          <img class="lightbox-trigger" src="img/ehf-euro/ehf-euro-1.jpg" alt="Official &lsquo;Celebration&rsquo; artwork featuring Culcha Candela with the EHF EURO 2024 logo." width="1800" height="1000">
         </div>
       </div>
     </div>
@@ -162,8 +163,8 @@
           <p class="cs-body" style="margin-top:16px;">&ldquo;Celebration&rdquo; by Kool &amp; the Gang was the source material: a universally known track that nobody needs explained, but that could be recontextualized for handball and the EHF EURO 2024. Culcha Candela was recommended as the act to reinterpret it &mdash; a German group with genuine multicultural energy, strong live presence, and an existing connection to football and sport culture.</p>
         </div>
         <div class="solution-image">
-          <div class="placeholder aspect-4-3">
-            <img src="img/ehf-euro/ehf-euro-2.jpg" alt="Culcha Candela holding an EHF EURO 2024 Berlin sign, announced as the official act for the opening celebration." width="1200" height="900">
+          <div class="image-frame aspect-4-3">
+            <img class="lightbox-trigger" src="img/ehf-euro/ehf-euro-2.jpg" alt="Culcha Candela holding an EHF EURO 2024 Berlin sign, announced as the official act for the opening celebration." width="1200" height="900">
           </div>
         </div>
       </article>
@@ -252,6 +253,18 @@
       <path d="M10 16V4M10 4L5 9M10 4L15 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </button>
+
+  <!-- Lightbox overlay — one per page; scripts.js wires up any image
+       that carries class="lightbox-trigger" on this page. -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged image" aria-hidden="true">
+    <div class="lightbox-backdrop"></div>
+    <div class="lightbox-content">
+      <img src="" alt="" id="lightbox-img">
+      <button class="lightbox-close" type="button" aria-label="Close enlarged image">
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
 
   <script src="scripts.js"></script>
 </body>
