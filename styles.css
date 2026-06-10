@@ -1644,15 +1644,16 @@ h1, h2, h3 {
 
 /* Section 05 — Testing (inverted) */
 
+/* Testing section: "What Worked" stacks above "What Changed". The
+   What Worked column is full width with a paragraph; the What
+   Changed column hosts a change-list that we lay out in two columns
+   on desktop so the long list reads at a comfortable scan-length
+   per side rather than one tall stack. */
 .testing-grid {
   margin-top: 64px;
   display: flex;
-  gap: 80px;
-  align-items: flex-start;
-}
-
-.testing-col {
-  flex: 1;
+  flex-direction: column;
+  gap: 56px;
 }
 
 .testing-body {
@@ -1676,6 +1677,25 @@ h1, h2, h3 {
 
 .change-item:first-child {
   border-top: 0;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+/* Inside the testing-grid only, the change-list becomes a 2-col
+   grid. The per-item border-tops (which work as dividers in a
+   single-column list) would create awkward cross-column rules in
+   a grid, so we strip them here and rely on the grid gap for
+   separation. Other usages of .change-list (team rosters,
+   outcome lists on other case-study pages) keep the divided
+   single-column treatment. */
+.testing-grid .change-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px 48px;
+}
+
+.testing-grid .change-list .change-item {
+  border-top: none;
   padding-top: 0;
   margin-top: 0;
 }
@@ -2222,10 +2242,17 @@ h1, h2, h3 {
   }
 
   .decision-block,
-  .solution-block,
-  .testing-grid {
+  .solution-block {
     flex-direction: column;
     gap: 32px;
+  }
+
+  .testing-grid {
+    gap: 40px;
+  }
+
+  .testing-grid .change-list {
+    grid-template-columns: 1fr;
   }
 
   .problem-stats {
