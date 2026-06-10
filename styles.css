@@ -1727,12 +1727,6 @@ h1, h2, h3 {
   gap: 64px 48px;
 }
 
-/* First block (Typography) spans the full grid width as a feature row.
-   Remaining four fall into the 2x2 below. */
-.design-block-feature {
-  grid-column: 1 / -1;
-}
-
 .design-block {
   display: flex;
   flex-direction: column;
@@ -1793,22 +1787,27 @@ h1, h2, h3 {
    PERSONA CARD
    ============================================================ */
 
+/* Two-column layout: profile on the left (image + name + archetype +
+   facts), attribute sections on the right (one per row, each itself
+   a 2-col grid of title + bullet list). The profile column caps the
+   image at 280px while the attrs column flexes to fill the rest. */
 .persona-card {
   margin-top: 56px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
+  grid-template-columns: 1fr 2fr;
+  gap: 64px;
   align-items: start;
 }
 
 .persona-profile {
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 32px;
 }
 
 .persona-image-frame {
   width: 100%;
+  max-width: 280px;
   aspect-ratio: 1 / 1;
   overflow: hidden;
   border-radius: 4px;
@@ -1825,7 +1824,7 @@ h1, h2, h3 {
 .persona-meta {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
 }
 
 .persona-name {
@@ -1836,11 +1835,22 @@ h1, h2, h3 {
   line-height: 1.1;
 }
 
+.persona-archetype {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+/* Tabular facts: each li becomes a 2-col grid so Role / Living labels
+   line up vertically and values share the same left edge. */
 .persona-facts {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
   font-family: 'DM Sans', sans-serif;
   font-weight: 300;
   font-size: 16px;
@@ -1848,16 +1858,41 @@ h1, h2, h3 {
   line-height: 1.55;
 }
 
+.persona-facts li {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 16px;
+}
+
+.persona-fact-label {
+  font-weight: 500;
+  color: var(--color-text);
+}
+
 .persona-attrs {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 48px;
 }
 
+/* Each attribute block: heading on the left, bullet list on the
+   right. The heading replaces the numbered eyebrow ("01"/"02"/"03")
+   the example used — using the section name itself as the anchor. */
 .persona-attr {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.persona-attr-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--color-text);
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  margin: 0;
 }
 
 .persona-list {
@@ -1900,8 +1935,9 @@ h1, h2, h3 {
     margin-top: 40px;
   }
 
-  .persona-attrs {
-    gap: 32px;
+  .persona-attr {
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
 }
 
