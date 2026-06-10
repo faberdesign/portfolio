@@ -1872,7 +1872,7 @@ h1, h2, h3 {
 .persona-attrs {
   display: flex;
   flex-direction: column;
-  gap: 48px;
+  gap: 64px;
 }
 
 /* Each attribute block: heading on the left, bullet list on the
