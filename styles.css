@@ -25,7 +25,7 @@
 }
 
 .section-label.accent {
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .section-label.on-dark {
@@ -655,7 +655,7 @@ h1, h2, h3 {
   font-size: 12px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .work-card-tile-name {

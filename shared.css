@@ -12,6 +12,11 @@
      carries a trace of the brand temperature. */
   --color-accent:       oklch(57.5% 0.18 32);     /* vermilion */
   --color-accent-soft:  oklch(57.5% 0.18 32 / 0.14);
+  /* Darker vermilion reserved for small accent text on cream surfaces.
+     The display accent fails WCAG AA 4.5:1 at body sizes; this token
+     clears AA against --color-bg and --color-bg-tinted while staying
+     in the vermilion family. */
+  --color-accent-text:  oklch(45% 0.19 32);
   --color-dark:         oklch(23% 0.04 262);      /* deep navy */
   --color-bg:           oklch(96% 0.008 70);      /* warm cream */
   --color-bg-tinted:    oklch(93% 0.008 70);      /* deeper cream */
